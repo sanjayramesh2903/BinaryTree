@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BinaryTree - Empowering Digital Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="icon.png">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <img src = icon.png alt = "small-logo" class = "small-logo">
+            <a href="index.html" class="nav-logo">BinaryTree</a>
+            <div class="nav-links">
+                <a href="mission.html">Mission</a>
+                <a href="#why-us">Why Us</a>
+                <a href="team.html">Team</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Discover the World of BinaryTree</h1>
+            <h2>Support Our Mission</h2>
+            <img src = icon.png alt = "logo" class = "logo">
+        </section>
+
+        <div class="content">
+            <section class="explore-section">
+                <h2>Ready to start learning?</h2>
+                <p>Discover how BinaryTree can help you master computer science.</p>
+                <a href="mission.html" class="explore-button">Explore More</a>
+            </section>
+
+            <section id="why" class="section why-section">
+                <h2 class="section-title">Why BinaryTree?</h2>
+                
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3>Empowerment</h3>
+                        <p>To give kids the confidence to take risks and carve their own paths.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                        </div>
+                        <h3>Accessibility</h3>
+                        <p>To help every kid have the digital opportunities to thrive.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <h3>Education</h3>
+                        <p>To guide kids through digital obstacles and prepare them for the 21st century.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="contact-section">
+                <h2>Contact Us</h2>
+                <p>Ready to make a difference? Join our mission to empower through education.</p>
+                <div class="contact-buttons">
+                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=binarytree61@gmail.com&tf=cm" class="contact-button email">Email Us</a>
+                    <a href="https://discord.gg/3tGEJBrcU7" class="contact-button discord">Join Discord</a>
+                    <a href="https://forms.gle/VPmPtFBGMiqU9EUa7" class="contact-button team">Join the Team</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 BinaryTree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html>
