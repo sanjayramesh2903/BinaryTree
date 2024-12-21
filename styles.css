@@ -250,7 +250,7 @@ body {
     content: "→";
     position: absolute;
     left: 1.5rem;
-    color: var(--primary);
+    color: var (--primary);
     transition: transform 0.3s ease;
 }
 
@@ -549,7 +549,7 @@ footer {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: var(--text);
+    color: var (--text);
 }
 
 .value-card p {
@@ -1224,4 +1224,67 @@ footer {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #1d4ed8;
+}
+
+.team-category {
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+}
+
+.category-title {
+    position: relative;
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+}
+
+.category-title::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+.category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: var(--border);
+}
+
+.category-title h3 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.team-grid {
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .team-category {
+        padding: 1.5rem;
+    }
+    
+    .category-title h3 {
+        font-size: 2rem;
+    }
 }
