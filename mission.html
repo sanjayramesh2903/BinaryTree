@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/icon.png">
+
 </head>
 <body>
     <nav class="navbar">
@@ -25,12 +27,29 @@
 
     <main>
         <section class="mission-hero">
-            <h1>Our Mission</h1>
+            <div class="hero-content fade-in">
+                <h1 class="slide-up">Our Mission</h1>
+                <p class="mission-tagline slide-up-delay">Improving Computer Science, Technology, and Digital Literacy education for the underprivileged in developing countries.</p>
+                <div class="mission-stats slide-up-delay-2">
+                    <div class="stat-item">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Students Impacted</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Partner Countries</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">$15K</span>
+                        <span class="stat-label">Fundraising Goal</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <div class="content">
-            <section class="mission-grid">
-                <div class="mission-card">
+            <section class="mission-grid fade-in">
+                <div class="mission-card slide-up">
                     <div class="mission-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -40,7 +59,7 @@
                     <p>Empowering through knowledge.</p>
                 </div>
 
-                <div class="mission-card">
+                <div class="mission-card slide-up-delay">
                     <div class="mission-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -50,7 +69,7 @@
                     <p>Building skills for the future.</p>
                 </div>
 
-                <div class="mission-card">
+                <div class="mission-card slide-up-delay-2">
                     <div class="mission-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -58,6 +77,48 @@
                     </div>
                     <h2>Support</h2>
                     <p>Guiding and mentoring.</p>
+                </div>
+            </section>
+
+            <section class="mission-statement fade-in slide-up">
+                <h2>Who We Are</h2>
+                <p>BinaryTree is a 501(c)(3) non-profit organization dedicated to bridging the digital divide and bringing quality technology education to underserved communities in developing countries.</p>
+            </section>
+
+            <section class="current-initiatives fade-in">
+                <h2 class="slide-up">Current Initiatives</h2>
+                <div class="initiatives-grid">
+                    <div class="initiative-card slide-up">
+                        <h3>Tanzania Computer Lab Project</h3>
+                        <p>Fundraising $15,000 USD to establish a computer lab that will serve 200+ schoolchildren in rural Tanzania.</p>
+                        <a href="https://www.globalgiving.org/projects/equip-computer-skills-to-students-in-tanzania/" 
+                           class="donate-link" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            Donate Here <span class="arrow">→</span>
+                        </a>
+                    </div>
+
+                    <div class="initiative-card slide-up-delay">
+                        <h3>Computer Donation Drive</h3>
+                        <p>Collecting computer and laptop donations across the United States and Canada, coordinating with our partner organization in Pennsylvania for distribution.</p>
+                    </div>
+
+                    <div class="initiative-card slide-up-delay-2">
+                        <h3>Educational Programs</h3>
+                        <p>Developing and implementing programming curricula in Kenya, teaching:</p>
+                        <ul>
+                            <li>Scratch for beginners</li>
+                            <li>Python programming</li>
+                            <li>Java fundamentals</li>
+                            <li>Digital literacy skills</li>
+                        </ul>
+                    </div>
+
+                    <div class="initiative-card slide-up-delay-3">
+                        <h3>Community Outreach</h3>
+                        <p>Building awareness through social media platforms including Instagram and Discord, connecting with supporters and sharing our impact.</p>
+                    </div>
                 </div>
             </section>
         </div>
@@ -78,6 +139,19 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Animation observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-up, .slide-up-delay, .slide-up-delay-2, .slide-up-delay-3')
+            .forEach(element => observer.observe(element));
     </script>
 </body>
 </html>

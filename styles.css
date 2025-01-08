@@ -565,15 +565,62 @@ footer {
 }
 
 .mission-hero {
-    min-height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    min-height: 60vh;
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    padding: 6rem 2rem 4rem;
     position: relative;
     overflow: hidden;
+}
+
+.hero-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    border-radius: var(--radius);
+    min-width: 150px;
+}
+
+.stat-label {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .mission-stats {
+        gap: 2rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        min-width: 120px;
+        padding: 0.75rem 1.5rem;
+    }
 }
 
 .mission-hero::before {
@@ -1288,3 +1335,145 @@ footer {
         font-size: 2rem;
     }
 }
+
+/* ...existing code... */
+
+.mission-tagline {
+    max-width: 800px;
+    margin: 1rem auto;
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.mission-statement {
+    max-width: 800px;
+    margin: 4rem auto;
+    text-align: center;
+}
+
+.mission-statement h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.current-initiatives {
+    margin: 4rem 0;
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+}
+
+.current-initiatives h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.initiatives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.initiative-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border);
+    background: linear-gradient(to bottom right, white, rgba(255, 255, 255, 0.95));
+    backdrop-filter: blur(10px);
+}
+
+.initiative-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-light);
+}
+
+.initiative-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.initiative-card ul {
+    list-style-position: inside;
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.initiative-card li {
+    margin-bottom: 0.5rem;
+}
+
+/* Animation Classes */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slide-up-delay {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+}
+
+.slide-up-delay-2 {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out 0.4s, transform 0.8s ease-out 0.4s;
+}
+
+.slide-up-delay-3 {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out 0.6s, transform 0.8s ease-out 0.6s;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ...existing code... */
+
+/* ...existing code... */
+
+.donate-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.donate-link:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+.donate-link .arrow {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.donate-link:hover .arrow {
+    transform: translateX(4px);
+}
+
+/* ...existing code... */
