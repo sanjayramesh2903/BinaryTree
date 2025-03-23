@@ -9,7 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/icon.png">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -17,10 +21,10 @@
             <img src = assets/icon.png alt = "small-logo" class = "small-logo">
             <a href="index.html" class="nav-logo">BinaryTree</a>
             <div class="nav-links">
-                <a href="mission.html" class="active">Mission</a>
-                <a href="index.html#why-us">Why Us</a>
+                <a href ="index.html">Home</a>
+                <a href="mission.html">Mission</a>
                 <a href="team.html">Team</a>
-                <a href="index.html#contact">Contact</a>
+                <a href="ide.html">Python IDE</a>
             </div>
         </div>
     </nav>
@@ -122,11 +126,12 @@
                 </div>
             </section>
         </div>
+
     </main>
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 BinaryTree. All rights reserved.</p>
+            <p>&copy; 2025 BinaryTree. All rights reserved.</p>
         </div>
     </footer>
 
@@ -153,5 +158,6 @@
         document.querySelectorAll('.fade-in, .slide-up, .slide-up-delay, .slide-up-delay-2, .slide-up-delay-3')
             .forEach(element => observer.observe(element));
     </script>
+    <script src="ide.js"></script>
 </body>
 </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python IDE - BinaryTree</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ide.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <img src="assets/icon.png" alt="small-logo" class="small-logo">
+            <a href="index.html" class="nav-logo">BinaryTree</a>
+            <div class="nav-links">
+                <a href = "index.html">Home</a>
+                <a href="mission.html">Mission</a>
+                <a href="team.html">Team</a>
+                <a href="ide.html">Python IDE</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="ide-container">
+        <h1>Python IDE</h1>
+        <div class="ide-wrapper">
+            <div class="editor-container">
+                <textarea id="code-editor">print("Hello, World!")</textarea>
+            </div>
+            <div class="controls">
+                <button id="run-btn">Run Code</button>
+                <button id="clear-btn">Clear</button>
+            </div>
+            <div class="output-container">
+                <h3>Output:</h3>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 BinaryTree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="ide.js"></script>
+</body>
+</html> 
