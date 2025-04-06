@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat - BinaryTree</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ai-chat.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Add highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <img src="assets/icon.png" alt="small-logo" class="small-logo">
+            <a href="index.html" class="nav-logo">BinaryTree</a>
+            <div class="nav-links">
+                <a href = "index.html">Home</a>
+                <a href="mission.html">Mission</a>
+                <a href="team.html">Team</a>
+                <a href="ide.html">Python IDE</a>
+                <a href="ai-chat.html">AI Chat</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="chat-container">
+        <h1>AI Coding Assistant</h1>
+        <div class="chat-wrapper">
+            <div class="chat-messages" id="chat-messages">
+                <div class="message assistant">
+                    <div class="message-content">
+                        Hello! I'm your coding assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <textarea id="user-input" placeholder="Ask me anything about coding..."></textarea>
+                <button id="send-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 BinaryTree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="ai-chat.js"></script>
+</body>
+</html> 
