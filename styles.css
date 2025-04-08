@@ -1,23 +1,23 @@
 :root {
-    --primary: #3b82f6; /* Slightly brighter blue */
+    --primary: #3b82f6; 
     --primary-dark: #2563eb;
     --primary-light: #93c5fd;
-    --secondary: #14b8a6; /* Slightly brighter teal */
+    --secondary: #14b8a6; 
     --secondary-dark: #0d9488;
-    --accent: #f97316; /* Brighter orange */
-    --text: #111827; /* Darker text for contrast */
+    --accent: #f97316; 
+    --text: #111827; 
     --text-light: #4b5563;
     --background: #ffffff;
-    --background-alt: #f9fafb; /* Slightly different alt background */
+    --background-alt: #f9fafb; 
     --border: #e5e7eb;
-    --border-light: #f3f4f6; /* Lighter border */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04); /* Softer shadows */
+    --border-light: #f3f4f6; 
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04); 
     --shadow: 0 3px 5px rgba(0, 0, 0, 0.07);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-    --max-width: 1280px; /* Slightly wider max width */
-    --radius-sm: 0.375rem; /* 6px */
-    --radius: 0.5rem; /* 8px */
-    --radius-lg: 0.75rem; /* 12px */
+    --max-width: 1280px; 
+    --radius-sm: 0.375rem; 
+    --radius: 0.5rem; 
+    --radius-lg: 0.75rem; 
     --font-sans: 'Outfit', sans-serif;
     --fw-light: 300;
     --fw-normal: 400;
@@ -55,42 +55,43 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem; /* Adjust for potentially taller fixed navbar */
-    font-size: 16px; /* Base font size */
+    scroll-padding-top: 6rem; 
+    font-size: 16px; 
 }
 
 body {
     font-family: var(--font-sans);
-    line-height: 1.7; /* Slightly increased line height */
+    line-height: 1.7; 
     font-weight: var(--fw-normal);
     color: var(--text);
-    background-color: var(--background);
+    /* Added subtle gradient background */
+    background: linear-gradient(135deg, #f0f9ff 0%, #f0fdfa 100%); 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Navbar */
+
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* Ensure it's above other content */
-    background: rgba(255, 255, 255, 0.85); /* Slightly less opaque */
-    backdrop-filter: blur(12px) saturate(180%); /* Enhanced blur */
+    z-index: 1000; 
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px) saturate(180%); 
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-bottom: 1px solid var(--border-light); /* Lighter border */
-    box-shadow: var(--shadow); /* Add subtle shadow */
+    border-bottom: 1px solid var(--border-light); 
+    box-shadow: var(--shadow); 
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-content {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 1rem 2rem; /* Consistent padding */
+    padding: 1rem 2rem; 
     display: flex;
     align-items: center;
-    height: 4.5rem; /* Fixed height */
+    height: 4.5rem; 
 }
 
 .small-logo {
@@ -107,7 +108,7 @@ body {
     font-weight: var(--fw-bold);
     font-size: 1.5rem;
     margin-right: auto;
-    display: flex; /* Align logo and text */
+    display: flex; 
     align-items: center;
 }
 
@@ -118,7 +119,7 @@ body {
 }
 
 .nav-links a {
-    color: var(--text-light); /* Slightly lighter default color */
+    color: var(--text-light); 
     text-decoration: none;
     font-weight: var(--fw-medium);
     position: relative;
@@ -127,13 +128,13 @@ body {
 }
 
 .nav-links a:hover {
-    color: var(--primary); /* Hover color */
+    color: var(--primary); 
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -2px; /* Position slightly below text */
+    bottom: -2px; 
     left: 0;
     width: 0;
     height: 2px;
@@ -149,7 +150,7 @@ body {
 
 .nav-links a.active {
     color: var(--primary);
-    font-weight: var(--fw-semibold); /* Make active link slightly bolder */
+    font-weight: var(--fw-semibold); 
 }
 
 @media (max-width: 768px) {
@@ -162,7 +163,7 @@ body {
     }
 }
 
-/* Hero Section - Clean White Background */
+
 .hero {
     min-height: 90vh;
     display: flex;
@@ -171,13 +172,14 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
-    padding: 8rem 2rem; /* More vertical padding */
-    background: var(--background); /* Clean white */
-    color: var(--text);
+    padding: 8rem 2rem; 
+    /* Changed background to gradient and text color to white */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
+    color: white; 
     overflow: hidden;
 }
 
-/* Remove pattern */
+
 .hero::before {
    display: none;
 }
@@ -195,85 +197,86 @@ body {
 
 .hero h1 {
     font-size: clamp(3rem, 6vw, 4.5rem);
-    font-weight: var(--fw-bold); /* Slightly less bold */
+    font-weight: var(--fw-bold); 
     line-height: 1.1;
     margin-bottom: 1.5rem;
     margin-top: 3rem;
-    color: var(--text); /* Dark text */
-    background: none; /* Remove gradient */
+    color: white; /* Changed color */
+    background: none; 
     -webkit-background-clip: unset;
     background-clip: unset;
     -webkit-text-fill-color: unset;
-    text-shadow: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Added text shadow */
     letter-spacing: -0.02em;
 }
 
 .hero h2 {
     font-size: clamp(1.1rem, 3vw, 1.3rem);
     font-weight: var(--fw-normal);
-    color: var(--text-light); /* Standard light text */
+    color: rgba(255, 255, 255, 0.85); /* Changed color */
     max-width: 650px;
     margin: 0 auto 2.5rem;
     line-height: 1.6;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* Added text shadow */
 }
 
-/* Content & Sections */
+
 .content {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 5rem 2rem; /* Increased vertical padding */
+    padding: 5rem 2rem; 
 }
 
 .section {
-    margin-bottom: 5rem; /* Slightly reduced margin */
-    padding: 3.5rem; /* Increased padding */
+    margin-bottom: 5rem; 
+    padding: 3.5rem; 
     background: var(--background);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow); /* Use softer default shadow */
-    border: 1px solid var(--border-light); /* Use lighter border */
+    box-shadow: var(--shadow); 
+    border: 1px solid var(--border-light); 
     transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .section:hover {
-    transform: translateY(-6px); /* Slightly more lift */
-    box-shadow: var(--shadow-lg); /* Use larger shadow on hover */
+    transform: translateY(-6px); 
+    box-shadow: var(--shadow-lg); 
 }
 
 .intro {
-    font-size: 1.15rem; /* Slightly smaller */
-    margin-bottom: 2.5rem; /* Increased margin */
-    color: var(--text-light); /* Use lighter text */
+    font-size: 1.15rem; 
+    margin-bottom: 2.5rem; 
+    color: var(--text-light); 
     line-height: 1.8;
-    max-width: 800px; /* Constrain width for readability */
+    max-width: 800px; 
 }
 
-/* Specialties List */
+
 .specialties {
     list-style-type: none;
-    margin: 2.5rem 0; /* Increased margin */
-    padding: 0; /* Remove default padding */
+    margin: 2.5rem 0; 
+    padding: 0; 
 }
 
 .specialties li {
     position: relative;
-    padding: 1.25rem 1.5rem 1.25rem 3.5rem; /* Adjusted padding */
+    padding: 1.25rem 1.5rem 1.25rem 3.5rem; 
     margin-bottom: 1rem;
     background: var(--background-alt);
     border-radius: var(--radius);
     transition: var(--transition-normal);
-    border: 1px solid var(--border-light); /* Add subtle border */
+    border: 1px solid var(--border-light); 
     font-weight: var(--fw-medium);
 }
 
 .specialties li:hover {
-    transform: translateX(8px); /* Slightly less movement */
-    background: rgba(59, 130, 246, 0.08); /* Use primary color alpha */
-    border-color: rgba(59, 130, 246, 0.3); /* Use primary color alpha */
+    transform: translateX(8px); 
+    background: rgba(59, 130, 246, 0.08); 
+    border-color: rgba(59, 130, 246, 0.3); 
     box-shadow: var(--shadow-sm);
 }
 
 .specialties li::before {
-    content: "✓"; /* Checkmark icon */
+    content: "✓"; 
     position: absolute;
     left: 1.5rem;
     top: 50%;
@@ -285,35 +288,34 @@ body {
 }
 
 .specialties li:hover::before {
-    transform: translateY(-50%) scale(1.1); /* Scale icon slightly on hover */
+    transform: translateY(-50%) scale(1.1); 
 }
 
-/* Service Cards */
+
 .service-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly smaller min width */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 2rem;
-    margin-top: 3rem; /* Increased margin */
+    margin-top: 3rem; 
 }
 
 .service-card {
     background: var(--background);
-    border: 1px solid var(--border-light); /* Lighter border */
+    border: 1px solid var(--border-light); 
     border-radius: var(--radius-lg);
-    padding: 2.5rem; /* Increased padding */
+    padding: 2.5rem; 
     transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-sm); /* Start with smaller shadow */
+    box-shadow: var(--shadow-sm); 
 }
 
-/* Remove the top border animation, use shadow/transform instead */
-/* .service-card::before { ... } */
+
 
 .service-card:hover {
-    transform: translateY(-8px); /* Slightly less lift */
+    transform: translateY(-8px); 
     box-shadow: var(--shadow-lg);
-    border-color: var(--border); /* Darken border slightly on hover */
+    border-color: var(--border); 
 }
 
 .card-icon {
@@ -321,24 +323,24 @@ body {
 }
 
 .icon-circle {
-    width: 56px; /* Larger icon circle */
+    width: 56px; 
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(20, 184, 166, 0.1)); /* Subtle gradient background */
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(20, 184, 166, 0.1)); 
     display: flex;
     align-items: center;
     justify-content: center;
     transition: var(--transition-normal);
-    margin-bottom: 1.5rem; /* Add margin below icon */
+    margin-bottom: 1.5rem; 
 }
 
 .service-card:hover .icon-circle {
-    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Full color gradient on hover */
-    transform: scale(1.05); /* Slightly scale up icon */
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+    transform: scale(1.05); 
 }
 
 .icon-circle svg {
-    width: 28px; /* Larger icon */
+    width: 28px; 
     height: 28px;
     color: var(--primary);
     transition: var(--transition-normal);
@@ -349,28 +351,28 @@ body {
 }
 
 .service-card h3 {
-    font-size: 1.3rem; /* Slightly larger */
-    font-weight: var(--fw-semibold); /* Bolder */
-    margin-bottom: 0.75rem; /* Reduced margin */
+    font-size: 1.3rem; 
+    font-weight: var(--fw-semibold); 
+    margin-bottom: 0.75rem; 
     color: var(--text);
 }
 
 .service-card p {
     color: var(--text-light);
     line-height: 1.6;
-    font-size: 0.95rem; /* Slightly smaller paragraph text */
+    font-size: 0.95rem; 
 }
 
-/* Contact Section */
+
 .contact {
     text-align: center;
-    padding: 5rem 2rem; /* Adjusted padding */
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
+    padding: 5rem 2rem; 
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); 
     border-radius: var(--radius-lg);
     color: white;
     position: relative;
     overflow: hidden;
-    margin-top: 5rem; /* Add margin */
+    margin-top: 5rem; 
     box-shadow: var(--shadow-lg);
 }
 
@@ -386,7 +388,7 @@ body {
     background-size: 200% 100%;
 }
 
-.contact h2 { /* Add styling for a potential heading */
+.contact h2 { 
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: var(--fw-bold);
     margin-bottom: 1rem;
@@ -394,38 +396,37 @@ body {
 }
 
 .contact p {
-    font-size: 1.15rem; /* Slightly smaller */
-    margin-bottom: 2.5rem; /* Increased margin */
+    font-size: 1.15rem; 
+    margin-bottom: 2.5rem; 
     position: relative;
-    max-width: 600px; /* Constrain width */
+    max-width: 600px; 
     margin-left: auto;
     margin-right: auto;
-    opacity: 0.9; /* Slightly transparent */
+    opacity: 0.9; 
 }
 
-/* Remove specific .email-link styles, handled by .contact-button.email */
 
-/* Footer */
+
 footer {
     background: var(--background-alt);
-    padding: 3rem 2rem; /* Reduced padding */
+    padding: 3rem 2rem; 
     text-align: center;
     color: var(--text-light);
-    border-top: 1px solid var(--border-light); /* Lighter border */
-    margin-top: 5rem; /* Add margin */
-    font-size: 0.9rem; /* Smaller font size */
+    border-top: 1px solid var(--border-light); 
+    margin-top: 5rem; 
+    font-size: 0.9rem; 
 }
 
 .footer-content {
     max-width: var(--max-width);
     margin: 0 auto;
-    display: flex; /* Use flexbox for layout */
+    display: flex; 
     flex-direction: column;
     align-items: center;
-    gap: 1rem; /* Add gap between elements */
+    gap: 1rem; 
 }
 
-/* Add styles for potential footer links or social icons if needed later */
+
 .footer-links {
     display: flex;
     gap: 1.5rem;
@@ -442,7 +443,7 @@ footer {
     color: var(--primary);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 3rem;
@@ -487,18 +488,18 @@ footer {
     }
 }
 
-/* === Buttons - Refined (Final) === */
+
 .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.9rem 2.1rem; /* Increased padding */
-    border-radius: var(--radius-lg); /* Larger radius */
+    padding: 0.9rem 2.1rem; 
+    border-radius: var(--radius-lg); 
     font-weight: var(--fw-semibold);
     text-decoration: none;
     transition: var(--transition-normal);
     font-size: 1rem;
-    border: 1px solid transparent; /* Base border */
+    border: 1px solid transparent; 
     cursor: pointer;
     line-height: 1.5;
     box-shadow: var(--shadow-sm);
@@ -513,7 +514,7 @@ footer {
 .button.primary:hover {
     background: var(--primary-dark);
     border-color: var(--primary-dark);
-    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    transform: translateY(-3px) scale(1.02); 
     box-shadow: var(--shadow);
     color: white;
 }
@@ -527,45 +528,44 @@ footer {
 .button.secondary:hover {
     background: var(--secondary-dark);
     border-color: var(--secondary-dark);
-    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    transform: translateY(-3px) scale(1.02); 
     box-shadow: var(--shadow);
 }
 
-/* Refine outline button style */
+
 .button.outline {
     background: transparent;
     color: var(--primary);
-    border: 2px solid var(--primary); /* Thicker border */
+    border: 2px solid var(--primary); 
     box-shadow: none;
-    padding: calc(0.9rem - 1px) calc(2.1rem - 1px); /* Adjust padding for border */
+    padding: calc(0.9rem - 1px) calc(2.1rem - 1px); 
 }
 
 .button.outline:hover {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
-    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    transform: translateY(-3px) scale(1.02); 
     box-shadow: var(--shadow);
 }
 
-/* === Section Title === */
+
 .section-title {
-    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive font size */
-    font-weight: var(--fw-bold); /* Use variable */
+    font-size: clamp(2rem, 5vw, 2.8rem); 
+    font-weight: var(--fw-bold); 
     text-align: center;
-    margin-bottom: 3.5rem; /* Increased margin */
+    margin-bottom: 3.5rem; 
     line-height: 1.2;
-    color: var(--text); /* Default text color */
-    /* Optional: Keep gradient or simplify */
-    /* background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
+    color: var(--text); 
+    
+    
+    
+    
     position: relative;
-    padding-bottom: 1rem; /* Add padding for underline */
+    padding-bottom: 1rem; 
 }
 
-/* Add a subtle underline effect */
+
 .section-title::after {
     content: '';
     position: absolute;
@@ -578,38 +578,38 @@ footer {
     border-radius: 2px;
 }
 
-/* === Value Cards === */
+
 .values-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust min width */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 2rem;
-    margin-top: 3rem; /* Increased margin */
+    margin-top: 3rem; 
 }
 
 .value-card {
-    background: var(--background-alt); /* Use alt background */
-    border: 1px solid var(--border-light); /* Lighter border */
+    background: var(--background-alt); 
+    border: 1px solid var(--border-light); 
     border-radius: var(--radius-lg);
-    padding: 2.5rem; /* Increased padding */
+    padding: 2.5rem; 
     transition: var(--transition-normal);
     text-align: center;
-    box-shadow: var(--shadow-sm); /* Start with smaller shadow */
+    box-shadow: var(--shadow-sm); 
 }
 
 .value-card:hover {
-    transform: translateY(-8px); /* Adjust lift */
+    transform: translateY(-8px); 
     box-shadow: var(--shadow-lg);
-    border-color: var(--border); /* Darken border slightly */
-    background: var(--background); /* Change background on hover */
+    border-color: var(--border); 
+    background: var(--background); 
 }
 
 .value-icon {
-    width: 72px; /* Larger icon */
+    width: 72px; 
     height: 72px;
     margin: 0 auto 1.5rem;
-    padding: 1.25rem; /* Adjust padding */
+    padding: 1.25rem; 
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15)); /* Slightly stronger gradient */
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15)); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -617,12 +617,12 @@ footer {
 }
 
 .value-card:hover .value-icon {
-    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Full gradient on hover */
-    transform: scale(1.05) rotate(5deg); /* Add slight rotation */
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+    transform: scale(1.05) rotate(5deg); 
 }
 
 .value-icon svg {
-    width: 36px; /* Larger SVG */
+    width: 36px; 
     height: 36px;
     color: var(--primary);
     transition: var(--transition-normal);
@@ -633,16 +633,16 @@ footer {
 }
 
 .value-card h3 {
-    font-size: 1.4rem; /* Adjust size */
-    font-weight: var(--fw-semibold); /* Use variable */
-    margin-bottom: 0.75rem; /* Adjust margin */
-    color: var(--text); /* Ensure text color is set */
+    font-size: 1.4rem; 
+    font-weight: var(--fw-semibold); 
+    margin-bottom: 0.75rem; 
+    color: var(--text); 
 }
 
 .value-card p {
     color: var(--text-light);
-    line-height: 1.7; /* Increase line height slightly */
-    font-size: 1rem; /* Adjust size */
+    line-height: 1.7; 
+    font-size: 1rem; 
 }
 
 .why-section {
@@ -651,29 +651,29 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* === Mission Page Specific Styles === */
+
 .mission-hero {
     min-height: 60vh;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); 
     position: relative;
     overflow: hidden;
-    display: flex; /* Use flex for centering */
+    display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5rem 2rem; /* Adjusted padding */
+    padding: 5rem 2rem; 
+    text-align: center;
 }
 
-/* Remove .hero-content if it's redundant with .mission-hero flex centering */
-/* .hero-content { ... } */
+
 
 .mission-stats {
     display: flex;
     justify-content: center;
-    gap: 3rem; /* Reduced gap */
-    margin-top: 3.5rem; /* Increased margin */
+    gap: 3rem; 
+    margin-top: 3.5rem; 
     flex-wrap: wrap;
-    position: relative; /* Ensure stats are above pseudo-element */
+    position: relative; 
     z-index: 2;
 }
 
@@ -682,24 +682,24 @@ footer {
     flex-direction: column;
     align-items: center;
     color: white;
-    text-align: center; /* Ensure text is centered */
+    text-align: center; 
 }
 
 .stat-number {
-    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive font size */
-    font-weight: var(--fw-bold); /* Use variable */
+    font-size: clamp(2rem, 5vw, 2.8rem); 
+    font-weight: var(--fw-bold); 
     margin-bottom: 0.5rem;
-    background: rgba(255, 255, 255, 0.15); /* Slightly less opaque */
-    padding: 0.75rem 1.5rem; /* Adjusted padding */
+    background: rgba(255, 255, 255, 0.15); 
+    padding: 0.75rem 1.5rem; 
     border-radius: var(--radius);
-    min-width: 140px; /* Adjust width */
+    min-width: 140px; 
     line-height: 1.2;
 }
 
 .stat-label {
-    font-size: 0.9rem; /* Slightly smaller */
-    font-weight: var(--fw-medium); /* Use variable */
-    opacity: 0.85; /* Adjust opacity */
+    font-size: 0.9rem; 
+    font-weight: var(--fw-medium); 
+    opacity: 0.85; 
     margin-top: 0.25rem;
 }
 
@@ -715,7 +715,7 @@ footer {
     }
 }
 
-/* Refine the hero background pattern */
+
 .mission-hero::before {
     content: '';
     position: absolute;
@@ -730,11 +730,11 @@ footer {
 }
 
 .mission-hero h1 {
-    font-size: clamp(3rem, 6vw, 4.5rem); /* Responsive */
-    font-weight: var(--fw-extrabold); /* Use variable */
+    font-size: clamp(3rem, 6vw, 4.5rem); 
+    font-weight: var(--fw-extrabold); 
     color: white;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
-    margin-bottom: 1.5rem; /* Increased margin */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    margin-bottom: 1.5rem; 
     position: relative;
     z-index: 2;
     line-height: 1.1;
@@ -743,34 +743,34 @@ footer {
 
 .mission-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min width */
-    gap: 2.5rem; /* Increased gap */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 2.5rem; 
     padding: 4rem 0;
 }
 
 .mission-card {
     background: var(--background);
-    border: 1px solid var(--border-light); /* Lighter border */
+    border: 1px solid var(--border-light); 
     border-radius: var(--radius-lg);
-    padding: 2.5rem; /* Adjusted padding */
+    padding: 2.5rem; 
     text-align: center;
     transition: var(--transition-normal);
-    box-shadow: var(--shadow); /* Default shadow */
+    box-shadow: var(--shadow); 
 }
 
 .mission-card:hover {
-    transform: translateY(-8px); /* Adjust lift */
+    transform: translateY(-8px); 
     box-shadow: var(--shadow-lg);
-    border-color: var(--border); /* Darken border */
+    border-color: var(--border); 
 }
 
 .mission-icon {
-    width: 72px; /* Match value icon size */
+    width: 72px; 
     height: 72px;
-    margin: 0 auto 1.5rem; /* Adjust margin */
-    padding: 1.25rem; /* Match value icon padding */
+    margin: 0 auto 1.5rem; 
+    padding: 1.25rem; 
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15)); /* Match value icon background */
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15)); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -778,12 +778,12 @@ footer {
 }
 
 .mission-card:hover .mission-icon {
-    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Match value icon hover */
-    transform: scale(1.05) rotate(-5deg); /* Add rotation */
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+    transform: scale(1.05) rotate(-5deg); 
 }
 
 .mission-icon svg {
-    width: 36px; /* Match value icon svg size */
+    width: 36px; 
     height: 36px;
     color: var(--primary);
     transition: var(--transition-normal);
@@ -794,21 +794,20 @@ footer {
 }
 
 .mission-card h2 {
-    font-size: 1.6rem; /* Adjust size */
-    font-weight: var(--fw-bold); /* Use variable */
-    margin-bottom: 0.75rem; /* Adjust margin */
-    color: var(--text); /* Use default text color */
-    /* Optional: Remove gradient */
-    /* background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
+    font-size: 1.6rem; 
+    font-weight: var(--fw-bold); 
+    margin-bottom: 0.75rem; 
+    color: var(--text); 
+    
+    
+    
+    
 }
 
 .mission-card p {
     color: var(--text-light);
-    font-size: 1rem; /* Adjust size */
-    line-height: 1.7; /* Adjust line height */
+    font-size: 1rem; 
+    line-height: 1.7; 
 }
 
 @media (max-width: 768px) {
@@ -837,34 +836,60 @@ footer {
 
 .explore-section {
     text-align: center;
-    padding: 5rem 2rem; /* Increased padding */
+    padding: 5rem 2rem; 
     position: relative;
     z-index: 2;
-    background: var(--background-alt); /* Add subtle background */
+    /* Changed background to light primary */
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.12)); 
     border-radius: var(--radius-lg);
-    margin: 5rem 0; /* Add vertical margin */
+    margin: 5rem 0; 
     box-shadow: var(--shadow);
+    border: 1px solid rgba(59, 130, 246, 0.2); /* Added subtle border */
 }
 
 .explore-section h2 {
-    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive */
-    font-weight: var(--fw-bold); /* Use variable */
+    font-size: clamp(1.8rem, 4vw, 2.5rem); 
+    font-weight: var(--fw-bold); 
     color: var(--text);
     margin-bottom: 1rem;
 }
 
 .explore-section p {
-    font-size: 1.1rem; /* Adjust size */
+    font-size: 1.1rem; 
     color: var(--text-light);
-    margin-bottom: 2.5rem; /* Increased margin */
+    margin-bottom: 2.5rem; 
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Use general button styles */
+
 .explore-button {
-    /* Inherits from .button.outline */
+    /* Apply primary button styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.1rem; 
+    border-radius: var(--radius-lg); 
+    font-weight: var(--fw-semibold);
+    text-decoration: none;
+    transition: var(--transition-normal);
+    font-size: 1rem;
+    border: 1px solid transparent; 
+    cursor: pointer;
+    line-height: 1.5;
+    box-shadow: var(--shadow-sm);
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.explore-button:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-3px) scale(1.02); 
+    box-shadow: var(--shadow);
+    color: white;
 }
 
 @media (max-width: 768px) {
@@ -879,32 +904,31 @@ footer {
 
 .contact-section {
     text-align: center;
-    padding: 6rem 2rem; /* Increased padding */
-    background: linear-gradient(to bottom, var(--background-alt), var(--background)); /* Subtle gradient */
+    padding: 6rem 2rem; 
+    background: linear-gradient(to bottom, var(--background-alt), var(--background)); 
     border-radius: var(--radius-lg);
     margin: 5rem 0;
     box-shadow: var(--shadow);
-    border-top: 1px solid var(--border-light); /* Add top border */
+    border-top: 1px solid var(--border-light); 
 }
 
 .contact-section h2 {
-    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive */
-    font-weight: var(--fw-bold); /* Use variable */
-    color: var(--text); /* Use default text color */
-    /* Optional: Remove gradient */
-    /* background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
+    font-size: clamp(2rem, 5vw, 2.8rem); 
+    font-weight: var(--fw-bold); 
+    color: var(--text); 
+    
+    
+    
+    
     margin-bottom: 1.5rem;
 }
 
 .contact-section p {
-    font-size: 1.1rem; /* Adjust size */
+    font-size: 1.1rem; 
     color: var(--text-light);
     max-width: 600px;
-    margin: 0 auto 2.5rem; /* Add bottom margin */
-    line-height: 1.7; /* Adjust line height */
+    margin: 0 auto 2.5rem; 
+    line-height: 1.7; 
 }
 
 .contact-buttons {
@@ -915,19 +939,32 @@ footer {
     flex-wrap: wrap;
 }
 
-/* Explicitly style contact buttons (Final) */
+
 .contact-button {
-    /* Base styles from .button are inherited */
+    /* Apply base button styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.1rem; 
+    border-radius: var(--radius-lg); /* Added rounded corners */
+    font-weight: var(--fw-semibold);
+    text-decoration: none;
+    transition: var(--transition-normal);
+    font-size: 1rem;
+    border: 1px solid transparent; 
+    cursor: pointer;
+    line-height: 1.5;
+    box-shadow: var(--shadow-sm);
     min-width: 160px;
 }
 
 .contact-button.email {
-    /* Style like .button.outline */
+    
     background: transparent;
     color: var(--primary);
     border: 2px solid var(--primary);
     box-shadow: none;
-    padding: calc(0.9rem - 1px) calc(2.1rem - 1px); /* Adjust padding */
+    padding: calc(0.9rem - 1px) calc(2.1rem - 1px); 
 }
 
 .contact-button.email:hover {
@@ -938,8 +975,8 @@ footer {
     box-shadow: var(--shadow);
 }
 
-.contact-button.discord { /* This is the "Donate" button */
-    /* Style like .button.primary */
+.contact-button.discord { 
+    
     background: var(--primary);
     color: white;
     border-color: var(--primary);
@@ -953,7 +990,7 @@ footer {
 }
 
 .contact-button.team {
-    /* Style like .button.secondary */
+    
     background: var(--secondary);
     color: white;
     border-color: var(--secondary);
@@ -981,152 +1018,152 @@ footer {
     }
 }
 
-/* === Team Page Specific Styles === */
+
 .team-section {
-    padding: 5rem 0; /* Increased padding */
+    padding: 5rem 0; 
 }
 
-/* Consolidate team grid styles */
+
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem; /* Increased gap */
-    margin-top: 3rem; /* Increased margin */
-    max-width: var(--max-width); /* Ensure max width */
+    gap: 2.5rem; 
+    margin-top: 3rem; 
+    max-width: var(--max-width); 
     margin-left: auto;
     margin-right: auto;
-    padding: 0 1rem; /* Add horizontal padding */
+    padding: 0 1rem; 
 }
 
-/* Consolidate team card styles */
-.team-card, .team-member { /* Apply base styles to both */
+
+.team-card, .team-member { 
     background: var(--background);
-    border-radius: var(--radius-lg); /* Use variable */
-    padding: 2.5rem; /* Increased padding */
+    border-radius: var(--radius-lg); 
+    padding: 2.5rem; 
     text-align: center;
-    box-shadow: var(--shadow); /* Use variable */
+    box-shadow: var(--shadow); 
     transition: var(--transition-normal);
-    border: 1px solid var(--border-light); /* Add light border */
+    border: 1px solid var(--border-light); 
 }
 
 .team-card:hover, .team-member:hover {
-    transform: translateY(-8px); /* Adjust lift */
-    box-shadow: var(--shadow-lg); /* Use variable */
+    transform: translateY(-8px); 
+    box-shadow: var(--shadow-lg); 
     border-color: var(--border);
 }
 
 .team-image {
-    width: 140px; /* Larger image */
+    width: 140px; 
     height: 140px;
     border-radius: 50%;
     margin: 0 auto 1.5rem;
     overflow: hidden;
-    /* background: var(--primary); Remove background color */
-    border: 4px solid var(--background); /* Add border to lift image */
-    box-shadow: var(--shadow-sm), 0 0 0 1px var(--border); /* Inner/outer shadow */
-    position: relative; /* For potential overlays or effects */
+     
+    border: 4px solid var(--background); 
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--border); 
+    position: relative; 
 }
 
 .team-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block; /* Remove extra space below image */
+    display: block; 
     transition: transform var(--transition-normal);
 }
 
 .team-card:hover .team-image img,
 .team-member:hover .team-image img {
-    transform: scale(1.05); /* Scale image on card hover */
+    transform: scale(1.05); 
 }
 
-/* Consolidate team member text styles */
+
 .team-card h3, .team-member h3 {
     color: var(--text);
-    font-size: 1.4rem; /* Adjust size */
-    font-weight: var(--fw-semibold); /* Use variable */
-    margin-bottom: 0.25rem; /* Reduced margin */
-    margin-top: 0; /* Remove potential top margin from .team-member */
+    font-size: 1.4rem; 
+    font-weight: var(--fw-semibold); 
+    margin-bottom: 0.25rem; 
+    margin-top: 0; 
 }
 
 .team-card .role, .team-member .role {
-    color: var(--primary); /* Use primary color for role */
+    color: var(--primary); 
     font-size: 1rem;
-    font-weight: var(--fw-medium); /* Use variable */
+    font-weight: var(--fw-medium); 
     margin-bottom: 1rem;
 }
 
 .team-card .bio, .team-member .bio {
     color: var(--text-light);
-    font-size: 0.9rem; /* Adjust size */
-    line-height: 1.6; /* Adjust line height */
+    font-size: 0.9rem; 
+    line-height: 1.6; 
     margin-bottom: 1.5rem;
-    max-width: 35ch; /* Adjust max width */
+    max-width: 35ch; 
     margin-left: auto;
     margin-right: auto;
 }
 
 .social-links {
     display: flex;
-    gap: 0.75rem; /* Reduced gap */
+    gap: 0.75rem; 
     justify-content: center;
-    margin-top: 1.5rem; /* Increased margin */
+    margin-top: 1.5rem; 
 }
 
 .social-link {
-    display: inline-flex; /* Use inline-flex */
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
-    width: 36px; /* Slightly smaller */
+    width: 36px; 
     height: 36px;
     border-radius: 50%;
-    background: var(--background-alt); /* Use alt background */
-    color: var(--text-light); /* Lighter default color */
+    background: var(--background-alt); 
+    color: var(--text-light); 
     transition: var(--transition-fast);
-    border: 1px solid var(--border-light); /* Add border */
+    border: 1px solid var(--border-light); 
 }
 
 .social-link:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-2px) scale(1.1); /* Add scale */
+    transform: translateY(-2px) scale(1.1); 
     border-color: var(--primary);
 }
 
 .social-link svg {
-    width: 18px; /* Adjust size */
+    width: 18px; 
     height: 18px;
 }
 
-/* .team-member styles are now consolidated with .team-card */
+
 
 .join-team {
     text-align: center;
-    padding: 5rem 2rem; /* Adjusted padding */
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
+    padding: 5rem 2rem; 
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); 
     color: white;
-    border-radius: var(--radius-lg); /* Use variable */
-    margin: 5rem auto; /* Center horizontally */
-    max-width: calc(var(--max-width) - 4rem); /* Constrain width */
+    border-radius: var(--radius-lg); 
+    margin: 5rem auto; 
+    max-width: calc(var(--max-width) - 4rem); 
     box-shadow: var(--shadow-lg);
 }
 
 .join-team h2 {
-    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive */
-    font-weight: var(--fw-bold); /* Use variable */
+    font-size: clamp(1.8rem, 4vw, 2.5rem); 
+    font-weight: var(--fw-bold); 
     margin-bottom: 1rem;
 }
 
 .join-team p {
-    font-size: 1.1rem; /* Adjust size */
-    margin-bottom: 2.5rem; /* Increased margin */
+    font-size: 1.1rem; 
+    margin-bottom: 2.5rem; 
     opacity: 0.9;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Style .join-team .button like outline hover state */
+
 .join-team .button {
     display: inline-flex;
     align-items: center;
@@ -1137,20 +1174,20 @@ footer {
     text-decoration: none;
     transition: var(--transition-normal);
     font-size: 1rem;
-    border: 1px solid var(--primary); /* Match hover border */
+    border: 1px solid var(--primary); 
     cursor: pointer;
     line-height: 1.5;
     box-shadow: var(--shadow-sm);
-    /* Specific styles */
-    background: var(--primary); /* Primary background */
-    color: white; /* White text */
+    
+    background: var(--primary); 
+    color: white; 
 }
 
 .join-team .button:hover {
-    background: var(--primary-dark); /* Darken on hover */
+    background: var(--primary-dark); 
     border-color: var(--primary-dark);
     color: white;
-    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    transform: translateY(-3px) scale(1.02); 
     box-shadow: var(--shadow);
 }
 
@@ -1168,21 +1205,21 @@ footer {
     }
 }
 
-/* Update Team Hero to match Mission Hero */
+
 .team-hero {
-    min-height: 50vh; /* Adjust height */
+    min-height: 50vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
-    padding: 5rem 2rem; /* Adjusted padding */
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); 
+    padding: 5rem 2rem; 
     position: relative;
     overflow: hidden;
 }
 
-/* Use same pattern as Mission Hero */
+
 .team-hero::before {
     content: '';
     position: absolute;
@@ -1197,10 +1234,10 @@ footer {
 }
 
 .team-hero h1 {
-    font-size: clamp(3rem, 6vw, 4.5rem); /* Responsive */
-    font-weight: var(--fw-extrabold); /* Use variable */
+    font-size: clamp(3rem, 6vw, 4.5rem); 
+    font-weight: var(--fw-extrabold); 
     color: white;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
     margin-bottom: 1rem;
     position: relative;
     z-index: 2;
@@ -1209,8 +1246,8 @@ footer {
 }
 
 .team-hero p {
-    font-size: clamp(1.1rem, 3vw, 1.3rem); /* Responsive */
-    color: rgba(255, 255, 255, 0.85); /* Adjust opacity */
+    font-size: clamp(1.1rem, 3vw, 1.3rem); 
+    color: rgba(255, 255, 255, 0.85); 
     position: relative;
     z-index: 2;
     max-width: 600px;
@@ -1375,66 +1412,65 @@ footer {
     margin-right: auto;
 }
 
-/* === Custom Scrollbar === */
+
 ::-webkit-scrollbar {
-    width: 10px; /* Slightly thinner */
+    width: 10px; 
     height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--background-alt); /* Use alt background */
+    background: var(--background-alt); 
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-light); /* Lighter thumb */
+    background: var(--primary-light); 
     border-radius: 5px;
-    border: 2px solid var(--background-alt); /* Match track background */
+    border: 2px solid var(--background-alt); 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary); /* Darker on hover */
+    background: var(--primary); 
 }
 
-/* === Team Category (Consolidated earlier) === */
+
 .team-category {
-    margin-bottom: 5rem; /* Increased margin */
-    padding: 3rem 2rem; /* Adjusted padding */
-    background: var(--background-alt); /* Use alt background */
+    margin-bottom: 5rem; 
+    padding: 3rem 2rem; 
+    background: var(--background-alt); 
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow); /* Use default shadow */
-    border: 1px solid var(--border-light); /* Lighter border */
+    box-shadow: var(--shadow); 
+    border: 1px solid var(--border-light); 
 }
 
-/* Use .section-title styling for category titles */
+
 .category-title h3 {
-    /* Inherits from .section-title */
-    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Adjust size */
-    margin-bottom: 0; /* Remove bottom margin if using ::after */
-    color: var(--text); /* Ensure default color */
-    background: none; /* Remove gradient */
+    
+    font-size: clamp(1.8rem, 4vw, 2.5rem); 
+    margin-bottom: 0; 
+    color: var(--text); 
+    background: none; 
     -webkit-background-clip: unset;
     background-clip: unset;
     -webkit-text-fill-color: unset;
 }
 
-/* Remove redundant title decorations if using .section-title::after */
+
 .category-title::before,
 .category-title::after {
     display: none;
 }
 
-/* Apply .section-title directly to the container if possible in HTML,
-   otherwise, style .category-title like .section-title */
+
 .category-title {
-    /* Replicate .section-title styles if needed */
+    
     text-align: center;
     margin-bottom: 3.5rem;
     position: relative;
     padding-bottom: 1rem;
 }
-.category-title::after { /* Re-add the underline from .section-title */
-    display: block; /* Ensure it's displayed */
+.category-title::after { 
+    display: block; 
     content: '';
     position: absolute;
     bottom: 0;
@@ -1446,37 +1482,36 @@ footer {
     border-radius: 2px;
 }
 
-/* .team-grid padding is handled in the main .team-grid rule */
 
-/* Media query adjustments for team category */
+
 @media (max-width: 768px) {
     .team-category {
-        padding: 2rem 1.5rem; /* Adjust padding */
+        padding: 2rem 1.5rem; 
     }
-    /* .category-title h3 size is handled by clamp() in .section-title */
+    
 }
 
-/* === Mission Page Text Sections === */
+
 .mission-tagline {
     max-width: 800px;
-    margin: 1rem auto 0; /* Adjust margin */
-    color: rgba(255, 255, 255, 0.85); /* Match hero paragraph color */
-    font-size: clamp(1.1rem, 3vw, 1.3rem); /* Match hero paragraph size */
+    margin: 1rem auto 0; 
+    color: rgba(255, 255, 255, 0.85); 
+    font-size: clamp(1.1rem, 3vw, 1.3rem); 
     text-align: center;
-    position: relative; /* Ensure it's above pseudo-elements */
+    position: relative; 
     z-index: 2;
     line-height: 1.6;
 }
 
 .mission-statement {
     max-width: 800px;
-    margin: 5rem auto; /* Increased margin */
+    margin: 5rem auto; 
     text-align: center;
-    padding: 0 1rem; /* Add padding */
+    padding: 0 1rem; 
 }
 
 .mission-statement h2 {
-    /* Use .section-title styling */
+    
     font-size: clamp(2rem, 5vw, 2.8rem);
     font-weight: var(--fw-bold);
     margin-bottom: 1.5rem;
@@ -1484,7 +1519,7 @@ footer {
     position: relative;
     padding-bottom: 1rem;
 }
-.mission-statement h2::after { /* Add underline */
+.mission-statement h2::after { 
     content: '';
     position: absolute;
     bottom: 0;
@@ -1496,24 +1531,24 @@ footer {
     border-radius: 2px;
 }
 
-/* Add styling for paragraph within mission-statement if needed */
+
 .mission-statement p {
     font-size: 1.1rem;
     color: var(--text-light);
     line-height: 1.7;
 }
 
-/* === Current Initiatives Section === */
+
 .current-initiatives {
-    margin: 5rem 0; /* Increased margin */
-    padding: 4rem 2rem; /* Increased padding */
-    background-color: var(--background-alt); /* Use variable */
-    border-radius: var(--radius-lg); /* Add radius */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); /* Subtle inner shadow */
+    margin: 5rem 0; 
+    padding: 4rem 2rem; 
+    background-color: var(--background-alt); 
+    border-radius: var(--radius-lg); 
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); 
 }
 
 .current-initiatives h2 {
-    /* Use .section-title styling */
+    
     font-size: clamp(2rem, 5vw, 2.8rem);
     font-weight: var(--fw-bold);
     text-align: center;
@@ -1523,7 +1558,7 @@ footer {
     position: relative;
     padding-bottom: 1rem;
 }
-.current-initiatives h2::after { /* Add underline */
+.current-initiatives h2::after { 
     content: '';
     position: absolute;
     bottom: 0;
@@ -1539,38 +1574,38 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 0; /* Remove padding, handled by section */
-    max-width: var(--max-width); /* Use variable */
+    padding: 0; 
+    max-width: var(--max-width); 
     margin: 0 auto;
 }
 
 .initiative-card {
-    background: var(--background); /* Use variable */
+    background: var(--background); 
     padding: 2rem;
-    border-radius: var(--radius); /* Use variable */
-    box-shadow: var(--shadow-sm); /* Use variable */
+    border-radius: var(--radius); 
+    box-shadow: var(--shadow-sm); 
     transition: var(--transition-normal);
-    border: 1px solid var(--border-light); /* Use variable */
-    /* Remove gradient/blur */
-    /* background: linear-gradient(...); */
-    /* backdrop-filter: blur(10px); */
+    border: 1px solid var(--border-light); 
+    
+    
+    
 }
 
 .initiative-card:hover {
-    transform: translateY(-6px); /* Adjust lift */
-    box-shadow: var(--shadow-lg); /* Use variable */
-    border-color: var(--border); /* Use variable */
+    transform: translateY(-6px); 
+    box-shadow: var(--shadow-lg); 
+    border-color: var(--border); 
 }
 
 .initiative-card h3 {
-    color: var(--primary); /* Use primary color */
+    color: var(--primary); 
     font-weight: var(--fw-semibold);
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
 
 .initiative-card ul {
-    list-style-type: none; /* Remove default bullets */
+    list-style-type: none; 
     padding-left: 0;
     margin-top: 0.5rem;
     color: var(--text-light);
@@ -1578,22 +1613,22 @@ footer {
 }
 
 .initiative-card li {
-    margin-bottom: 0.75rem; /* Increased spacing */
+    margin-bottom: 0.75rem; 
     position: relative;
-    padding-left: 1.5rem; /* Space for custom bullet */
+    padding-left: 1.5rem; 
 }
 
-.initiative-card li::before { /* Custom bullet */
+.initiative-card li::before { 
     content: '•';
     position: absolute;
     left: 0;
-    color: var(--secondary); /* Use secondary color */
+    color: var(--secondary); 
     font-weight: bold;
     font-size: 1.1rem;
     line-height: 1;
 }
 
-/* Animation Classes */
+
 .fade-in {
     opacity: 0;
     transition: opacity 1s ease-out;
@@ -1603,34 +1638,38 @@ footer {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    text-align: center;
 }
 
 .slide-up-delay {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+    text-align: center;
 }
 
 .slide-up-delay-2 {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out 0.4s, transform 0.8s ease-out 0.4s;
+    text-align: center;
 }
 
 .slide-up-delay-3 {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out 0.6s, transform 0.8s ease-out 0.6s;
+    text-align: center;
 }
 
 .show {
     opacity: 1;
     transform: translateY(0);
+    text-align: center;
 }
 
-/* ...existing code... */
 
-/* === Donate Link (Style as primary button) (Final) === */
+
 .donate-link {
     display: inline-flex;
     align-items: center;
@@ -1645,7 +1684,7 @@ footer {
     cursor: pointer;
     line-height: 1.5;
     box-shadow: var(--shadow-sm);
-    /* Specific styles */
+    
     background: var(--primary);
     color: white;
     margin-top: 1rem;
@@ -1654,18 +1693,16 @@ footer {
 .donate-link:hover {
     background: var(--primary-dark);
     border-color: var(--primary-dark);
-    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    transform: translateY(-3px) scale(1.02); 
     box-shadow: var(--shadow);
     color: white;
 }
 
 .donate-link .arrow {
     margin-left: 0.5rem;
-    transition: transform var(--transition-fast); /* Faster transition for arrow */
+    transition: transform var(--transition-fast); 
 }
 
 .donate-link:hover .arrow {
-    transform: translateX(3px); /* Adjust movement */
+    transform: translateX(3px); 
 }
-
-/* === End of File === */

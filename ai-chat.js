@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('send-btn');
     let isProcessing = false;
 
-    // Configure marked.js
+    
     marked.setOptions({
         highlight: function(code, language) {
             return hljs.highlight(code, {language: language || 'plaintext'}).value;
@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const data = await response.json();
-            console.log('API Response:', data); // For debugging
+            console.log('API Response:', data); 
 
-            // Updated response format handling
+            
             let aiResponse;
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                 aiResponse = data.candidates[0].content.parts.map(part => part.text).join('');
@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error('Unexpected API response format');
             }
 
-            // Format the response with marked
+            
             const formattedResponse = marked.parse(aiResponse);
             loadingDiv.innerHTML = formattedResponse;
 
-            // Apply syntax highlighting
+            
             loadingDiv.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightBlock(block);
             });
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return contentDiv;
     }
 
-    // Event listeners
+    
     sendButton.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {

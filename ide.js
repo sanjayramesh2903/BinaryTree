@@ -44,4 +44,4 @@ document.addEventListener('DOMContentLoaded', function() {
         editor.setValue('');
         output.textContent = '';
     });
-}); 
+});

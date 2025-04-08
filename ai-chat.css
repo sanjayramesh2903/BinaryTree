@@ -85,7 +85,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Style code blocks in messages */
+
 .message pre {
     background-color: #1e1f29;
     padding: 1rem;
@@ -120,4 +120,4 @@
 #send-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-} 
+}
