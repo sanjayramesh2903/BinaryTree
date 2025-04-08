@@ -1,21 +1,32 @@
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #60a5fa;
-    --secondary: #10b981;
-    --accent: #f59e0b;
-    --text: #1f2937;
+    --primary: #3b82f6; /* Slightly brighter blue */
+    --primary-dark: #2563eb;
+    --primary-light: #93c5fd;
+    --secondary: #14b8a6; /* Slightly brighter teal */
+    --secondary-dark: #0d9488;
+    --accent: #f97316; /* Brighter orange */
+    --text: #111827; /* Darker text for contrast */
     --text-light: #4b5563;
     --background: #ffffff;
-    --background-alt: #f8fafc;
+    --background-alt: #f9fafb; /* Slightly different alt background */
     --border: #e5e7eb;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --max-width: 1200px;
-    --radius-sm: 0.375rem;
-    --radius: 8px;
-    --radius-lg: 12px;
+    --border-light: #f3f4f6; /* Lighter border */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04); /* Softer shadows */
+    --shadow: 0 3px 5px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --max-width: 1280px; /* Slightly wider max width */
+    --radius-sm: 0.375rem; /* 6px */
+    --radius: 0.5rem; /* 8px */
+    --radius-lg: 0.75rem; /* 12px */
+    --font-sans: 'Outfit', sans-serif;
+    --fw-light: 300;
+    --fw-normal: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
+    --transition-fast: all 0.2s ease-out;
+    --transition-normal: all 0.3s ease-out;
 }
 
 @keyframes float {
@@ -39,19 +50,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
 }
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem; /* Adjust for potentially taller fixed navbar */
+    font-size: 16px; /* Base font size */
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
-    line-height: 1.6;
+    font-family: var(--font-sans);
+    line-height: 1.7; /* Slightly increased line height */
+    font-weight: var(--fw-normal);
     color: var(--text);
     background-color: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Navbar */
@@ -60,18 +75,22 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it's above other content */
+    background: rgba(255, 255, 255, 0.85); /* Slightly less opaque */
+    backdrop-filter: blur(12px) saturate(180%); /* Enhanced blur */
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid var(--border-light); /* Lighter border */
+    box-shadow: var(--shadow); /* Add subtle shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-content {
-    max-width: 1200px;
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 1rem 2rem; /* Consistent padding */
     display: flex;
     align-items: center;
+    height: 4.5rem; /* Fixed height */
 }
 
 .small-logo {
@@ -85,9 +104,11 @@ body {
 .nav-logo {
     color: var(--text);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: var(--fw-bold);
     font-size: 1.5rem;
     margin-right: auto;
+    display: flex; /* Align logo and text */
+    align-items: center;
 }
 
 .nav-links {
@@ -97,34 +118,38 @@ body {
 }
 
 .nav-links a {
-    color: var(--text);
+    color: var(--text-light); /* Slightly lighter default color */
     text-decoration: none;
-    font-weight: 500;
+    font-weight: var(--fw-medium);
     position: relative;
     padding: 0.5rem 0;
+    transition: color var(--transition-fast);
+}
+
+.nav-links a:hover {
+    color: var(--primary); /* Hover color */
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px; /* Position slightly below text */
     left: 0;
     width: 0;
     height: 2px;
     background: var(--primary);
-    transition: width 0.3s ease;
+    border-radius: 1px;
+    transition: width var(--transition-normal);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.active::after {
     width: 100%;
 }
 
 .nav-links a.active {
     color: var(--primary);
-}
-
-.nav-links a.active::after {
-    width: 100%;
+    font-weight: var(--fw-semibold); /* Make active link slightly bolder */
 }
 
 @media (max-width: 768px) {
@@ -137,7 +162,7 @@ body {
     }
 }
 
-/* Hero Section */
+/* Hero Section - Clean White Background */
 .hero {
     min-height: 90vh;
     display: flex;
@@ -146,22 +171,15 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
-    padding: 4rem 2rem;
-    background: radial-gradient(circle at top right, var(--primary-light) 0%, transparent 70%),
-                radial-gradient(circle at bottom left, var(--secondary) 0%, transparent 70%);
-    background-size: 100% 100%;
+    padding: 8rem 2rem; /* More vertical padding */
+    background: var(--background); /* Clean white */
+    color: var(--text);
     overflow: hidden;
 }
 
+/* Remove pattern */
 .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2H6zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.5;
+   display: none;
 }
 
 .logo{
@@ -176,129 +194,126 @@ body {
 }
 
 .hero h1 {
-    font-size: 4rem;
-    font-weight: 800;
-    line-height: 1.2;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: var(--fw-bold); /* Slightly less bold */
+    line-height: 1.1;
     margin-bottom: 1.5rem;
     margin-top: 3rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    background-clip:text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient 8s ease infinite;
+    color: var(--text); /* Dark text */
+    background: none; /* Remove gradient */
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: unset;
+    text-shadow: none;
+    letter-spacing: -0.02em;
 }
 
 .hero h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--text);
-    max-width: 600px;
-    margin: 0 auto;
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    font-weight: var(--fw-normal);
+    color: var(--text-light); /* Standard light text */
+    max-width: 650px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
 }
 
-/* Content */
+/* Content & Sections */
 .content {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 5rem 2rem; /* Increased vertical padding */
 }
 
-/* Sections */
 .section {
-    margin-bottom: 6rem;
-    padding: 3rem;
+    margin-bottom: 5rem; /* Slightly reduced margin */
+    padding: 3.5rem; /* Increased padding */
     background: var(--background);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow); /* Use softer default shadow */
+    border: 1px solid var(--border-light); /* Use lighter border */
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .section:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg), 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    transform: translateY(-6px); /* Slightly more lift */
+    box-shadow: var(--shadow-lg); /* Use larger shadow on hover */
 }
 
 .intro {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    color: var(--text);
+    font-size: 1.15rem; /* Slightly smaller */
+    margin-bottom: 2.5rem; /* Increased margin */
+    color: var(--text-light); /* Use lighter text */
     line-height: 1.8;
+    max-width: 800px; /* Constrain width for readability */
 }
 
 /* Specialties List */
 .specialties {
     list-style-type: none;
-    margin: 2rem 0;
+    margin: 2.5rem 0; /* Increased margin */
+    padding: 0; /* Remove default padding */
 }
 
 .specialties li {
     position: relative;
-    padding: 1.5rem 2rem 1.5rem 3rem;
+    padding: 1.25rem 1.5rem 1.25rem 3.5rem; /* Adjusted padding */
     margin-bottom: 1rem;
     background: var(--background-alt);
     border-radius: var(--radius);
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-light); /* Add subtle border */
+    font-weight: var(--fw-medium);
 }
 
 .specialties li:hover {
-    transform: translateX(10px);
-    background: rgba(37, 99, 235, 0.05);
-    border-color: var(--primary-light);
+    transform: translateX(8px); /* Slightly less movement */
+    background: rgba(59, 130, 246, 0.08); /* Use primary color alpha */
+    border-color: rgba(59, 130, 246, 0.3); /* Use primary color alpha */
+    box-shadow: var(--shadow-sm);
 }
 
 .specialties li::before {
-    content: "→";
+    content: "✓"; /* Checkmark icon */
     position: absolute;
     left: 1.5rem;
-    color: var (--primary);
-    transition: transform 0.3s ease;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-weight: var(--fw-bold);
+    font-size: 1.1rem;
+    transition: transform var(--transition-fast);
 }
 
 .specialties li:hover::before {
-    transform: translateX(5px);
+    transform: translateY(-50%) scale(1.1); /* Scale icon slightly on hover */
 }
 
 /* Service Cards */
 .service-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly smaller min width */
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 3rem; /* Increased margin */
 }
 
 .service-card {
     background: var(--background);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-light); /* Lighter border */
     border-radius: var(--radius-lg);
-    padding: 2rem;
-    transition: all 0.3s ease;
+    padding: 2.5rem; /* Increased padding */
+    transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-sm); /* Start with smaller shadow */
 }
 
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
-
-.service-card:hover::before {
-    transform: scaleX(1);
-}
+/* Remove the top border animation, use shadow/transform instead */
+/* .service-card::before { ... } */
 
 .service-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px); /* Slightly less lift */
     box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    border-color: var(--border); /* Darken border slightly on hover */
 }
 
 .card-icon {
@@ -306,25 +321,27 @@ body {
 }
 
 .icon-circle {
-    width: 48px;
-    height: 48px;
+    width: 56px; /* Larger icon circle */
+    height: 56px;
     border-radius: 50%;
-    background: rgba(37, 99, 235, 0.1);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(20, 184, 166, 0.1)); /* Subtle gradient background */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
+    margin-bottom: 1.5rem; /* Add margin below icon */
 }
 
 .service-card:hover .icon-circle {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Full color gradient on hover */
+    transform: scale(1.05); /* Slightly scale up icon */
 }
 
 .icon-circle svg {
-    width: 24px;
-    height: 24px;
+    width: 28px; /* Larger icon */
+    height: 28px;
     color: var(--primary);
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .service-card:hover .icon-circle svg {
@@ -332,26 +349,29 @@ body {
 }
 
 .service-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    font-size: 1.3rem; /* Slightly larger */
+    font-weight: var(--fw-semibold); /* Bolder */
+    margin-bottom: 0.75rem; /* Reduced margin */
     color: var(--text);
 }
 
 .service-card p {
     color: var(--text-light);
     line-height: 1.6;
+    font-size: 0.95rem; /* Slightly smaller paragraph text */
 }
 
 /* Contact Section */
 .contact {
     text-align: center;
-    padding: 6rem 2rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    padding: 5rem 2rem; /* Adjusted padding */
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
     border-radius: var(--radius-lg);
     color: white;
     position: relative;
     overflow: hidden;
+    margin-top: 5rem; /* Add margin */
+    box-shadow: var(--shadow-lg);
 }
 
 .contact::before {
@@ -366,43 +386,60 @@ body {
     background-size: 200% 100%;
 }
 
+.contact h2 { /* Add styling for a potential heading */
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: var(--fw-bold);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
 .contact p {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.15rem; /* Slightly smaller */
+    margin-bottom: 2.5rem; /* Increased margin */
     position: relative;
+    max-width: 600px; /* Constrain width */
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9; /* Slightly transparent */
 }
 
-.email-link {
-    display: inline-block;
-    color: var(--primary);
-    font-size: 1.25rem;
-    text-decoration: none;
-    padding: 1rem 2.5rem;
-    border-radius: var(--radius);
-    background: white;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-}
-
-.email-link:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
+/* Remove specific .email-link styles, handled by .contact-button.email */
 
 /* Footer */
 footer {
     background: var(--background-alt);
-    padding: 4rem 2rem;
+    padding: 3rem 2rem; /* Reduced padding */
     text-align: center;
     color: var(--text-light);
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--border-light); /* Lighter border */
+    margin-top: 5rem; /* Add margin */
+    font-size: 0.9rem; /* Smaller font size */
 }
 
 .footer-content {
     max-width: var(--max-width);
     margin: 0 auto;
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Add gap between elements */
+}
+
+/* Add styles for potential footer links or social icons if needed later */
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--primary);
 }
 
 /* Responsive Design */
@@ -450,97 +487,145 @@ footer {
     }
 }
 
+/* === Buttons - Refined (Final) === */
 .button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.1rem; /* Increased padding */
+    border-radius: var(--radius-lg); /* Larger radius */
+    font-weight: var(--fw-semibold);
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: var(--transition-normal);
     font-size: 1rem;
+    border: 1px solid transparent; /* Base border */
+    cursor: pointer;
+    line-height: 1.5;
+    box-shadow: var(--shadow-sm);
 }
 
 .button.primary {
     background: var(--primary);
     color: white;
-    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
-    transition: all 0.3s ease;
+    border-color: var(--primary);
 }
 
 .button.primary:hover {
     background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-    color:white;
+    border-color: var(--primary-dark);
+    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    box-shadow: var(--shadow);
+    color: white;
 }
 
 .button.secondary {
     background: var(--secondary);
     color: white;
-    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
+    border-color: var(--secondary);
 }
 
 .button.secondary:hover {
     background: var(--secondary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+    border-color: var(--secondary-dark);
+    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    box-shadow: var(--shadow);
 }
 
+/* Refine outline button style */
+.button.outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary); /* Thicker border */
+    box-shadow: none;
+    padding: calc(0.9rem - 1px) calc(2.1rem - 1px); /* Adjust padding for border */
+}
+
+.button.outline:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    box-shadow: var(--shadow);
+}
+
+/* === Section Title === */
 .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive font size */
+    font-weight: var(--fw-bold); /* Use variable */
     text-align: center;
-    margin-bottom: 3rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    background-clip:text;
+    margin-bottom: 3.5rem; /* Increased margin */
+    line-height: 1.2;
+    color: var(--text); /* Default text color */
+    /* Optional: Keep gradient or simplify */
+    /* background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
+    position: relative;
+    padding-bottom: 1rem; /* Add padding for underline */
 }
 
+/* Add a subtle underline effect */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+/* === Value Cards === */
 .values-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust min width */
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 3rem; /* Increased margin */
 }
 
 .value-card {
-    background: var(--background);
-    border: 1px solid var(--border);
+    background: var(--background-alt); /* Use alt background */
+    border: 1px solid var(--border-light); /* Lighter border */
     border-radius: var(--radius-lg);
-    padding: 2rem;
-    transition: all 0.3s ease;
+    padding: 2.5rem; /* Increased padding */
+    transition: var(--transition-normal);
     text-align: center;
+    box-shadow: var(--shadow-sm); /* Start with smaller shadow */
 }
 
 .value-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px); /* Adjust lift */
     box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    border-color: var(--border); /* Darken border slightly */
+    background: var(--background); /* Change background on hover */
 }
 
 .value-icon {
-    width: 64px;
-    height: 64px;
+    width: 72px; /* Larger icon */
+    height: 72px;
     margin: 0 auto 1.5rem;
-    padding: 1rem;
+    padding: 1.25rem; /* Adjust padding */
     border-radius: 50%;
-    background: rgba(37, 99, 235, 0.1);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15)); /* Slightly stronger gradient */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .value-card:hover .value-icon {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Full gradient on hover */
+    transform: scale(1.05) rotate(5deg); /* Add slight rotation */
 }
 
 .value-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 36px; /* Larger SVG */
+    height: 36px;
     color: var(--primary);
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .value-card:hover .value-icon svg {
@@ -548,16 +633,16 @@ footer {
 }
 
 .value-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var (--text);
+    font-size: 1.4rem; /* Adjust size */
+    font-weight: var(--fw-semibold); /* Use variable */
+    margin-bottom: 0.75rem; /* Adjust margin */
+    color: var(--text); /* Ensure text color is set */
 }
 
 .value-card p {
     color: var(--text-light);
-    line-height: 1.6;
-    font-size: 1.1rem;
+    line-height: 1.7; /* Increase line height slightly */
+    font-size: 1rem; /* Adjust size */
 }
 
 .why-section {
@@ -566,28 +651,30 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* === Mission Page Specific Styles === */
 .mission-hero {
     min-height: 60vh;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
     position: relative;
     overflow: hidden;
+    display: flex; /* Use flex for centering */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 2rem; /* Adjusted padding */
 }
 
-.hero-content {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 6rem 2rem 4rem;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
+/* Remove .hero-content if it's redundant with .mission-hero flex centering */
+/* .hero-content { ... } */
 
 .mission-stats {
     display: flex;
     justify-content: center;
-    gap: 4rem;
-    margin-top: 3rem;
+    gap: 3rem; /* Reduced gap */
+    margin-top: 3.5rem; /* Increased margin */
     flex-wrap: wrap;
+    position: relative; /* Ensure stats are above pseudo-element */
+    z-index: 2;
 }
 
 .stat-item {
@@ -595,22 +682,25 @@ footer {
     flex-direction: column;
     align-items: center;
     color: white;
+    text-align: center; /* Ensure text is centered */
 }
 
 .stat-number {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive font size */
+    font-weight: var(--fw-bold); /* Use variable */
     margin-bottom: 0.5rem;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.15); /* Slightly less opaque */
+    padding: 0.75rem 1.5rem; /* Adjusted padding */
     border-radius: var(--radius);
-    min-width: 150px;
+    min-width: 140px; /* Adjust width */
+    line-height: 1.2;
 }
 
 .stat-label {
-    font-size: 1rem;
-    font-weight: 500;
-    opacity: 0.9;
+    font-size: 0.9rem; /* Slightly smaller */
+    font-weight: var(--fw-medium); /* Use variable */
+    opacity: 0.85; /* Adjust opacity */
+    margin-top: 0.25rem;
 }
 
 @media (max-width: 768px) {
@@ -625,6 +715,7 @@ footer {
     }
 }
 
+/* Refine the hero background pattern */
 .mission-hero::before {
     content: '';
     position: absolute;
@@ -632,63 +723,70 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.2;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 25px 25px;
+    opacity: 0.5;
+    mask-image: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
 }
 
 .mission-hero h1 {
-    font-size: 4rem;
-    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 4.5rem); /* Responsive */
+    font-weight: var(--fw-extrabold); /* Use variable */
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+    margin-bottom: 1.5rem; /* Increased margin */
     position: relative;
+    z-index: 2;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .mission-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min width */
+    gap: 2.5rem; /* Increased gap */
     padding: 4rem 0;
 }
 
 .mission-card {
     background: var(--background);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-light); /* Lighter border */
     border-radius: var(--radius-lg);
-    padding: 3rem 2rem;
+    padding: 2.5rem; /* Adjusted padding */
     text-align: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow); /* Default shadow */
 }
 
 .mission-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px); /* Adjust lift */
     box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    border-color: var(--border); /* Darken border */
 }
 
 .mission-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 2rem;
-    padding: 1.5rem;
+    width: 72px; /* Match value icon size */
+    height: 72px;
+    margin: 0 auto 1.5rem; /* Adjust margin */
+    padding: 1.25rem; /* Match value icon padding */
     border-radius: 50%;
-    background: rgba(37, 99, 235, 0.1);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15)); /* Match value icon background */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .mission-card:hover .mission-icon {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Match value icon hover */
+    transform: scale(1.05) rotate(-5deg); /* Add rotation */
 }
 
 .mission-icon svg {
-    width: 40px;
-    height: 40px;
+    width: 36px; /* Match value icon svg size */
+    height: 36px;
     color: var(--primary);
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .mission-card:hover .mission-icon svg {
@@ -696,19 +794,21 @@ footer {
 }
 
 .mission-card h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    background-clip:text;
+    font-size: 1.6rem; /* Adjust size */
+    font-weight: var(--fw-bold); /* Use variable */
+    margin-bottom: 0.75rem; /* Adjust margin */
+    color: var(--text); /* Use default text color */
+    /* Optional: Remove gradient */
+    /* background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
 }
 
 .mission-card p {
     color: var(--text-light);
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: 1rem; /* Adjust size */
+    line-height: 1.7; /* Adjust line height */
 }
 
 @media (max-width: 768px) {
@@ -737,43 +837,34 @@ footer {
 
 .explore-section {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 5rem 2rem; /* Increased padding */
     position: relative;
     z-index: 2;
+    background: var(--background-alt); /* Add subtle background */
+    border-radius: var(--radius-lg);
+    margin: 5rem 0; /* Add vertical margin */
+    box-shadow: var(--shadow);
 }
 
 .explore-section h2 {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive */
+    font-weight: var(--fw-bold); /* Use variable */
     color: var(--text);
     margin-bottom: 1rem;
 }
 
 .explore-section p {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Adjust size */
     color: var(--text-light);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem; /* Increased margin */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+/* Use general button styles */
 .explore-button {
-    display: inline-block;
-    padding: 0.875rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--primary);
-    background: white;
-    border: 2px solid var(--primary);
-    border-radius: 0.75rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
-}
-
-.explore-button:hover {
-    background: var(--primary);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    /* Inherits from .button.outline */
 }
 
 @media (max-width: 768px) {
@@ -788,26 +879,32 @@ footer {
 
 .contact-section {
     text-align: center;
-    padding: 6rem 2rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+    padding: 6rem 2rem; /* Increased padding */
+    background: linear-gradient(to bottom, var(--background-alt), var(--background)); /* Subtle gradient */
+    border-radius: var(--radius-lg);
+    margin: 5rem 0;
+    box-shadow: var(--shadow);
+    border-top: 1px solid var(--border-light); /* Add top border */
 }
 
 .contact-section h2 {
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive */
+    font-weight: var(--fw-bold); /* Use variable */
+    color: var(--text); /* Use default text color */
+    /* Optional: Remove gradient */
+    /* background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
     margin-bottom: 1.5rem;
 }
 
 .contact-section p {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Adjust size */
     color: var(--text-light);
     max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
+    margin: 0 auto 2.5rem; /* Add bottom margin */
+    line-height: 1.7; /* Adjust line height */
 }
 
 .contact-buttons {
@@ -818,51 +915,55 @@ footer {
     flex-wrap: wrap;
 }
 
+/* Explicitly style contact buttons (Final) */
 .contact-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.875rem 1.5rem;
-    min-width: 150px;
-    border-radius: 0.75rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
+    /* Base styles from .button are inherited */
+    min-width: 160px;
 }
 
 .contact-button.email {
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    /* Style like .button.outline */
     background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    box-shadow: none;
+    padding: calc(0.9rem - 1px) calc(2.1rem - 1px); /* Adjust padding */
 }
 
 .contact-button.email:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-2px);
+    border-color: var(--primary);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow);
 }
 
-.contact-button.discord {
-    background: #5865F2;
+.contact-button.discord { /* This is the "Donate" button */
+    /* Style like .button.primary */
+    background: var(--primary);
     color: white;
-    border: none;
+    border-color: var(--primary);
 }
 
 .contact-button.discord:hover {
-    background: #4752c4;
-    transform: translateY(-2px);
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow);
 }
 
 .contact-button.team {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    /* Style like .button.secondary */
+    background: var(--secondary);
     color: white;
-    border: none;
+    border-color: var(--secondary);
 }
 
 .contact-button.team:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+    background: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow);
 }
 
 @media (max-width: 768px) {
@@ -880,168 +981,177 @@ footer {
     }
 }
 
+/* === Team Page Specific Styles === */
 .team-section {
-    padding: 4rem 0;
+    padding: 5rem 0; /* Increased padding */
 }
 
+/* Consolidate team grid styles */
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: 2.5rem; /* Increased gap */
+    margin-top: 3rem; /* Increased margin */
+    max-width: var(--max-width); /* Ensure max width */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem; /* Add horizontal padding */
 }
 
-.team-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 2rem;
+/* Consolidate team card styles */
+.team-card, .team-member { /* Apply base styles to both */
+    background: var(--background);
+    border-radius: var(--radius-lg); /* Use variable */
+    padding: 2.5rem; /* Increased padding */
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: var(--shadow); /* Use variable */
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-light); /* Add light border */
 }
 
-.team-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+.team-card:hover, .team-member:hover {
+    transform: translateY(-8px); /* Adjust lift */
+    box-shadow: var(--shadow-lg); /* Use variable */
+    border-color: var(--border);
 }
 
 .team-image {
-    width: 120px;
-    height: 120px;
+    width: 140px; /* Larger image */
+    height: 140px;
     border-radius: 50%;
     margin: 0 auto 1.5rem;
     overflow: hidden;
-    background: var(--primary);
+    /* background: var(--primary); Remove background color */
+    border: 4px solid var(--background); /* Add border to lift image */
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--border); /* Inner/outer shadow */
+    position: relative; /* For potential overlays or effects */
 }
 
 .team-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block; /* Remove extra space below image */
+    transition: transform var(--transition-normal);
 }
 
-.team-card h3 {
+.team-card:hover .team-image img,
+.team-member:hover .team-image img {
+    transform: scale(1.05); /* Scale image on card hover */
+}
+
+/* Consolidate team member text styles */
+.team-card h3, .team-member h3 {
     color: var(--text);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+    font-size: 1.4rem; /* Adjust size */
+    font-weight: var(--fw-semibold); /* Use variable */
+    margin-bottom: 0.25rem; /* Reduced margin */
+    margin-top: 0; /* Remove potential top margin from .team-member */
 }
 
-.team-card .role {
-    color: var(--text-light);
+.team-card .role, .team-member .role {
+    color: var(--primary); /* Use primary color for role */
     font-size: 1rem;
+    font-weight: var(--fw-medium); /* Use variable */
     margin-bottom: 1rem;
 }
 
-.team-card .bio {
+.team-card .bio, .team-member .bio {
     color: var(--text-light);
-    font-size: 0.875rem;
-    line-height: 1.5;
+    font-size: 0.9rem; /* Adjust size */
+    line-height: 1.6; /* Adjust line height */
     margin-bottom: 1.5rem;
+    max-width: 35ch; /* Adjust max width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .social-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem; /* Reduced gap */
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 1.5rem; /* Increased margin */
 }
 
 .social-link {
-    display: flex;
+    display: inline-flex; /* Use inline-flex */
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px; /* Slightly smaller */
+    height: 36px;
     border-radius: 50%;
-    background: rgba(37, 99, 235, 0.1);
-    color: var(--primary);
-    transition: all 0.2s ease;
+    background: var(--background-alt); /* Use alt background */
+    color: var(--text-light); /* Lighter default color */
+    transition: var(--transition-fast);
+    border: 1px solid var(--border-light); /* Add border */
 }
 
 .social-link:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.1); /* Add scale */
+    border-color: var(--primary);
 }
 
 .social-link svg {
-    width: 20px;
-    height: 20px;
+    width: 18px; /* Adjust size */
+    height: 18px;
 }
 
-.team-member {
-    background: white;
-    border-radius: 1rem;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.team-member:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-}
-
-.team-member h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text);
-    margin: 1rem 0 0.5rem;
-}
-
-.team-member .role {
-    color: var(--primary);
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.team-member .bio {
-    color: var(--text-light);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    max-width: 32ch;
-    margin-left: auto;
-    margin-right: auto;
-}
+/* .team-member styles are now consolidated with .team-card */
 
 .join-team {
     text-align: center;
-    padding: 6rem 2rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    padding: 5rem 2rem; /* Adjusted padding */
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
     color: white;
-    border-radius: 1rem;
-    margin: 4rem 0;
+    border-radius: var(--radius-lg); /* Use variable */
+    margin: 5rem auto; /* Center horizontally */
+    max-width: calc(var(--max-width) - 4rem); /* Constrain width */
+    box-shadow: var(--shadow-lg);
 }
 
 .join-team h2 {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive */
+    font-weight: var(--fw-bold); /* Use variable */
     margin-bottom: 1rem;
 }
 
 .join-team p {
-    font-size: 1.125rem;
-    margin-bottom: 2rem;
+    font-size: 1.1rem; /* Adjust size */
+    margin-bottom: 2.5rem; /* Increased margin */
     opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+/* Style .join-team .button like outline hover state */
 .join-team .button {
-    background: white;
-    color: var(--primary);
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.125rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.1rem;
+    border-radius: var(--radius-lg);
+    font-weight: var(--fw-semibold);
+    text-decoration: none;
+    transition: var(--transition-normal);
+    font-size: 1rem;
+    border: 1px solid var(--primary); /* Match hover border */
+    cursor: pointer;
+    line-height: 1.5;
+    box-shadow: var(--shadow-sm);
+    /* Specific styles */
+    background: var(--primary); /* Primary background */
+    color: white; /* White text */
 }
 
 .join-team .button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    background: var(--primary-dark); /* Darken on hover */
+    border-color: var(--primary-dark);
+    color: white;
+    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    box-shadow: var(--shadow);
 }
 
 @media (max-width: 768px) {
@@ -1058,19 +1168,21 @@ footer {
     }
 }
 
+/* Update Team Hero to match Mission Hero */
 .team-hero {
-    min-height: 40vh;
+    min-height: 50vh; /* Adjust height */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    padding: 6rem 2rem 4rem;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); /* Darker gradient */
+    padding: 5rem 2rem; /* Adjusted padding */
     position: relative;
     overflow: hidden;
 }
 
+/* Use same pattern as Mission Hero */
 .team-hero::before {
     content: '';
     position: absolute;
@@ -1078,23 +1190,31 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.2;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 25px 25px;
+    opacity: 0.5;
+    mask-image: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
 }
 
 .team-hero h1 {
-    font-size: 4rem;
-    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 4.5rem); /* Responsive */
+    font-weight: var(--fw-extrabold); /* Use variable */
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Stronger shadow */
     margin-bottom: 1rem;
     position: relative;
+    z-index: 2;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .team-hero p {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(1.1rem, 3vw, 1.3rem); /* Responsive */
+    color: rgba(255, 255, 255, 0.85); /* Adjust opacity */
     position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .placeholder-image {
@@ -1255,160 +1375,222 @@ footer {
     margin-right: auto;
 }
 
-/* Custom Scrollbar */
+/* === Custom Scrollbar === */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px; /* Slightly thinner */
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 6px;
+    background: var(--background-alt); /* Use alt background */
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 6px;
-    border: 3px solid #f1f5f9;
+    background: var(--primary-light); /* Lighter thumb */
+    border-radius: 5px;
+    border: 2px solid var(--background-alt); /* Match track background */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #1d4ed8;
+    background: var(--primary); /* Darker on hover */
 }
 
+/* === Team Category (Consolidated earlier) === */
 .team-category {
-    margin-bottom: 4rem;
-    padding: 2rem;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+    margin-bottom: 5rem; /* Increased margin */
+    padding: 3rem 2rem; /* Adjusted padding */
+    background: var(--background-alt); /* Use alt background */
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
+    box-shadow: var(--shadow); /* Use default shadow */
+    border: 1px solid var(--border-light); /* Lighter border */
 }
 
+/* Use .section-title styling for category titles */
+.category-title h3 {
+    /* Inherits from .section-title */
+    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Adjust size */
+    margin-bottom: 0; /* Remove bottom margin if using ::after */
+    color: var(--text); /* Ensure default color */
+    background: none; /* Remove gradient */
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: unset;
+}
+
+/* Remove redundant title decorations if using .section-title::after */
+.category-title::before,
+.category-title::after {
+    display: none;
+}
+
+/* Apply .section-title directly to the container if possible in HTML,
+   otherwise, style .category-title like .section-title */
 .category-title {
-    position: relative;
+    /* Replicate .section-title styles if needed */
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
+    position: relative;
     padding-bottom: 1rem;
 }
-
-.category-title::before {
+.category-title::after { /* Re-add the underline from .section-title */
+    display: block; /* Ensure it's displayed */
     content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
+    width: 80px;
     height: 4px;
     background: linear-gradient(90deg, var(--primary), var(--secondary));
     border-radius: 2px;
 }
 
-.category-title::after {
+/* .team-grid padding is handled in the main .team-grid rule */
+
+/* Media query adjustments for team category */
+@media (max-width: 768px) {
+    .team-category {
+        padding: 2rem 1.5rem; /* Adjust padding */
+    }
+    /* .category-title h3 size is handled by clamp() in .section-title */
+}
+
+/* === Mission Page Text Sections === */
+.mission-tagline {
+    max-width: 800px;
+    margin: 1rem auto 0; /* Adjust margin */
+    color: rgba(255, 255, 255, 0.85); /* Match hero paragraph color */
+    font-size: clamp(1.1rem, 3vw, 1.3rem); /* Match hero paragraph size */
+    text-align: center;
+    position: relative; /* Ensure it's above pseudo-elements */
+    z-index: 2;
+    line-height: 1.6;
+}
+
+.mission-statement {
+    max-width: 800px;
+    margin: 5rem auto; /* Increased margin */
+    text-align: center;
+    padding: 0 1rem; /* Add padding */
+}
+
+.mission-statement h2 {
+    /* Use .section-title styling */
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: var(--fw-bold);
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    position: relative;
+    padding-bottom: 1rem;
+}
+.mission-statement h2::after { /* Add underline */
     content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 1px;
-    background: var(--border);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
 }
 
-.category-title h3 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+/* Add styling for paragraph within mission-statement if needed */
+.mission-statement p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    line-height: 1.7;
 }
 
-.team-grid {
-    padding: 1rem;
-}
-
-@media (max-width: 768px) {
-    .team-category {
-        padding: 1.5rem;
-    }
-    
-    .category-title h3 {
-        font-size: 2rem;
-    }
-}
-
-/* ...existing code... */
-
-.mission-tagline {
-    max-width: 800px;
-    margin: 1rem auto;
-    color: #fff;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.mission-statement {
-    max-width: 800px;
-    margin: 4rem auto;
-    text-align: center;
-}
-
-.mission-statement h2 {
-    color: #333;
-    margin-bottom: 1.5rem;
-}
-
+/* === Current Initiatives Section === */
 .current-initiatives {
-    margin: 4rem 0;
-    padding: 2rem 0;
-    background-color: #f8f9fa;
+    margin: 5rem 0; /* Increased margin */
+    padding: 4rem 2rem; /* Increased padding */
+    background-color: var(--background-alt); /* Use variable */
+    border-radius: var(--radius-lg); /* Add radius */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); /* Subtle inner shadow */
 }
 
 .current-initiatives h2 {
+    /* Use .section-title styling */
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: var(--fw-bold);
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3.5rem;
+    line-height: 1.2;
+    color: var(--text);
+    position: relative;
+    padding-bottom: 1rem;
+}
+.current-initiatives h2::after { /* Add underline */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
 }
 
 .initiatives-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 0 2rem;
-    max-width: 1200px;
+    padding: 0; /* Remove padding, handled by section */
+    max-width: var(--max-width); /* Use variable */
     margin: 0 auto;
 }
 
 .initiative-card {
-    background: white;
+    background: var(--background); /* Use variable */
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid var(--border);
-    background: linear-gradient(to bottom right, white, rgba(255, 255, 255, 0.95));
-    backdrop-filter: blur(10px);
+    border-radius: var(--radius); /* Use variable */
+    box-shadow: var(--shadow-sm); /* Use variable */
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-light); /* Use variable */
+    /* Remove gradient/blur */
+    /* background: linear-gradient(...); */
+    /* backdrop-filter: blur(10px); */
 }
 
 .initiative-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    border-color: var(--primary-light);
+    transform: translateY(-6px); /* Adjust lift */
+    box-shadow: var(--shadow-lg); /* Use variable */
+    border-color: var(--border); /* Use variable */
 }
 
 .initiative-card h3 {
-    color: #2c3e50;
+    color: var(--primary); /* Use primary color */
+    font-weight: var(--fw-semibold);
     margin-bottom: 1rem;
+    font-size: 1.2rem;
 }
 
 .initiative-card ul {
-    list-style-position: inside;
-    padding-left: 1rem;
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0;
     margin-top: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.95rem;
 }
 
 .initiative-card li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem; /* Increased spacing */
+    position: relative;
+    padding-left: 1.5rem; /* Space for custom bullet */
+}
+
+.initiative-card li::before { /* Custom bullet */
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--secondary); /* Use secondary color */
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1;
 }
 
 /* Animation Classes */
@@ -1448,34 +1630,42 @@ footer {
 
 /* ...existing code... */
 
-/* ...existing code... */
-
+/* === Donate Link (Style as primary button) (Final) === */
 .donate-link {
     display: inline-flex;
     align-items: center;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
+    justify-content: center;
+    padding: 0.9rem 2.1rem;
+    border-radius: var(--radius-lg);
+    font-weight: var(--fw-semibold);
+    text-decoration: none;
+    transition: var(--transition-normal);
+    font-size: 1rem;
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    line-height: 1.5;
+    box-shadow: var(--shadow-sm);
+    /* Specific styles */
     background: var(--primary);
     color: white;
-    text-decoration: none;
-    border-radius: var(--radius);
-    font-weight: 600;
-    transition: all 0.3s ease;
+    margin-top: 1rem;
 }
 
 .donate-link:hover {
     background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    border-color: var(--primary-dark);
+    transform: translateY(-3px) scale(1.02); /* Enhanced hover */
+    box-shadow: var(--shadow);
+    color: white;
 }
 
 .donate-link .arrow {
     margin-left: 0.5rem;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-fast); /* Faster transition for arrow */
 }
 
 .donate-link:hover .arrow {
-    transform: translateX(4px);
+    transform: translateX(3px); /* Adjust movement */
 }
 
-/* ...existing code... */
+/* === End of File === */
