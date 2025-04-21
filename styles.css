@@ -1042,6 +1042,45 @@ footer {
     box-shadow: var(--shadow);
 }
 
+.contact-button.instagram {
+    background: #E1306C; /* Instagram Pink */
+    color: white;
+    border-color: #E1306C;
+}
+
+.contact-button.instagram:hover {
+    background: #c32a5f; /* Darker Instagram Pink */
+    border-color: #c32a5f;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow);
+}
+
+.contact-button.youtube {
+    background: #FF0000; /* YouTube Red */
+    color: white;
+    border-color: #FF0000;
+}
+
+.contact-button.youtube:hover {
+    background: #cc0000; /* Darker YouTube Red */
+    border-color: #cc0000;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow);
+}
+
+.contact-button.linkedin {
+    background: #0077B5; /* LinkedIn Blue */
+    color: white;
+    border-color: #0077B5;
+}
+
+.contact-button.linkedin:hover {
+    background: #005e90; /* Darker LinkedIn Blue */
+    border-color: #005e90;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow);
+}
+
 @media (max-width: 768px) {
     .contact-buttons {
         flex-direction: column;
