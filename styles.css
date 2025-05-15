@@ -161,8 +161,48 @@ body {
     .nav-links {
         gap: 1rem;
     }
-}
 
+    .mobile-nav-toggle {
+        display: none; /* Hidden by default */
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+        z-index: 1001; /* Ensure it's above other nav content */
+    }
+
+    .mobile-nav-toggle svg {
+        width: 24px;
+        height: 24px;
+        color: var(--text);
+    }
+
+    .mobile-nav-toggle .icon-close {
+        display: none; /* Hide close icon initially */
+    }
+
+    /* Style for when the mobile menu is open */
+    .nav-open .mobile-nav-toggle .icon-hamburger {
+        display: none;
+    }
+
+    .nav-open .mobile-nav-toggle .icon-close {
+        display: block;
+    }
+
+    /* Screen-reader only text */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+}
 
 .hero {
     min-height: 90vh;
@@ -445,13 +485,48 @@ footer {
 
 
 @media (max-width: 768px) {
-    .hero h1 {
-        font-size: 3rem;
+    .nav-content {
+        padding: 1rem;
+        justify-content: space-between; /* Adjust alignment */
     }
 
-    .nav-content {
-        padding: 0 1rem;
+    .nav-logo {
+        margin-right: 0; /* Remove auto margin */
     }
+
+    .nav-links {
+        /* Hide regular links, style for mobile menu */
+        display: none; /* Hide by default on mobile */
+        position: fixed;
+        inset: 0 0 0 30%; /* Slide in from right */
+        flex-direction: column;
+        padding: min(20vh, 10rem) 2rem;
+        gap: 1.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        transform: translateX(100%);
+        transition: transform 350ms ease-out;
+        z-index: 999; /* Below navbar but above content */
+    }
+
+    .nav-links[data-visible="true"] {
+        display: flex; /* Show when toggled */
+        transform: translateX(0%);
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+        color: var(--text); /* Ensure visibility on light background */
+    }
+
+    .nav-links a::after {
+        bottom: -4px; /* Adjust underline position */
+    }
+
+    .mobile-nav-toggle {
+        display: block; /* Show hamburger on mobile */
+    }
+
 
     .section {
         padding: 2rem;

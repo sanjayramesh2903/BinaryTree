@@ -55,5 +55,35 @@
     </footer>
 
     <script src="ide.js"></script>
+    <script>
+        const primaryNav = document.querySelector('.nav-links');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        const navbar = document.querySelector('.navbar'); // Get the navbar element
+
+        navToggle.addEventListener('click', () => {
+            const visibility = primaryNav.getAttribute('data-visible');
+
+            if (visibility === "false" || visibility === null) {
+                primaryNav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+                navbar.classList.add('nav-open'); // Add class to navbar
+            } else {
+                primaryNav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+                navbar.classList.remove('nav-open'); // Remove class from navbar
+            }
+        });
+
+        // Close menu when a link is clicked (optional but good UX)
+        primaryNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (primaryNav.getAttribute('data-visible') === "true") {
+                    primaryNav.setAttribute('data-visible', false);
+                    navToggle.setAttribute('aria-expanded', false);
+                    navbar.classList.remove('nav-open');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

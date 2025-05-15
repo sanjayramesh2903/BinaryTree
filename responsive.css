@@ -1,0 +1,157 @@
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    /* Navbar adjustments */
+    .navbar {
+        padding: 0.5rem 0;
+    }
+    
+    .nav-content {
+        padding: 0.5rem 1rem;
+        height: auto;
+    }
+    
+    .small-logo {
+        width: 32px;
+        margin-right: 0.5rem;
+    }
+    
+    .nav-logo {
+        font-size: 1.2rem;
+    }
+    
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text);
+        cursor: pointer;
+        margin-left: auto;
+    }
+    
+    /* Main content spacing */
+    .content {
+        padding: 2rem 1rem;
+    }
+    
+    .section {
+        padding: 2rem 1rem;
+        margin-bottom: 3rem;
+    }
+    
+    /* Hero section */
+    .hero {
+        padding: 5rem 1rem 3rem 1rem;
+        min-height: auto;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+        margin-top: 2rem;
+    }
+    
+    .hero h2 {
+        font-size: 1rem;
+    }
+    
+    /* Values grid */
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Contact section */
+    .contact-section {
+        padding: 3rem 1rem;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .contact-button {
+        width: 100%;
+    }
+    
+    /* IDE and Chat pages */
+    .ide-container, .chat-container {
+        padding: 1rem;
+        margin-top: 70px;
+    }
+    
+    .ide-wrapper, .chat-wrapper {
+        height: calc(100vh - 180px);
+        padding: 1rem;
+    }
+    
+    .output-container {
+        height: 100px;
+    }
+    
+    /* Team page */
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-hero {
+        padding: 4rem 1rem 2rem 1rem;
+    }
+    
+    .team-card {
+        padding: 1.5rem;
+    }
+    
+    /* Mission page */
+    .mission-hero {
+        padding: 4rem 1rem 2rem 1rem;
+    }
+    
+    .mission-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .initiatives-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Add hamburger menu button */
+.mobile-menu-btn {
+    display: none;
+}
+
+/* For smallest screens */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .explore-section h2 {
+        font-size: 1.5rem;
+    }
+} 
