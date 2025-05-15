@@ -42,10 +42,11 @@
         display: block;
         background: none;
         border: none;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         color: var(--text);
         cursor: pointer;
         margin-left: auto;
+        padding: 0.5rem;
     }
     
     /* Main content spacing */
@@ -134,11 +135,6 @@
     .initiatives-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* Add hamburger menu button */
-.mobile-menu-btn {
-    display: none;
 }
 
 /* For smallest screens */
