@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         indentUnit: 4,
         tabSize: 4,
         lineWrapping: true,
-        matchBrackets: true
+        matchBrackets: true,
+        fontFamily: "'JetBrains Mono', monospace"
     });
 
     const runBtn = document.getElementById('run-btn');
