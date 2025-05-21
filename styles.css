@@ -580,6 +580,11 @@ footer {
     box-shadow: var(--shadow-sm);
 }
 
+.button:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: var(--shadow-sm); /* Or a slightly inset shadow if preferred */
+}
+
 .button.primary {
     background: var(--primary);
     color: white;
