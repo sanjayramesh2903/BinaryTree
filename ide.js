@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+    // Make editor globally accessible
+    window.editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
         mode: 'python',
         theme: 'dracula',
         lineNumbers: true,
@@ -16,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const runBtn = document.getElementById('run-btn');
     const clearBtn = document.getElementById('clear-btn');
     const output = document.getElementById('output');
+
+    // Force a refresh after a short delay to ensure proper rendering
+    setTimeout(function() {
+        window.editor.refresh();
+    }, 500);
+    
+    // Also refresh on window resize
+    window.addEventListener('resize', function() {
+        window.editor.refresh();
+    });
 
     runBtn.addEventListener('click', async () => {
         const code = editor.getValue();

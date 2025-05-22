@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="ide.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" href="assets/icon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -32,16 +34,16 @@
     </nav>
 
     <main class="ide-container">
-        <h1>Python IDE</h1>
-        <div class="ide-wrapper">
+        <h1 data-aos="fade-down">Python IDE</h1>
+        <div class="ide-wrapper" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
             <div class="editor-container">
                 <textarea id="code-editor">print("Hello, World!")</textarea>
             </div>
-            <div class="controls">
+            <div class="controls" data-aos="fade-up" data-aos-delay="200">
                 <button id="run-btn">Run Code</button>
                 <button id="clear-btn">Clear</button>
             </div>
-            <div class="output-container">
+            <div class="output-container" data-aos="fade-up" data-aos-delay="300">
                 <h3>Output:</h3>
                 <pre id="output"></pre>
             </div>
@@ -49,11 +51,20 @@
     </main>
 
     <footer>
-        <div class="footer-content">
+        <div class="footer-content" data-aos="fade-up">
             <p>&copy; 2025 BinaryTree. All rights reserved.</p>
         </div>
     </footer>
 
+    <script>
+        // Initialize AOS first - with shorter durations
+        AOS.init({
+            duration: 600,
+            once: true,
+            offset: 100,
+            disable: window.innerWidth < 768 // Disable on mobile for better performance
+        });
+    </script>
     <script src="ide.js"></script>
     <script>
         const primaryNav = document.querySelector('.nav-links');
@@ -83,6 +94,15 @@
                     navbar.classList.remove('nav-open');
                 }
             });
+        });
+        
+        // Force CodeMirror to refresh when animations complete
+        document.addEventListener('aos:in:editor-container', function() {
+            if (window.editor) {
+                setTimeout(function() {
+                    window.editor.refresh();
+                }, 100);
+            }
         });
     </script>
 </body>
