@@ -36,12 +36,39 @@
     <main class="ide-container">
         <h1 data-aos="fade-down">Python IDE</h1>
         <div class="ide-wrapper" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+            <div class="filename-container" data-aos="fade-up" data-aos-delay="150">
+                <label for="filename-input">File Name:</label>
+                <input type="text" id="filename-input" placeholder="filename.py" value="code.py">
+            </div>
             <div class="editor-container">
                 <textarea id="code-editor">print("Hello, World!")</textarea>
             </div>
             <div class="controls" data-aos="fade-up" data-aos-delay="200">
-                <button id="run-btn">Run Code</button>
-                <button id="clear-btn">Clear</button>
+                <button id="run-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 2l8 6-8 6V2z" fill="currentColor"/>
+                    </svg>
+                    Run Code
+                </button>
+                <button id="save-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13 0H0v16h16V3L13 0zM8 2h3v3H8V2zM2 2h4v4h8v8H2V2z" fill="currentColor"/>
+                    </svg>
+                    Save
+                </button>
+                <button id="download-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 12l-4-4h2.5V2h3v6H12L8 12z" fill="currentColor"/>
+                        <path d="M14 14H2v-4h2v2h8v-2h2v4z" fill="currentColor"/>
+                    </svg>
+                    Download
+                </button>
+                <button id="clear-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 4h12M6 4V2h4v2M4 4v10h8V4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Clear
+                </button>
             </div>
             <div class="output-container" data-aos="fade-up" data-aos-delay="300">
                 <h3>Output:</h3>

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Make editor globally accessible
     window.editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
         mode: 'python',
         theme: 'dracula',
@@ -12,18 +11,23 @@ document.addEventListener('DOMContentLoaded', function() {
         fontFamily: "'JetBrains Mono', monospace"
     });
 
-    loadCode(); // Load the saved code here
+    loadCode();
 
     const runBtn = document.getElementById('run-btn');
     const clearBtn = document.getElementById('clear-btn');
+    const saveBtn = document.getElementById('save-btn');
+    const downloadBtn = document.getElementById('download-btn');
+    const filenameInput = document.getElementById('filename-input');
     const output = document.getElementById('output');
 
-    // Force a refresh after a short delay to ensure proper rendering
+    filenameInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[\\/:*?"<>|]/g, '_');
+    });
+
     setTimeout(function() {
         window.editor.refresh();
     }, 500);
     
-    // Also refresh on window resize
     window.addEventListener('resize', function() {
         window.editor.refresh();
     });
@@ -52,10 +56,18 @@ document.addEventListener('DOMContentLoaded', function() {
         editor.setValue('');
         output.textContent = '';
     });
+    
+    saveBtn.addEventListener('click', () => {
+        saveCode();
+    });
+    
+    downloadBtn.addEventListener('click', () => {
+        downloadCode();
+    });
 });
 
 function getCode(){
-    const code = editor.getValue(); // This was missing in your getCode()
+    const code = editor.getValue();
     return JSON.stringify({
         language: 'python',
         version: '3.10',
@@ -65,12 +77,26 @@ function getCode(){
     });
 }
 
-//Saving of the code on tab-close
 const STORAGEKEY = "python_code";
 function saveCode() {
-    const code = getCode();
-    localStorage.setItem(STORAGEKEY, code);
-    alert("Code saved!");
+    const code = editor.getValue();
+    localStorage.setItem(STORAGEKEY, JSON.stringify({
+        files: [{
+            content: code
+        }]
+    }));
+    
+    const notification = document.createElement('div');
+    notification.className = 'save-notification';
+    notification.textContent = 'Code saved successfully!';
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 500);
+    }, 2000);
 }
 
 function loadCode() {
@@ -78,12 +104,37 @@ function loadCode() {
     if (saved) {
         try {
             const parsed = JSON.parse(saved);
-            const code = parsed.files?.[0]?.content || ""; //Fallback to not throw error as well
+            const code = parsed.files?.[0]?.content || "";
             editor.setValue(code);
         } catch (e) {
-            alert("Failed to load saved code: ", e);
+            console.error("Failed to load saved code: ", e);
         }
     }
+}
+
+function downloadCode() {
+    const code = editor.getValue();
+    const blob = new Blob([code], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    
+    let filename = document.getElementById('filename-input').value.trim();
+    
+    if (!filename) {
+        filename = 'code.py';
+    } else if (!filename.toLowerCase().endsWith('.py')) {
+        filename += '.py';
+    }
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 0);
 }
 
 window.addEventListener("beforeunload", () => {
@@ -91,9 +142,8 @@ window.addEventListener("beforeunload", () => {
 });
 
 document.addEventListener('keydown', function(e) {
-    //Check if Ctrl+S or Cmd+S is pressed
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-        e.preventDefault(); //Prevent the browser's default save dialog
+        e.preventDefault();
         saveCode();
     }
 });

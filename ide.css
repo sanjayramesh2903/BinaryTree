@@ -6,7 +6,6 @@
     font-family: 'JetBrains Mono', monospace;
 }
 
-/* Ensure all elements in IDE use monospace */
 .ide-container * {
     font-family: 'JetBrains Mono', monospace;
 }
@@ -20,6 +19,39 @@
     height: calc(100vh - 250px);
     display: flex;
     flex-direction: column;
+}
+
+.filename-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #44475a;
+}
+
+.filename-container label {
+    color: #f8f8f2;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#filename-input {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #1e1f29;
+    color: #f8f8f2;
+    border: 1px solid #44475a;
+    border-radius: 4px;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    width: 200px;
+    transition: all 0.2s ease;
+}
+
+#filename-input:focus {
+    outline: none;
+    border-color: #bd93f9;
+    box-shadow: 0 0 0 2px rgba(189, 147, 249, 0.3);
 }
 
 .editor-container {
@@ -47,6 +79,7 @@
     margin: 1rem 0;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 button {
@@ -68,9 +101,25 @@ button {
     color: #282a36;
 }
 
+#save-btn {
+    background-color: #8be9fd;
+    color: #282a36;
+}
+
+#download-btn {
+    background-color: #bd93f9;
+    color: #ffffff;
+}
+
 #clear-btn {
     background-color: #ff5555;
     color: white;
+}
+
+.download-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 button:hover {
@@ -153,6 +202,22 @@ button:hover {
     color:white
 }
 
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #50fa7b;
+    color: #282a36;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
 @media (max-width: 768px) {
     .ide-container {
         padding: 1rem;
@@ -165,5 +230,26 @@ button:hover {
 
     .output-container {
         height: 120px;
+    }
+    
+    .controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    #filename-input {
+        width: 150px;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .filename-container {
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
 }
