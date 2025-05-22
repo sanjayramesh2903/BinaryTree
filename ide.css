@@ -111,6 +111,11 @@ button {
     color: #ffffff;
 }
 
+#import-btn {
+    background-color: #ffb86c;
+    color: #282a36;
+}
+
 #clear-btn {
     background-color: #ff5555;
     color: white;

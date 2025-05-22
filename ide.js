@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearBtn = document.getElementById('clear-btn');
     const saveBtn = document.getElementById('save-btn');
     const downloadBtn = document.getElementById('download-btn');
+    const importBtn = document.getElementById('import-btn');
+    const fileInput = document.getElementById('file-input');
     const filenameInput = document.getElementById('filename-input');
     const output = document.getElementById('output');
 
@@ -64,6 +66,38 @@ document.addEventListener('DOMContentLoaded', function() {
     downloadBtn.addEventListener('click', () => {
         downloadCode();
     });
+    
+    importBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+    
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const content = e.target.result;
+                editor.setValue(content);
+                
+                // Update the filename input with the imported filename
+                const fileName = file.name;
+                filenameInput.value = fileName;
+                
+                // Show a notification
+                showNotification('File imported successfully!', '#ffb86c');
+            };
+            
+            reader.onerror = function() {
+                showNotification('Error reading file!', '#ff5555');
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Reset the file input so the same file can be selected again
+        fileInput.value = '';
+    });
 });
 
 function getCode(){
@@ -86,9 +120,14 @@ function saveCode() {
         }]
     }));
     
+    showNotification('Code saved successfully!', '#50fa7b');
+}
+
+function showNotification(message, backgroundColor) {
     const notification = document.createElement('div');
     notification.className = 'save-notification';
-    notification.textContent = 'Code saved successfully!';
+    notification.textContent = message;
+    notification.style.backgroundColor = backgroundColor;
     document.body.appendChild(notification);
     
     setTimeout(() => {
