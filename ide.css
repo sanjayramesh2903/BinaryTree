@@ -204,7 +204,7 @@ button:hover {
 }
 
 .ide-container h3 {
-    color:white
+    color: white;
 }
 
 .save-notification {
@@ -223,6 +223,23 @@ button:hover {
     transition: opacity 0.5s ease;
 }
 
+/* Responsive styles */
+@media (max-width: 992px) {
+    .ide-container {
+        padding: 1.5rem;
+        margin-top: 90px;
+    }
+    
+    .ide-wrapper {
+        height: calc(100vh - 220px);
+        padding: 1.25rem;
+    }
+    
+    .controls {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 768px) {
     .ide-container {
         padding: 1rem;
@@ -231,6 +248,7 @@ button:hover {
 
     .ide-wrapper {
         height: calc(100vh - 200px);
+        padding: 1rem;
     }
 
     .output-container {
@@ -240,21 +258,83 @@ button:hover {
     .controls {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 8px;
     }
     
     button {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0.9rem;
         font-size: 0.8rem;
     }
     
     #filename-input {
-        width: 150px;
+        width: 160px;
         padding: 0.5rem;
-        font-size: 0.8rem;
     }
     
     .filename-container {
         flex-wrap: wrap;
-        justify-content: flex-start;
+    }
+    
+    .CodeMirror {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ide-container {
+        padding: 0.75rem;
+        margin-top: 70px;
+    }
+    
+    .ide-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .ide-wrapper {
+        height: calc(100vh - 180px);
+        padding: 0.75rem;
+    }
+    
+    button {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.75rem;
+    }
+    
+    .controls {
+        margin: 0.5rem 0;
+    }
+    
+    .output-container {
+        height: 100px;
+        padding: 0.75rem;
+    }
+    
+    #output {
+        font-size: 12px;
+    }
+    
+    #filename-input {
+        width: 140px;
+        font-size: 0.8rem;
+    }
+    
+    .filename-container label {
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .ide-container {
+        margin-top: 60px;
+    }
+    
+    .ide-wrapper {
+        height: calc(100vh - 150px);
+    }
+    
+    .output-container {
+        height: 80px;
     }
 }

@@ -15,7 +15,19 @@
         <div class="nav-content">
             <img src = assets/icon.png alt = "small-logo" class = "small-logo">
             <a href="index.html" class="nav-logo">BinaryTree</a>
-            <div class="nav-links">
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <span class="sr-only">Menu</span>
+            </button>
+            <div class="nav-links" data-visible="false">
                 <a href = "index.html">Home</a>
                 <a href="mission.html">Mission</a>
                 <a href="team.html">Team</a>
@@ -415,10 +427,12 @@
                 primaryNav.setAttribute('data-visible', true);
                 navToggle.setAttribute('aria-expanded', true);
                 navbar.classList.add('nav-open'); // Add class to navbar
+                document.body.classList.add('menu-open'); // Add class to body
             } else {
                 primaryNav.setAttribute('data-visible', false);
                 navToggle.setAttribute('aria-expanded', false);
                 navbar.classList.remove('nav-open'); // Remove class from navbar
+                document.body.classList.remove('menu-open'); // Remove class from body
             }
         });
 
@@ -429,6 +443,7 @@
                     primaryNav.setAttribute('data-visible', false);
                     navToggle.setAttribute('aria-expanded', false);
                     navbar.classList.remove('nav-open');
+                    document.body.classList.remove('menu-open'); // Remove class from body
                 }
             });
         });
