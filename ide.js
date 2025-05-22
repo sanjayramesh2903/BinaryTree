@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
         fontFamily: "'JetBrains Mono', monospace"
     });
 
+    loadCode(); // Load the saved code here
+
     const runBtn = document.getElementById('run-btn');
     const clearBtn = document.getElementById('clear-btn');
     const output = document.getElementById('output');
@@ -36,13 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    language: 'python',
-                    version: '3.10',
-                    files: [{
-                        content: code
-                    }]
-                })
+                body: getCode()
             });
 
             const data = await response.json();
@@ -56,4 +52,48 @@ document.addEventListener('DOMContentLoaded', function() {
         editor.setValue('');
         output.textContent = '';
     });
+});
+
+function getCode(){
+    const code = editor.getValue(); // This was missing in your getCode()
+    return JSON.stringify({
+        language: 'python',
+        version: '3.10',
+        files: [{
+            content: code
+        }]
+    });
+}
+
+//Saving of the code on tab-close
+const STORAGEKEY = "python_code";
+function saveCode() {
+    const code = getCode();
+    localStorage.setItem(STORAGEKEY, code);
+    alert("Code saved to localStorage!");
+}
+
+function loadCode() {
+    const saved = localStorage.getItem(STORAGEKEY);
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            const code = parsed.files?.[0]?.content || ""; //Fallback to not throw error as well
+            editor.setValue(code);
+        } catch (e) {
+            alert("Failed to load saved code: ", e);
+        }
+    }
+}
+
+window.addEventListener("beforeunload", () => {
+    saveCode();
+});
+
+document.addEventListener('keydown', function(e) {
+    //Check if Ctrl+S or Cmd+S is pressed
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault(); //Prevent the browser's default save dialog
+        saveCode();
+    }
 });
