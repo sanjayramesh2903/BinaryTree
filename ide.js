@@ -70,7 +70,7 @@ const STORAGEKEY = "python_code";
 function saveCode() {
     const code = getCode();
     localStorage.setItem(STORAGEKEY, code);
-    alert("Code saved to localStorage!");
+    alert("Code saved!");
 }
 
 function loadCode() {
