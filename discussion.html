@@ -5,8 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Discussion Tab</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .nav-test {
+      background: white;
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      gap: 2rem;
+      font-weight: var(--fw-medium);
+    }
+    .nav-test a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-test a:hover {
+      color: var(--primary-dark);
+    }
+  </style>
 </head>
 <body>
+
+<nav class="nav-test">
+  <a href="#">Home</a>
+  <a href="#discussion">Discussion</a>
+</nav>
 
 <section id="discussion" class="section">
   <h2 class="section-title">Discussion</h2>
