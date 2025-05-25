@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Discussion - BinaryTree</title>
-  <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,22 +11,223 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <style>
+    :root {
+      --primary: #3a86ff;
+      --secondary: #8338ec;
+      --accent: #ff006e;
+      --background: #f8f9fa;
+      --text: #1a1a1a;
+      --radius-lg: 0.75rem;
+      --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--background);
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+    }
+
+    .navbar {
+      background-color: white;
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow-lg);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .small-logo {
+      width: 40px;
+      margin-right: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+    }
+
+    .discussion-board {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .section h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .discussion-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .discussion-form input,
+    .discussion-form textarea {
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid #ccc;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+    }
+
+    .discussion-form button {
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+    }
+
+    .discussion-post {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .discussion-post h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.25rem;
+      color: var(--secondary);
+    }
+
+    .discussion-post p {
+      margin: 0 0 1rem;
+    }
+
+    .discussion-post .actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .discussion-post .actions button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: var(--accent);
+      color: white;
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+    }
+
+    .discussion-post .reply-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid #ccc;
+      margin-bottom: 0.5rem;
+      resize: vertical;
+    }
+
+    .discussion-post .reply-form button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+    }
+
+    .replies {
+      margin-top: 1rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--primary);
+    }
+
+    .reply {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: #f1f3f5;
+      border-radius: var(--radius-lg);
+    }
+
+    footer {
+      padding: 2rem;
+      background-color: white;
+      text-align: center;
+      box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 2rem;
+    }
+
+    footer p {
+      margin: 0;
+      font-weight: 400;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        background: white;
+        position: absolute;
+        top: 60px;
+        right: 2rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .nav-links[data-visible="true"] {
+        display: flex;
+      }
+
+      .mobile-nav-toggle {
+        display: block;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- BODY CONTENT IS UNCHANGED -->
   <nav class="navbar">
     <div class="nav-content">
       <img src="assets/icon.png" alt="small-logo" class="small-logo">
       <a href="index.html" class="nav-logo">BinaryTree</a>
       <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
-        <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
+        <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         <span class="sr-only">Menu</span>
       </button>
       <div class="nav-links" data-visible="false">
