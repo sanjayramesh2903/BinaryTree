@@ -262,6 +262,7 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
     // Your Firebase config copied exactly
@@ -278,6 +279,9 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+
+    // Initialize Firestore
+    const db = firebase.firestore();
   </script>
 
   <script>
@@ -285,103 +289,189 @@
     const discussionForm = document.getElementById("postForm");
     const discussionContainer = document.getElementById("discussionContainer");
 
-    discussionForm.addEventListener("submit", function(e) {
+    // Helper: Create discussion post element from data object
+    function createDiscussionPost(post) {
+      const postElement = document.createElement("div");
+      postElement.classList.add("discussion-post");
+
+      // Main content
+      const heading = document.createElement("h3");
+      heading.textContent = post.topic;
+
+      const description = document.createElement("p");
+      description.textContent = post.description;
+
+      postElement.appendChild(heading);
+      postElement.appendChild(description);
+
+      // Actions (upvote, downvote)
+      const actions = document.createElement("div");
+      actions.classList.add("actions");
+
+      const upvoteBtn = document.createElement("button");
+      upvoteBtn.textContent = `Upvote (${post.upvotes || 0})`;
+      upvoteBtn.addEventListener("click", () => {
+        post.upvotes = (post.upvotes || 0) + 1;
+        upvoteBtn.textContent = `Upvote (${post.upvotes})`;
+        saveAllPosts();
+      });
+
+      const downvoteBtn = document.createElement("button");
+      downvoteBtn.textContent = `Downvote (${post.downvotes || 0})`;
+      downvoteBtn.addEventListener("click", () => {
+        post.downvotes = (post.downvotes || 0) + 1;
+        downvoteBtn.textContent = `Downvote (${post.downvotes})`;
+        saveAllPosts();
+      });
+
+      actions.appendChild(upvoteBtn);
+      actions.appendChild(downvoteBtn);
+
+      postElement.appendChild(actions);
+
+      // Reply form
+      const replyForm = document.createElement("form");
+      replyForm.classList.add("reply-form");
+
+      const replyTextarea = document.createElement("textarea");
+      replyTextarea.placeholder = "Write a reply...";
+      replyTextarea.required = true;
+      replyForm.appendChild(replyTextarea);
+
+      const replySubmit = document.createElement("button");
+      replySubmit.textContent = "Reply";
+      replyForm.appendChild(replySubmit);
+
+      replyForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const replyText = replyTextarea.value.trim();
+        if (replyText) {
+          if (!post.replies) post.replies = [];
+          post.replies.push(replyText);
+          renderReplies(replyList, post.replies);
+          replyTextarea.value = "";
+          saveAllPosts();
+        }
+      });
+
+      postElement.appendChild(replyForm);
+
+      // Replies container
+      const replyList = document.createElement("div");
+      replyList.classList.add("replies");
+      postElement.appendChild(replyList);
+
+      // Render existing replies
+      if (post.replies && post.replies.length > 0) {
+        renderReplies(replyList, post.replies);
+      }
+
+      return postElement;
+    }
+
+    // Render replies
+    function renderReplies(container, replies) {
+      container.innerHTML = "";
+      replies.forEach(reply => {
+        const replyDiv = document.createElement("div");
+        replyDiv.classList.add("reply");
+        replyDiv.textContent = reply;
+        container.appendChild(replyDiv);
+      });
+    }
+
+    // Store all posts in this array
+    let posts = [];
+
+    // Save all posts to Firestore
+    function saveAllPosts() {
+      const batch = db.batch();
+      const postsRef = db.collection("posts");
+
+      // Clear old posts first: to keep simple, we can delete all docs and re-add
+      postsRef.get().then(snapshot => {
+        const deleteBatch = db.batch();
+        snapshot.docs.forEach(doc => {
+          deleteBatch.delete(doc.ref);
+        });
+        return deleteBatch.commit();
+      }).then(() => {
+        // Add current posts to Firestore
+        posts.forEach(post => {
+          const docRef = postsRef.doc();
+          batch.set(docRef, post);
+        });
+        return batch.commit();
+      }).catch(error => {
+        console.error("Error saving posts: ", error);
+      });
+    }
+
+    // Load posts from Firestore and render
+    function loadPosts() {
+      db.collection("posts").get().then(snapshot => {
+        posts = [];
+        discussionContainer.innerHTML = "";
+        snapshot.forEach(doc => {
+          const postData = doc.data();
+          // Normalize missing fields
+          postData.upvotes = postData.upvotes || 0;
+          postData.downvotes = postData.downvotes || 0;
+          postData.replies = postData.replies || [];
+          posts.push(postData);
+        });
+
+        posts.forEach(post => {
+          const postElement = createDiscussionPost(post);
+          discussionContainer.appendChild(postElement);
+        });
+      }).catch(error => {
+        console.error("Error loading posts: ", error);
+      });
+    }
+
+    // On form submit, add a new post
+    discussionForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const topic = document.getElementById("topic").value.trim();
       const description = document.getElementById("description").value.trim();
 
       if (topic && description) {
-        const discussionPost = document.createElement("div");
-        discussionPost.classList.add("discussion-post");
-        discussionPost.innerHTML = `
-          <h3>${topic}</h3>
-          <p>${description}</p>
-          <div class="actions">
-            <button class="reply-btn">Reply</button>
-            <button class="upvote-btn">Upvote</button>
-            <button class="downvote-btn">Downvote</button>
-          </div>
-          <div class="replies"></div>
-        `;
+        const newPost = {
+          topic,
+          description,
+          upvotes: 0,
+          downvotes: 0,
+          replies: []
+        };
 
-        // Add upvote/downvote count display
-        let upvoteCount = 0;
-        let downvoteCount = 0;
+        posts.push(newPost);
 
-        const upvoteBtn = discussionPost.querySelector(".upvote-btn");
-        const downvoteBtn = discussionPost.querySelector(".downvote-btn");
-        const replyBtn = discussionPost.querySelector(".reply-btn");
-        const repliesContainer = discussionPost.querySelector(".replies");
+        const postElement = createDiscussionPost(newPost);
+        discussionContainer.appendChild(postElement);
 
-        upvoteBtn.addEventListener("click", () => {
-          upvoteCount++;
-          upvoteBtn.textContent = `Upvote (${upvoteCount})`;
-          // Ensure downvote count resets or logic as desired
-          if (downvoteCount > 0) {
-            downvoteCount--;
-            downvoteBtn.textContent = `Downvote (${downvoteCount})`;
-          }
-        });
-
-        downvoteBtn.addEventListener("click", () => {
-          downvoteCount++;
-          downvoteBtn.textContent = `Downvote (${downvoteCount})`;
-          if (upvoteCount > 0) {
-            upvoteCount--;
-            upvoteBtn.textContent = `Upvote (${upvoteCount})`;
-          }
-        });
-
-        replyBtn.addEventListener("click", () => {
-          // Check if reply form already exists to avoid duplicates
-          if (discussionPost.querySelector(".reply-form")) return;
-
-          const replyForm = document.createElement("form");
-          replyForm.classList.add("reply-form");
-          replyForm.innerHTML = `
-            <textarea rows="2" placeholder="Write a reply..." required></textarea>
-            <button type="submit">Submit Reply</button>
-          `;
-
-          replyForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const replyText = replyForm.querySelector("textarea").value.trim();
-            if (replyText) {
-              const replyDiv = document.createElement("div");
-              replyDiv.classList.add("reply");
-              replyDiv.textContent = replyText;
-              repliesContainer.appendChild(replyDiv);
-              replyForm.reset();
-              replyForm.remove();
-            }
-          });
-
-          discussionPost.appendChild(replyForm);
-        });
-
-        discussionContainer.appendChild(discussionPost);
-
+        // Reset form
         discussionForm.reset();
+
+        saveAllPosts();
       }
     });
 
-    // Mobile nav toggle code
+    // Mobile nav toggle logic
     const navToggle = document.querySelector(".mobile-nav-toggle");
     const navLinks = document.querySelector(".nav-links");
 
     navToggle.addEventListener("click", () => {
-      const visibility = navLinks.getAttribute("data-visible");
-      if (visibility === "false") {
-        navLinks.setAttribute("data-visible", "true");
-        navToggle.setAttribute("aria-expanded", "true");
-      } else {
-        navLinks.setAttribute("data-visible", "false");
-        navToggle.setAttribute("aria-expanded", "false");
-      }
+      const visible = navLinks.getAttribute("data-visible") === "true";
+      navLinks.setAttribute("data-visible", !visible);
+      navToggle.setAttribute("aria-expanded", !visible);
     });
 
-    // AOS initialization
+    // Initialize AOS
     AOS.init();
+
+    // Load posts when page loads
+    loadPosts();
   </script>
 </body>
 </html>
