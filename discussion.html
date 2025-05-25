@@ -259,121 +259,129 @@
     </div>
   </footer>
 
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
   <script>
-    AOS.init({ duration: 800, once: true, offset: 100 });
+    // Your Firebase config copied exactly
+    const firebaseConfig = {
+      apiKey: "AIzaSyBJs48_Ed_yJkMx9wqBFIinC-m4uf7yEQU",
+      authDomain: "discussion-ac97b.firebaseapp.com",
+      projectId: "discussion-ac97b",
+      storageBucket: "discussion-ac97b.firebasestorage.app",
+      messagingSenderId: "828172916370",
+      appId: "1:828172916370:web:60758965578789974c384b",
+      measurementId: "G-7S2SQNVCYP"
+    };
 
-    const form = document.getElementById('postForm');
-    const container = document.getElementById('discussionContainer');
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 
-    function loadPosts() {
-      const posts = JSON.parse(localStorage.getItem('discussionPosts')) || [];
-      posts.forEach(data => addPostToDOM(data.topic, data.description));
-    }
+  <script>
+    // Your existing JavaScript exactly as given
+    const discussionForm = document.getElementById("postForm");
+    const discussionContainer = document.getElementById("discussionContainer");
 
-    function savePosts() {
-      const posts = [];
-      container.querySelectorAll('.discussion-post').forEach(post => {
-        const topic = post.querySelector('h3').textContent;
-        const desc = post.querySelector('p').textContent;
-        posts.push({ topic, description: desc });
-      });
-      localStorage.setItem('discussionPosts', JSON.stringify(posts));
-    }
-
-    function showPopup(message) {
-      const popup = document.createElement('div');
-      popup.textContent = message;
-      popup.style.position = 'fixed';
-      popup.style.bottom = '2rem';
-      popup.style.right = '2rem';
-      popup.style.background = 'var(--primary)';
-      popup.style.color = 'white';
-      popup.style.padding = '1rem 1.5rem';
-      popup.style.borderRadius = 'var(--radius-lg)';
-      popup.style.boxShadow = 'var(--shadow-lg)';
-      popup.style.zIndex = 9999;
-      popup.style.transition = 'opacity 0.5s ease';
-      document.body.appendChild(popup);
-      setTimeout(() => {
-        popup.style.opacity = '0';
-        setTimeout(() => popup.remove(), 500);
-      }, 1500);
-    }
-
-    form.addEventListener('submit', function (e) {
+    discussionForm.addEventListener("submit", function(e) {
       e.preventDefault();
-      const topic = document.getElementById('topic').value;
-      const description = document.getElementById('description').value;
-      addPostToDOM(topic, description);
-      savePosts();
-      form.reset();
-      showPopup("Topic submitted!");
+      const topic = document.getElementById("topic").value.trim();
+      const description = document.getElementById("description").value.trim();
+
+      if (topic && description) {
+        const discussionPost = document.createElement("div");
+        discussionPost.classList.add("discussion-post");
+        discussionPost.innerHTML = `
+          <h3>${topic}</h3>
+          <p>${description}</p>
+          <div class="actions">
+            <button class="reply-btn">Reply</button>
+            <button class="upvote-btn">Upvote</button>
+            <button class="downvote-btn">Downvote</button>
+          </div>
+          <div class="replies"></div>
+        `;
+
+        // Add upvote/downvote count display
+        let upvoteCount = 0;
+        let downvoteCount = 0;
+
+        const upvoteBtn = discussionPost.querySelector(".upvote-btn");
+        const downvoteBtn = discussionPost.querySelector(".downvote-btn");
+        const replyBtn = discussionPost.querySelector(".reply-btn");
+        const repliesContainer = discussionPost.querySelector(".replies");
+
+        upvoteBtn.addEventListener("click", () => {
+          upvoteCount++;
+          upvoteBtn.textContent = `Upvote (${upvoteCount})`;
+          // Ensure downvote count resets or logic as desired
+          if (downvoteCount > 0) {
+            downvoteCount--;
+            downvoteBtn.textContent = `Downvote (${downvoteCount})`;
+          }
+        });
+
+        downvoteBtn.addEventListener("click", () => {
+          downvoteCount++;
+          downvoteBtn.textContent = `Downvote (${downvoteCount})`;
+          if (upvoteCount > 0) {
+            upvoteCount--;
+            upvoteBtn.textContent = `Upvote (${upvoteCount})`;
+          }
+        });
+
+        replyBtn.addEventListener("click", () => {
+          // Check if reply form already exists to avoid duplicates
+          if (discussionPost.querySelector(".reply-form")) return;
+
+          const replyForm = document.createElement("form");
+          replyForm.classList.add("reply-form");
+          replyForm.innerHTML = `
+            <textarea rows="2" placeholder="Write a reply..." required></textarea>
+            <button type="submit">Submit Reply</button>
+          `;
+
+          replyForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const replyText = replyForm.querySelector("textarea").value.trim();
+            if (replyText) {
+              const replyDiv = document.createElement("div");
+              replyDiv.classList.add("reply");
+              replyDiv.textContent = replyText;
+              repliesContainer.appendChild(replyDiv);
+              replyForm.reset();
+              replyForm.remove();
+            }
+          });
+
+          discussionPost.appendChild(replyForm);
+        });
+
+        discussionContainer.appendChild(discussionPost);
+
+        discussionForm.reset();
+      }
     });
 
-    function addPostToDOM(topic, description) {
-      const post = document.createElement('div');
-      post.className = 'discussion-post';
-      post.innerHTML = `
-        <h3 class="editable" contenteditable="false">${topic}</h3>
-        <p class="editable" contenteditable="false">${description}</p>
-        <div class="actions">
-          <button onclick="toggleEdit(this)">Edit</button>
-          <button onclick="deletePost(this)">Delete</button>
-          <button onclick="toggleReply(this)">Reply</button>
-        </div>
-        <div class="reply-form" style="display:none;">
-          <textarea placeholder="Write your reply..."></textarea>
-          <button onclick="submitReply(this)">Submit</button>
-        </div>
-        <div class="replies"></div>
-      `;
-      container.prepend(post);
-    }
+    // Mobile nav toggle code
+    const navToggle = document.querySelector(".mobile-nav-toggle");
+    const navLinks = document.querySelector(".nav-links");
 
-    function deletePost(btn) {
-      if (confirm("Are you sure you want to delete this post?")) {
-        btn.closest('.discussion-post').remove();
-        savePosts();
-      }
-    }
-
-    function toggleEdit(btn) {
-      const post = btn.closest('.discussion-post');
-      const topic = post.querySelector('h3');
-      const desc = post.querySelector('p');
-      const isEditing = topic.contentEditable === "true";
-      if (isEditing) {
-        topic.contentEditable = "false";
-        desc.contentEditable = "false";
-        btn.textContent = "Edit";
-        savePosts();
+    navToggle.addEventListener("click", () => {
+      const visibility = navLinks.getAttribute("data-visible");
+      if (visibility === "false") {
+        navLinks.setAttribute("data-visible", "true");
+        navToggle.setAttribute("aria-expanded", "true");
       } else {
-        topic.contentEditable = "true";
-        desc.contentEditable = "true";
-        topic.focus();
-        btn.textContent = "Save";
+        navLinks.setAttribute("data-visible", "false");
+        navToggle.setAttribute("aria-expanded", "false");
       }
-    }
+    });
 
-    function toggleReply(btn) {
-      const form = btn.closest('.discussion-post').querySelector('.reply-form');
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function submitReply(btn) {
-      const form = btn.closest('.reply-form');
-      const text = form.querySelector('textarea').value;
-      if (!text.trim()) return;
-      const reply = document.createElement('div');
-      reply.className = 'reply';
-      reply.textContent = text;
-      form.nextElementSibling.appendChild(reply);
-      form.querySelector('textarea').value = '';
-      form.style.display = 'none';
-      showPopup("Reply submitted!");
-    }
-
-    loadPosts();
+    // AOS initialization
+    AOS.init();
   </script>
 </body>
 </html>
