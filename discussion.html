@@ -71,12 +71,18 @@
       text-decoration: none;
       color: var(--text);
       font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
     }
 
     .mobile-nav-toggle {
       display: none;
       background: none;
       border: none;
+      cursor: pointer;
     }
 
     .discussion-board {
@@ -89,6 +95,10 @@
       text-align: center;
       font-size: 2.5rem;
       margin-bottom: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .discussion-form {
@@ -96,33 +106,61 @@
       flex-direction: column;
       gap: 1rem;
       margin-bottom: 2rem;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
     }
 
     .discussion-form input,
     .discussion-form textarea {
       padding: 1rem;
       border-radius: var(--radius-lg);
-      border: 1px solid #ccc;
+      border: 2px solid #e0e6ed;
       font-family: 'Outfit', sans-serif;
       font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .discussion-form input:focus,
+    .discussion-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
     .discussion-form button {
       padding: 1rem;
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       font-weight: 600;
       border: none;
       border-radius: var(--radius-lg);
       cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .discussion-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .discussion-form button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .discussion-post {
       background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
+      transition: transform 0.2s ease;
+    }
+
+    .discussion-post:hover {
+      transform: translateY(-2px);
     }
 
     .discussion-post h3 {
@@ -133,12 +171,19 @@
 
     .discussion-post p {
       margin: 0 0 1rem;
+      line-height: 1.6;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 1rem;
     }
 
     .discussion-post .actions {
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
 
     .discussion-post .actions button {
@@ -149,15 +194,39 @@
       font-weight: 600;
       border-radius: var(--radius-lg);
       cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+    }
+
+    .discussion-post .actions button:hover {
+      background-color: #e6005c;
+      transform: translateY(-1px);
+    }
+
+    .discussion-post .actions button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .discussion-post .reply-form {
+      margin-top: 1rem;
     }
 
     .discussion-post .reply-form textarea {
       width: 100%;
       padding: 0.75rem;
       border-radius: var(--radius-lg);
-      border: 1px solid #ccc;
+      border: 2px solid #e0e6ed;
       margin-bottom: 0.5rem;
       resize: vertical;
+      font-family: 'Outfit', sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    .discussion-post .reply-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
     .discussion-post .reply-form button {
@@ -167,19 +236,48 @@
       padding: 0.5rem 1rem;
       font-weight: 600;
       border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .discussion-post .reply-form button:hover {
+      background-color: #2a6ff0;
+      transform: translateY(-1px);
+    }
+
+    .discussion-post .reply-form button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .replies {
       margin-top: 1rem;
       padding-left: 1rem;
-      border-left: 2px solid var(--primary);
+      border-left: 3px solid var(--primary);
     }
 
     .reply {
-      margin-bottom: 0.5rem;
-      padding: 0.5rem;
-      background: #f1f3f5;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background: #f8f9fa;
       border-radius: var(--radius-lg);
+      border-left: 3px solid #e0e6ed;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .error {
+      background: #ffe6e6;
+      color: #d63031;
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      margin-bottom: 1rem;
+      border-left: 4px solid #d63031;
     }
 
     footer {
@@ -207,6 +305,7 @@
         right: 2rem;
         padding: 1rem;
         box-shadow: var(--shadow-lg);
+        border-radius: var(--radius-lg);
       }
 
       .nav-links[data-visible="true"] {
@@ -215,6 +314,18 @@
 
       .mobile-nav-toggle {
         display: block;
+      }
+
+      .discussion-board {
+        padding: 1rem;
+      }
+
+      .section h1 {
+        font-size: 2rem;
+      }
+
+      .discussion-form {
+        padding: 1.5rem;
       }
     }
   </style>
@@ -244,11 +355,19 @@
   <main class="discussion-board content">
     <section class="section" id="discussion">
       <h1 data-aos="fade-down">Discussion Board</h1>
+      
+      <div id="errorContainer"></div>
+      
       <form class="discussion-form" id="postForm">
-        <input type="text" id="topic" placeholder="Topic Heading" required />
-        <textarea id="description" rows="4" placeholder="Topic Description" required></textarea>
-        <button type="submit">Post Topic</button>
+        <input type="text" id="topic" placeholder="Topic Heading" required maxlength="100" />
+        <textarea id="description" rows="4" placeholder="Topic Description" required maxlength="500"></textarea>
+        <button type="submit" id="submitBtn">Post Topic</button>
       </form>
+      
+      <div id="loadingContainer" class="loading" style="display: none;">
+        Loading discussions...
+      </div>
+      
       <div id="discussionContainer"></div>
     </section>
   </main>
@@ -265,7 +384,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Your Firebase config copied exactly
+    // Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBJs48_Ed_yJkMx9wqBFIinC-m4uf7yEQU",
       authDomain: "discussion-ac97b.firebaseapp.com",
@@ -285,14 +404,32 @@
   </script>
 
   <script>
-    // Your existing JavaScript exactly as given
     const discussionForm = document.getElementById("postForm");
     const discussionContainer = document.getElementById("discussionContainer");
+    const loadingContainer = document.getElementById("loadingContainer");
+    const errorContainer = document.getElementById("errorContainer");
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Show error message
+    function showError(message) {
+      errorContainer.innerHTML = `<div class="error">${message}</div>`;
+      setTimeout(() => {
+        errorContainer.innerHTML = "";
+      }, 5000);
+    }
+
+    // Format timestamp
+    function formatTimestamp(timestamp) {
+      if (!timestamp) return "Just now";
+      const date = timestamp.toDate();
+      return date.toLocaleString();
+    }
 
     // Helper: Create discussion post element from data object
-    function createDiscussionPost(post) {
+    function createDiscussionPost(post, docId) {
       const postElement = document.createElement("div");
       postElement.classList.add("discussion-post");
+      postElement.setAttribute("data-aos", "fade-up");
 
       // Main content
       const heading = document.createElement("h3");
@@ -301,32 +438,53 @@
       const description = document.createElement("p");
       description.textContent = post.description;
 
+      // Post metadata
+      const metaDiv = document.createElement("div");
+      metaDiv.classList.add("post-meta");
+      metaDiv.textContent = `Posted ${formatTimestamp(post.createdAt)}`;
+
       postElement.appendChild(heading);
       postElement.appendChild(description);
+      postElement.appendChild(metaDiv);
 
       // Actions (upvote, downvote)
       const actions = document.createElement("div");
       actions.classList.add("actions");
 
       const upvoteBtn = document.createElement("button");
-      upvoteBtn.textContent = `Upvote (${post.upvotes || 0})`;
-      upvoteBtn.addEventListener("click", () => {
-        post.upvotes = (post.upvotes || 0) + 1;
-        upvoteBtn.textContent = `Upvote (${post.upvotes})`;
-        saveAllPosts();
+      upvoteBtn.textContent = `👍 ${post.upvotes || 0}`;
+      upvoteBtn.addEventListener("click", async () => {
+        upvoteBtn.disabled = true;
+        try {
+          const postRef = db.collection("posts").doc(docId);
+          await postRef.update({
+            upvotes: firebase.firestore.FieldValue.increment(1)
+          });
+        } catch (error) {
+          console.error("Error upvoting:", error);
+          showError("Failed to upvote. Please try again.");
+        }
+        upvoteBtn.disabled = false;
       });
 
       const downvoteBtn = document.createElement("button");
-      downvoteBtn.textContent = `Downvote (${post.downvotes || 0})`;
-      downvoteBtn.addEventListener("click", () => {
-        post.downvotes = (post.downvotes || 0) + 1;
-        downvoteBtn.textContent = `Downvote (${post.downvotes})`;
-        saveAllPosts();
+      downvoteBtn.textContent = `👎 ${post.downvotes || 0}`;
+      downvoteBtn.addEventListener("click", async () => {
+        downvoteBtn.disabled = true;
+        try {
+          const postRef = db.collection("posts").doc(docId);
+          await postRef.update({
+            downvotes: firebase.firestore.FieldValue.increment(1)
+          });
+        } catch (error) {
+          console.error("Error downvoting:", error);
+          showError("Failed to downvote. Please try again.");
+        }
+        downvoteBtn.disabled = false;
       });
 
       actions.appendChild(upvoteBtn);
       actions.appendChild(downvoteBtn);
-
       postElement.appendChild(actions);
 
       // Reply form
@@ -336,21 +494,37 @@
       const replyTextarea = document.createElement("textarea");
       replyTextarea.placeholder = "Write a reply...";
       replyTextarea.required = true;
+      replyTextarea.maxLength = 300;
       replyForm.appendChild(replyTextarea);
 
       const replySubmit = document.createElement("button");
       replySubmit.textContent = "Reply";
       replyForm.appendChild(replySubmit);
 
-      replyForm.addEventListener("submit", (e) => {
+      replyForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const replyText = replyTextarea.value.trim();
         if (replyText) {
-          if (!post.replies) post.replies = [];
-          post.replies.push(replyText);
-          renderReplies(replyList, post.replies);
-          replyTextarea.value = "";
-          saveAllPosts();
+          replySubmit.disabled = true;
+          replySubmit.textContent = "Posting...";
+          
+          try {
+            const postRef = db.collection("posts").doc(docId);
+            const replyData = {
+              text: replyText,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            await postRef.update({
+              replies: firebase.firestore.FieldValue.arrayUnion(replyData)
+            });
+            replyTextarea.value = "";
+          } catch (error) {
+            console.error("Error adding reply:", error);
+            showError("Failed to add reply. Please try again.");
+          }
+          
+          replySubmit.disabled = false;
+          replySubmit.textContent = "Reply";
         }
       });
 
@@ -375,85 +549,90 @@
       replies.forEach(reply => {
         const replyDiv = document.createElement("div");
         replyDiv.classList.add("reply");
-        replyDiv.textContent = reply;
+        
+        // Handle both old string replies and new object replies
+        if (typeof reply === 'string') {
+          replyDiv.textContent = reply;
+        } else {
+          replyDiv.innerHTML = `
+            <div>${reply.text}</div>
+            <small style="color: #666; font-size: 0.8em;">${formatTimestamp(reply.timestamp)}</small>
+          `;
+        }
+        
         container.appendChild(replyDiv);
       });
     }
 
-    // Store all posts in this array
-    let posts = [];
-
-    // Save all posts to Firestore
-    function saveAllPosts() {
-      const batch = db.batch();
-      const postsRef = db.collection("posts");
-
-      // Clear old posts first: to keep simple, we can delete all docs and re-add
-      postsRef.get().then(snapshot => {
-        const deleteBatch = db.batch();
-        snapshot.docs.forEach(doc => {
-          deleteBatch.delete(doc.ref);
+    // Listen for real-time updates
+    function setupRealTimeListener() {
+      loadingContainer.style.display = "block";
+      
+      const unsubscribe = db.collection("posts")
+        .orderBy("createdAt", "desc")
+        .onSnapshot(snapshot => {
+          loadingContainer.style.display = "none";
+          discussionContainer.innerHTML = "";
+          
+          if (snapshot.empty) {
+            discussionContainer.innerHTML = `
+              <div style="text-align: center; padding: 2rem; color: #666;">
+                <h3>No discussions yet</h3>
+                <p>Be the first to start a discussion!</p>
+              </div>
+            `;
+            return;
+          }
+          
+          snapshot.forEach(doc => {
+            const postData = doc.data();
+            postData.upvotes = postData.upvotes || 0;
+            postData.downvotes = postData.downvotes || 0;
+            postData.replies = postData.replies || [];
+            const postElement = createDiscussionPost(postData, doc.id);
+            discussionContainer.appendChild(postElement);
+          });
+          
+          // Refresh AOS animations for new elements
+          AOS.refresh();
+        }, error => {
+          loadingContainer.style.display = "none";
+          console.error("Error loading posts:", error);
+          showError("Failed to load discussions. Please refresh the page.");
         });
-        return deleteBatch.commit();
-      }).then(() => {
-        // Add current posts to Firestore
-        posts.forEach(post => {
-          const docRef = postsRef.doc();
-          batch.set(docRef, post);
-        });
-        return batch.commit();
-      }).catch(error => {
-        console.error("Error saving posts: ", error);
-      });
-    }
-
-    // Load posts from Firestore and render
-    function loadPosts() {
-      db.collection("posts").get().then(snapshot => {
-        posts = [];
-        discussionContainer.innerHTML = "";
-        snapshot.forEach(doc => {
-          const postData = doc.data();
-          // Normalize missing fields
-          postData.upvotes = postData.upvotes || 0;
-          postData.downvotes = postData.downvotes || 0;
-          postData.replies = postData.replies || [];
-          posts.push(postData);
-        });
-
-        posts.forEach(post => {
-          const postElement = createDiscussionPost(post);
-          discussionContainer.appendChild(postElement);
-        });
-      }).catch(error => {
-        console.error("Error loading posts: ", error);
-      });
+      
+      return unsubscribe;
     }
 
     // On form submit, add a new post
-    discussionForm.addEventListener("submit", (e) => {
+    discussionForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const topic = document.getElementById("topic").value.trim();
       const description = document.getElementById("description").value.trim();
 
       if (topic && description) {
-        const newPost = {
-          topic,
-          description,
-          upvotes: 0,
-          downvotes: 0,
-          replies: []
-        };
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Posting...";
+        
+        try {
+          const newPost = {
+            topic,
+            description,
+            upvotes: 0,
+            downvotes: 0,
+            replies: [],
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
 
-        posts.push(newPost);
-
-        const postElement = createDiscussionPost(newPost);
-        discussionContainer.appendChild(postElement);
-
-        // Reset form
-        discussionForm.reset();
-
-        saveAllPosts();
+          await db.collection("posts").add(newPost);
+          discussionForm.reset();
+        } catch (error) {
+          console.error("Error adding post:", error);
+          showError("Failed to post topic. Please try again.");
+        }
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Post Topic";
       }
     });
 
@@ -461,17 +640,24 @@
     const navToggle = document.querySelector(".mobile-nav-toggle");
     const navLinks = document.querySelector(".nav-links");
 
-    navToggle.addEventListener("click", () => {
-      const visible = navLinks.getAttribute("data-visible") === "true";
-      navLinks.setAttribute("data-visible", !visible);
-      navToggle.setAttribute("aria-expanded", !visible);
+    if (navToggle && navLinks) {
+      navToggle.addEventListener("click", () => {
+        const visible = navLinks.getAttribute("data-visible") === "true";
+        navLinks.setAttribute("data-visible", !visible);
+        navToggle.setAttribute("aria-expanded", !visible);
+      });
+    }
+
+    // Initialize everything
+    document.addEventListener("DOMContentLoaded", () => {
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true
+      });
+      
+      setupRealTimeListener();
     });
-
-    // Initialize AOS
-    AOS.init();
-
-    // Load posts when page loads
-    loadPosts();
   </script>
 </body>
 </html>
