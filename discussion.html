@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <style>
     :root {
@@ -377,28 +378,12 @@
     </div>
   </footer>
 
-  <!-- Load AOS library -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Firebase SDKs - FIXED VERSIONS -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  <!-- Firebase SDKs - Updated to v9 modular SDK -->
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js';
-    import { 
-      getFirestore, 
-      collection, 
-      addDoc, 
-      doc, 
-      updateDoc, 
-      increment, 
-      arrayUnion, 
-      serverTimestamp, 
-      query, 
-      orderBy, 
-      onSnapshot 
-    } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
-
+  <script>
     // Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBJs48_Ed_yJkMx9wqBFIinC-m4uf7yEQU",
@@ -411,196 +396,181 @@
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
 
-    // Make these available globally
-    window.db = db;
-    window.firebaseUtils = {
-      collection,
-      addDoc,
-      doc,
-      updateDoc,
-      increment,
-      arrayUnion,
-      serverTimestamp,
-      query,
-      orderBy,
-      onSnapshot
-    };
+    // Initialize Firestore
+    const db = firebase.firestore();
+  </script>
 
-    // Initialize the app after Firebase is loaded
-    initializeApp();
+  <script>
+    const discussionForm = document.getElementById("postForm");
+    const discussionContainer = document.getElementById("discussionContainer");
+    const loadingContainer = document.getElementById("loadingContainer");
+    const errorContainer = document.getElementById("errorContainer");
+    const submitBtn = document.getElementById("submitBtn");
 
-    function initializeApp() {
-      const discussionForm = document.getElementById("postForm");
-      const discussionContainer = document.getElementById("discussionContainer");
-      const loadingContainer = document.getElementById("loadingContainer");
-      const errorContainer = document.getElementById("errorContainer");
-      const submitBtn = document.getElementById("submitBtn");
+    // Show error message
+    function showError(message) {
+      errorContainer.innerHTML = `<div class="error">${message}</div>`;
+      setTimeout(() => {
+        errorContainer.innerHTML = "";
+      }, 5000);
+    }
 
-      // Show error message
-      function showError(message) {
-        errorContainer.innerHTML = `<div class="error">${message}</div>`;
-        setTimeout(() => {
-          errorContainer.innerHTML = "";
-        }, 5000);
-      }
+    // Format timestamp
+    function formatTimestamp(timestamp) {
+      if (!timestamp) return "Just now";
+      const date = timestamp.toDate();
+      return date.toLocaleString();
+    }
 
-      // Format timestamp
-      function formatTimestamp(timestamp) {
-        if (!timestamp) return "Just now";
-        const date = timestamp.toDate();
-        return date.toLocaleString();
-      }
+    // Helper: Create discussion post element from data object
+    function createDiscussionPost(post, docId) {
+      const postElement = document.createElement("div");
+      postElement.classList.add("discussion-post");
+      postElement.setAttribute("data-aos", "fade-up");
 
-      // Helper: Create discussion post element from data object
-      function createDiscussionPost(postData, docId) {
-        const postElement = document.createElement("div");
-        postElement.classList.add("discussion-post");
-        postElement.setAttribute("data-aos", "fade-up");
+      // Main content
+      const heading = document.createElement("h3");
+      heading.textContent = post.topic;
 
-        // Main content
-        const heading = document.createElement("h3");
-        heading.textContent = postData.topic;
+      const description = document.createElement("p");
+      description.textContent = post.description;
 
-        const description = document.createElement("p");
-        description.textContent = postData.description;
+      // Post metadata
+      const metaDiv = document.createElement("div");
+      metaDiv.classList.add("post-meta");
+      metaDiv.textContent = `Posted ${formatTimestamp(post.createdAt)}`;
 
-        // Post metadata
-        const metaDiv = document.createElement("div");
-        metaDiv.classList.add("post-meta");
-        metaDiv.textContent = `Posted ${formatTimestamp(postData.createdAt)}`;
+      postElement.appendChild(heading);
+      postElement.appendChild(description);
+      postElement.appendChild(metaDiv);
 
-        postElement.appendChild(heading);
-        postElement.appendChild(description);
-        postElement.appendChild(metaDiv);
+      // Actions (upvote, downvote)
+      const actions = document.createElement("div");
+      actions.classList.add("actions");
 
-        // Actions (upvote, downvote)
-        const actions = document.createElement("div");
-        actions.classList.add("actions");
-
-        const upvoteBtn = document.createElement("button");
-        upvoteBtn.textContent = `👍 ${postData.upvotes || 0}`;
-        upvoteBtn.addEventListener("click", async () => {
-          upvoteBtn.disabled = true;
-          try {
-            const postRef = doc(db, "posts", docId);
-            await updateDoc(postRef, {
-              upvotes: increment(1)
-            });
-          } catch (error) {
-            console.error("Error upvoting:", error);
-            showError("Failed to upvote. Please try again.");
-          }
-          upvoteBtn.disabled = false;
-        });
-
-        const downvoteBtn = document.createElement("button");
-        downvoteBtn.textContent = `👎 ${postData.downvotes || 0}`;
-        downvoteBtn.addEventListener("click", async () => {
-          downvoteBtn.disabled = true;
-          try {
-            const postRef = doc(db, "posts", docId);
-            await updateDoc(postRef, {
-              downvotes: increment(1)
-            });
-          } catch (error) {
-            console.error("Error downvoting:", error);
-            showError("Failed to downvote. Please try again.");
-          }
-          downvoteBtn.disabled = false;
-        });
-
-        actions.appendChild(upvoteBtn);
-        actions.appendChild(downvoteBtn);
-        postElement.appendChild(actions);
-
-        // Reply form
-        const replyForm = document.createElement("form");
-        replyForm.classList.add("reply-form");
-
-        const replyTextarea = document.createElement("textarea");
-        replyTextarea.placeholder = "Write a reply...";
-        replyTextarea.required = true;
-        replyTextarea.maxLength = 300;
-        replyForm.appendChild(replyTextarea);
-
-        const replySubmit = document.createElement("button");
-        replySubmit.textContent = "Reply";
-        replyForm.appendChild(replySubmit);
-
-        replyForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const replyText = replyTextarea.value.trim();
-          if (replyText) {
-            replySubmit.disabled = true;
-            replySubmit.textContent = "Posting...";
-            
-            try {
-              const postRef = doc(db, "posts", docId);
-              const replyData = {
-                text: replyText,
-                timestamp: serverTimestamp()
-              };
-              await updateDoc(postRef, {
-                replies: arrayUnion(replyData)
-              });
-              replyTextarea.value = "";
-            } catch (error) {
-              console.error("Error adding reply:", error);
-              showError("Failed to add reply. Please try again.");
-            }
-            
-            replySubmit.disabled = false;
-            replySubmit.textContent = "Reply";
-          }
-        });
-
-        postElement.appendChild(replyForm);
-
-        // Replies container
-        const replyList = document.createElement("div");
-        replyList.classList.add("replies");
-        postElement.appendChild(replyList);
-
-        // Render existing replies
-        if (postData.replies && postData.replies.length > 0) {
-          renderReplies(replyList, postData.replies);
+      const upvoteBtn = document.createElement("button");
+      upvoteBtn.textContent = `👍 ${post.upvotes || 0}`;
+      upvoteBtn.addEventListener("click", async () => {
+        upvoteBtn.disabled = true;
+        try {
+          const postRef = db.collection("posts").doc(docId);
+          await postRef.update({
+            upvotes: firebase.firestore.FieldValue.increment(1)
+          });
+        } catch (error) {
+          console.error("Error upvoting:", error);
+          showError("Failed to upvote. Please try again.");
         }
+        upvoteBtn.disabled = false;
+      });
 
-        return postElement;
-      }
+      const downvoteBtn = document.createElement("button");
+      downvoteBtn.textContent = `👎 ${post.downvotes || 0}`;
+      downvoteBtn.addEventListener("click", async () => {
+        downvoteBtn.disabled = true;
+        try {
+          const postRef = db.collection("posts").doc(docId);
+          await postRef.update({
+            downvotes: firebase.firestore.FieldValue.increment(1)
+          });
+        } catch (error) {
+          console.error("Error downvoting:", error);
+          showError("Failed to downvote. Please try again.");
+        }
+        downvoteBtn.disabled = false;
+      });
 
-      // Render replies
-      function renderReplies(container, replies) {
-        container.innerHTML = "";
-        replies.forEach(reply => {
-          const replyDiv = document.createElement("div");
-          replyDiv.classList.add("reply");
+      actions.appendChild(upvoteBtn);
+      actions.appendChild(downvoteBtn);
+      postElement.appendChild(actions);
+
+      // Reply form
+      const replyForm = document.createElement("form");
+      replyForm.classList.add("reply-form");
+
+      const replyTextarea = document.createElement("textarea");
+      replyTextarea.placeholder = "Write a reply...";
+      replyTextarea.required = true;
+      replyTextarea.maxLength = 300;
+      replyForm.appendChild(replyTextarea);
+
+      const replySubmit = document.createElement("button");
+      replySubmit.textContent = "Reply";
+      replyForm.appendChild(replySubmit);
+
+      replyForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const replyText = replyTextarea.value.trim();
+        if (replyText) {
+          replySubmit.disabled = true;
+          replySubmit.textContent = "Posting...";
           
-          // Handle both old string replies and new object replies
-          if (typeof reply === 'string') {
-            replyDiv.textContent = reply;
-          } else {
-            replyDiv.innerHTML = `
-              <div>${reply.text}</div>
-              <small style="color: #666; font-size: 0.8em;">${formatTimestamp(reply.timestamp)}</small>
-            `;
+          try {
+            const postRef = db.collection("posts").doc(docId);
+            const replyData = {
+              text: replyText,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            await postRef.update({
+              replies: firebase.firestore.FieldValue.arrayUnion(replyData)
+            });
+            replyTextarea.value = "";
+          } catch (error) {
+            console.error("Error adding reply:", error);
+            showError("Failed to add reply. Please try again.");
           }
           
-          container.appendChild(replyDiv);
-        });
+          replySubmit.disabled = false;
+          replySubmit.textContent = "Reply";
+        }
+      });
+
+      postElement.appendChild(replyForm);
+
+      // Replies container
+      const replyList = document.createElement("div");
+      replyList.classList.add("replies");
+      postElement.appendChild(replyList);
+
+      // Render existing replies
+      if (post.replies && post.replies.length > 0) {
+        renderReplies(replyList, post.replies);
       }
 
-      // Listen for real-time updates
-      function setupRealTimeListener() {
-        loadingContainer.style.display = "block";
+      return postElement;
+    }
+
+    // Render replies
+    function renderReplies(container, replies) {
+      container.innerHTML = "";
+      replies.forEach(reply => {
+        const replyDiv = document.createElement("div");
+        replyDiv.classList.add("reply");
         
-        const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+        // Handle both old string replies and new object replies
+        if (typeof reply === 'string') {
+          replyDiv.textContent = reply;
+        } else {
+          replyDiv.innerHTML = `
+            <div>${reply.text}</div>
+            <small style="color: #666; font-size: 0.8em;">${formatTimestamp(reply.timestamp)}</small>
+          `;
+        }
         
-        const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
+        container.appendChild(replyDiv);
+      });
+    }
+
+    // Listen for real-time updates
+    function setupRealTimeListener() {
+      loadingContainer.style.display = "block";
+      
+      const unsubscribe = db.collection("posts")
+        .orderBy("createdAt", "desc")
+        .onSnapshot(snapshot => {
           loadingContainer.style.display = "none";
           discussionContainer.innerHTML = "";
           
@@ -614,84 +584,80 @@
             return;
           }
           
-          snapshot.forEach((docSnapshot) => {
-            const postData = docSnapshot.data();
+          snapshot.forEach(doc => {
+            const postData = doc.data();
             postData.upvotes = postData.upvotes || 0;
             postData.downvotes = postData.downvotes || 0;
             postData.replies = postData.replies || [];
-            const postElement = createDiscussionPost(postData, docSnapshot.id);
+            const postElement = createDiscussionPost(postData, doc.id);
             discussionContainer.appendChild(postElement);
           });
           
           // Refresh AOS animations for new elements
-          if (window.AOS) {
-            window.AOS.refresh();
-          }
-        }, (error) => {
+          AOS.refresh();
+        }, error => {
           loadingContainer.style.display = "none";
           console.error("Error loading posts:", error);
           showError("Failed to load discussions. Please refresh the page.");
         });
-        
-        return unsubscribe;
-      }
-
-      // On form submit, add a new post
-      discussionForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const topic = document.getElementById("topic").value.trim();
-        const description = document.getElementById("description").value.trim();
-
-        if (topic && description) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Posting...";
-          
-          try {
-            const newPost = {
-              topic,
-              description,
-              upvotes: 0,
-              downvotes: 0,
-              replies: [],
-              createdAt: serverTimestamp()
-            };
-
-            await addDoc(collection(db, "posts"), newPost);
-            discussionForm.reset();
-          } catch (error) {
-            console.error("Error adding post:", error);
-            showError("Failed to post topic. Please try again.");
-          }
-          
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Post Topic";
-        }
-      });
-
-      // Mobile nav toggle logic
-      const navToggle = document.querySelector(".mobile-nav-toggle");
-      const navLinks = document.querySelector(".nav-links");
-
-      if (navToggle && navLinks) {
-        navToggle.addEventListener("click", () => {
-          const visible = navLinks.getAttribute("data-visible") === "true";
-          navLinks.setAttribute("data-visible", !visible);
-          navToggle.setAttribute("aria-expanded", !visible);
-        });
-      }
-
-      // Initialize AOS
-      if (window.AOS) {
-        window.AOS.init({
-          duration: 800,
-          easing: 'ease-in-out',
-          once: true
-        });
-      }
       
-      // Setup real-time listener
-      setupRealTimeListener();
+      return unsubscribe;
     }
+
+    // On form submit, add a new post
+    discussionForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const topic = document.getElementById("topic").value.trim();
+      const description = document.getElementById("description").value.trim();
+
+      if (topic && description) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Posting...";
+        
+        try {
+          const newPost = {
+            topic,
+            description,
+            upvotes: 0,
+            downvotes: 0,
+            replies: [],
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
+
+          await db.collection("posts").add(newPost);
+          discussionForm.reset();
+        } catch (error) {
+          console.error("Error adding post:", error);
+          showError("Failed to post topic. Please try again.");
+        }
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Post Topic";
+      }
+    });
+
+    // Mobile nav toggle logic
+    const navToggle = document.querySelector(".mobile-nav-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener("click", () => {
+        const visible = navLinks.getAttribute("data-visible") === "true";
+        navLinks.setAttribute("data-visible", !visible);
+        navToggle.setAttribute("aria-expanded", !visible);
+      });
+    }
+
+    // Initialize everything
+    document.addEventListener("DOMContentLoaded", () => {
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true
+      });
+      
+      setupRealTimeListener();
+    });
   </script>
 </body>
 </html>
