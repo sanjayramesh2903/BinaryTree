@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <style>
     :root {
@@ -378,284 +377,287 @@
     </div>
   </footer>
 
-  <!-- Firebase SDKs - FIXED VERSIONS -->
+  <!-- External Libraries - Load these first -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+  <!-- Main Application Script - Load after all libraries -->
   <script>
-    // Your Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyBJs48_Ed_yJkMx9wqBFIinC-m4uf7yEQU",
-      authDomain: "discussion-ac97b.firebaseapp.com",
-      projectId: "discussion-ac97b",
-      storageBucket: "discussion-ac97b.firebasestorage.app",
-      messagingSenderId: "828172916370",
-      appId: "1:828172916370:web:60758965578789974c384b",
-      measurementId: "G-7S2SQNVCYP"
-    };
+    // Wait for all external scripts to load before initializing
+    window.addEventListener('load', function() {
+      // Your Firebase config
+      const firebaseConfig = {
+        apiKey: "AIzaSyBJs48_Ed_yJkMx9wqBFIinC-m4uf7yEQU",
+        authDomain: "discussion-ac97b.firebaseapp.com",
+        projectId: "discussion-ac97b",
+        storageBucket: "discussion-ac97b.firebasestorage.app",
+        messagingSenderId: "828172916370",
+        appId: "1:828172916370:web:60758965578789974c384b",
+        measurementId: "G-7S2SQNVCYP"
+      };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
 
-    // Initialize Firestore
-    const db = firebase.firestore();
-  </script>
+      // Initialize Firestore
+      const db = firebase.firestore();
 
-  <script>
-    const discussionForm = document.getElementById("postForm");
-    const discussionContainer = document.getElementById("discussionContainer");
-    const loadingContainer = document.getElementById("loadingContainer");
-    const errorContainer = document.getElementById("errorContainer");
-    const submitBtn = document.getElementById("submitBtn");
-
-    // Show error message
-    function showError(message) {
-      errorContainer.innerHTML = `<div class="error">${message}</div>`;
-      setTimeout(() => {
-        errorContainer.innerHTML = "";
-      }, 5000);
-    }
-
-    // Format timestamp
-    function formatTimestamp(timestamp) {
-      if (!timestamp) return "Just now";
-      const date = timestamp.toDate();
-      return date.toLocaleString();
-    }
-
-    // Helper: Create discussion post element from data object
-    function createDiscussionPost(post, docId) {
-      const postElement = document.createElement("div");
-      postElement.classList.add("discussion-post");
-      postElement.setAttribute("data-aos", "fade-up");
-
-      // Main content
-      const heading = document.createElement("h3");
-      heading.textContent = post.topic;
-
-      const description = document.createElement("p");
-      description.textContent = post.description;
-
-      // Post metadata
-      const metaDiv = document.createElement("div");
-      metaDiv.classList.add("post-meta");
-      metaDiv.textContent = `Posted ${formatTimestamp(post.createdAt)}`;
-
-      postElement.appendChild(heading);
-      postElement.appendChild(description);
-      postElement.appendChild(metaDiv);
-
-      // Actions (upvote, downvote)
-      const actions = document.createElement("div");
-      actions.classList.add("actions");
-
-      const upvoteBtn = document.createElement("button");
-      upvoteBtn.textContent = `👍 ${post.upvotes || 0}`;
-      upvoteBtn.addEventListener("click", async () => {
-        upvoteBtn.disabled = true;
-        try {
-          const postRef = db.collection("posts").doc(docId);
-          await postRef.update({
-            upvotes: firebase.firestore.FieldValue.increment(1)
-          });
-        } catch (error) {
-          console.error("Error upvoting:", error);
-          showError("Failed to upvote. Please try again.");
-        }
-        upvoteBtn.disabled = false;
-      });
-
-      const downvoteBtn = document.createElement("button");
-      downvoteBtn.textContent = `👎 ${post.downvotes || 0}`;
-      downvoteBtn.addEventListener("click", async () => {
-        downvoteBtn.disabled = true;
-        try {
-          const postRef = db.collection("posts").doc(docId);
-          await postRef.update({
-            downvotes: firebase.firestore.FieldValue.increment(1)
-          });
-        } catch (error) {
-          console.error("Error downvoting:", error);
-          showError("Failed to downvote. Please try again.");
-        }
-        downvoteBtn.disabled = false;
-      });
-
-      actions.appendChild(upvoteBtn);
-      actions.appendChild(downvoteBtn);
-      postElement.appendChild(actions);
-
-      // Reply form
-      const replyForm = document.createElement("form");
-      replyForm.classList.add("reply-form");
-
-      const replyTextarea = document.createElement("textarea");
-      replyTextarea.placeholder = "Write a reply...";
-      replyTextarea.required = true;
-      replyTextarea.maxLength = 300;
-      replyForm.appendChild(replyTextarea);
-
-      const replySubmit = document.createElement("button");
-      replySubmit.textContent = "Reply";
-      replyForm.appendChild(replySubmit);
-
-      replyForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const replyText = replyTextarea.value.trim();
-        if (replyText) {
-          replySubmit.disabled = true;
-          replySubmit.textContent = "Posting...";
-          
-          try {
-            const postRef = db.collection("posts").doc(docId);
-            const replyData = {
-              text: replyText,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            };
-            await postRef.update({
-              replies: firebase.firestore.FieldValue.arrayUnion(replyData)
-            });
-            replyTextarea.value = "";
-          } catch (error) {
-            console.error("Error adding reply:", error);
-            showError("Failed to add reply. Please try again.");
-          }
-          
-          replySubmit.disabled = false;
-          replySubmit.textContent = "Reply";
-        }
-      });
-
-      postElement.appendChild(replyForm);
-
-      // Replies container
-      const replyList = document.createElement("div");
-      replyList.classList.add("replies");
-      postElement.appendChild(replyList);
-
-      // Render existing replies
-      if (post.replies && post.replies.length > 0) {
-        renderReplies(replyList, post.replies);
-      }
-
-      return postElement;
-    }
-
-    // Render replies
-    function renderReplies(container, replies) {
-      container.innerHTML = "";
-      replies.forEach(reply => {
-        const replyDiv = document.createElement("div");
-        replyDiv.classList.add("reply");
-        
-        // Handle both old string replies and new object replies
-        if (typeof reply === 'string') {
-          replyDiv.textContent = reply;
-        } else {
-          replyDiv.innerHTML = `
-            <div>${reply.text}</div>
-            <small style="color: #666; font-size: 0.8em;">${formatTimestamp(reply.timestamp)}</small>
-          `;
-        }
-        
-        container.appendChild(replyDiv);
-      });
-    }
-
-    // Listen for real-time updates
-    function setupRealTimeListener() {
-      loadingContainer.style.display = "block";
-      
-      const unsubscribe = db.collection("posts")
-        .orderBy("createdAt", "desc")
-        .onSnapshot(snapshot => {
-          loadingContainer.style.display = "none";
-          discussionContainer.innerHTML = "";
-          
-          if (snapshot.empty) {
-            discussionContainer.innerHTML = `
-              <div style="text-align: center; padding: 2rem; color: #666;">
-                <h3>No discussions yet</h3>
-                <p>Be the first to start a discussion!</p>
-              </div>
-            `;
-            return;
-          }
-          
-          snapshot.forEach(doc => {
-            const postData = doc.data();
-            postData.upvotes = postData.upvotes || 0;
-            postData.downvotes = postData.downvotes || 0;
-            postData.replies = postData.replies || [];
-            const postElement = createDiscussionPost(postData, doc.id);
-            discussionContainer.appendChild(postElement);
-          });
-          
-          // Refresh AOS animations for new elements
-          AOS.refresh();
-        }, error => {
-          loadingContainer.style.display = "none";
-          console.error("Error loading posts:", error);
-          showError("Failed to load discussions. Please refresh the page.");
-        });
-      
-      return unsubscribe;
-    }
-
-    // On form submit, add a new post
-    discussionForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const topic = document.getElementById("topic").value.trim();
-      const description = document.getElementById("description").value.trim();
-
-      if (topic && description) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Posting...";
-        
-        try {
-          const newPost = {
-            topic,
-            description,
-            upvotes: 0,
-            downvotes: 0,
-            replies: [],
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          };
-
-          await db.collection("posts").add(newPost);
-          discussionForm.reset();
-        } catch (error) {
-          console.error("Error adding post:", error);
-          showError("Failed to post topic. Please try again.");
-        }
-        
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Post Topic";
-      }
-    });
-
-    // Mobile nav toggle logic
-    const navToggle = document.querySelector(".mobile-nav-toggle");
-    const navLinks = document.querySelector(".nav-links");
-
-    if (navToggle && navLinks) {
-      navToggle.addEventListener("click", () => {
-        const visible = navLinks.getAttribute("data-visible") === "true";
-        navLinks.setAttribute("data-visible", !visible);
-        navToggle.setAttribute("aria-expanded", !visible);
-      });
-    }
-
-    // Initialize everything
-    document.addEventListener("DOMContentLoaded", () => {
+      // Initialize AOS
       AOS.init({
         duration: 800,
         easing: 'ease-in-out',
         once: true
       });
-      
+
+      // Get DOM elements
+      const discussionForm = document.getElementById("postForm");
+      const discussionContainer = document.getElementById("discussionContainer");
+      const loadingContainer = document.getElementById("loadingContainer");
+      const errorContainer = document.getElementById("errorContainer");
+      const submitBtn = document.getElementById("submitBtn");
+
+      // Show error message
+      function showError(message) {
+        errorContainer.innerHTML = `<div class="error">${message}</div>`;
+        setTimeout(() => {
+          errorContainer.innerHTML = "";
+        }, 5000);
+      }
+
+      // Format timestamp
+      function formatTimestamp(timestamp) {
+        if (!timestamp) return "Just now";
+        const date = timestamp.toDate();
+        return date.toLocaleString();
+      }
+
+      // Helper: Create discussion post element from data object
+      function createDiscussionPost(post, docId) {
+        const postElement = document.createElement("div");
+        postElement.classList.add("discussion-post");
+        postElement.setAttribute("data-aos", "fade-up");
+
+        // Main content
+        const heading = document.createElement("h3");
+        heading.textContent = post.topic;
+
+        const description = document.createElement("p");
+        description.textContent = post.description;
+
+        // Post metadata
+        const metaDiv = document.createElement("div");
+        metaDiv.classList.add("post-meta");
+        metaDiv.textContent = `Posted ${formatTimestamp(post.createdAt)}`;
+
+        postElement.appendChild(heading);
+        postElement.appendChild(description);
+        postElement.appendChild(metaDiv);
+
+        // Actions (upvote, downvote)
+        const actions = document.createElement("div");
+        actions.classList.add("actions");
+
+        const upvoteBtn = document.createElement("button");
+        upvoteBtn.textContent = `👍 ${post.upvotes || 0}`;
+        upvoteBtn.addEventListener("click", async () => {
+          upvoteBtn.disabled = true;
+          try {
+            const postRef = db.collection("posts").doc(docId);
+            await postRef.update({
+              upvotes: firebase.firestore.FieldValue.increment(1)
+            });
+          } catch (error) {
+            console.error("Error upvoting:", error);
+            showError("Failed to upvote. Please try again.");
+          }
+          upvoteBtn.disabled = false;
+        });
+
+        const downvoteBtn = document.createElement("button");
+        downvoteBtn.textContent = `👎 ${post.downvotes || 0}`;
+        downvoteBtn.addEventListener("click", async () => {
+          downvoteBtn.disabled = true;
+          try {
+            const postRef = db.collection("posts").doc(docId);
+            await postRef.update({
+              downvotes: firebase.firestore.FieldValue.increment(1)
+            });
+          } catch (error) {
+            console.error("Error downvoting:", error);
+            showError("Failed to downvote. Please try again.");
+          }
+          downvoteBtn.disabled = false;
+        });
+
+        actions.appendChild(upvoteBtn);
+        actions.appendChild(downvoteBtn);
+        postElement.appendChild(actions);
+
+        // Reply form
+        const replyForm = document.createElement("form");
+        replyForm.classList.add("reply-form");
+
+        const replyTextarea = document.createElement("textarea");
+        replyTextarea.placeholder = "Write a reply...";
+        replyTextarea.required = true;
+        replyTextarea.maxLength = 300;
+        replyForm.appendChild(replyTextarea);
+
+        const replySubmit = document.createElement("button");
+        replySubmit.textContent = "Reply";
+        replyForm.appendChild(replySubmit);
+
+        replyForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const replyText = replyTextarea.value.trim();
+          if (replyText) {
+            replySubmit.disabled = true;
+            replySubmit.textContent = "Posting...";
+            
+            try {
+              const postRef = db.collection("posts").doc(docId);
+              const replyData = {
+                text: replyText,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+              };
+              await postRef.update({
+                replies: firebase.firestore.FieldValue.arrayUnion(replyData)
+              });
+              replyTextarea.value = "";
+            } catch (error) {
+              console.error("Error adding reply:", error);
+              showError("Failed to add reply. Please try again.");
+            }
+            
+            replySubmit.disabled = false;
+            replySubmit.textContent = "Reply";
+          }
+        });
+
+        postElement.appendChild(replyForm);
+
+        // Replies container
+        const replyList = document.createElement("div");
+        replyList.classList.add("replies");
+        postElement.appendChild(replyList);
+
+        // Render existing replies
+        if (post.replies && post.replies.length > 0) {
+          renderReplies(replyList, post.replies);
+        }
+
+        return postElement;
+      }
+
+      // Render replies
+      function renderReplies(container, replies) {
+        container.innerHTML = "";
+        replies.forEach(reply => {
+          const replyDiv = document.createElement("div");
+          replyDiv.classList.add("reply");
+          
+          // Handle both old string replies and new object replies
+          if (typeof reply === 'string') {
+            replyDiv.textContent = reply;
+          } else {
+            replyDiv.innerHTML = `
+              <div>${reply.text}</div>
+              <small style="color: #666; font-size: 0.8em;">${formatTimestamp(reply.timestamp)}</small>
+            `;
+          }
+          
+          container.appendChild(replyDiv);
+        });
+      }
+
+      // Listen for real-time updates
+      function setupRealTimeListener() {
+        loadingContainer.style.display = "block";
+        
+        const unsubscribe = db.collection("posts")
+          .orderBy("createdAt", "desc")
+          .onSnapshot(snapshot => {
+            loadingContainer.style.display = "none";
+            discussionContainer.innerHTML = "";
+            
+            if (snapshot.empty) {
+              discussionContainer.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: #666;">
+                  <h3>No discussions yet</h3>
+                  <p>Be the first to start a discussion!</p>
+                </div>
+              `;
+              return;
+            }
+            
+            snapshot.forEach(doc => {
+              const postData = doc.data();
+              postData.upvotes = postData.upvotes || 0;
+              postData.downvotes = postData.downvotes || 0;
+              postData.replies = postData.replies || [];
+              const postElement = createDiscussionPost(postData, doc.id);
+              discussionContainer.appendChild(postElement);
+            });
+            
+            // Refresh AOS animations for new elements
+            AOS.refresh();
+          }, error => {
+            loadingContainer.style.display = "none";
+            console.error("Error loading posts:", error);
+            showError("Failed to load discussions. Please refresh the page.");
+          });
+        
+        return unsubscribe;
+      }
+
+      // On form submit, add a new post
+      discussionForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const topic = document.getElementById("topic").value.trim();
+        const description = document.getElementById("description").value.trim();
+
+        if (topic && description) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Posting...";
+          
+          try {
+            const newPost = {
+              topic,
+              description,
+              upvotes: 0,
+              downvotes: 0,
+              replies: [],
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            await db.collection("posts").add(newPost);
+            discussionForm.reset();
+          } catch (error) {
+            console.error("Error adding post:", error);
+            showError("Failed to post topic. Please try again.");
+          }
+          
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Post Topic";
+        }
+      });
+
+      // Mobile nav toggle logic
+      const navToggle = document.querySelector(".mobile-nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", () => {
+          const visible = navLinks.getAttribute("data-visible") === "true";
+          navLinks.setAttribute("data-visible", !visible);
+          navToggle.setAttribute("aria-expanded", !visible);
+        });
+      }
+
+      // Initialize the real-time listener
       setupRealTimeListener();
     });
   </script>
