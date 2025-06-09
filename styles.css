@@ -94,6 +94,52 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.partners-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #f9fbfd;
+}
+
+.section-subtitle {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.partner-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+}
+
+.partner-card:hover {
+    transform: scale(1.05);
+}
+
+.partner-logo {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.partner-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+
 .nav-content {
     max-width: var(--max-width);
     margin: 0 auto;
