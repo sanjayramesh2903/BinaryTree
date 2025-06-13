@@ -2185,3 +2185,39 @@ body.menu-open .nav-links a:first-child {
 .section {
     padding: 2rem var(--container-padding);
 }
+
+.partners-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.section-intro {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.partner {
+    margin-bottom: 2.5rem;
+}
+
+.partner h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.partner p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
