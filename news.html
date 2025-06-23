@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>News - BinaryTree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-content">
+      <img src="assets/icon.png" alt="small-logo" class="small-logo">
+      <a href="index.html" class="nav-logo">BinaryTree</a>
+      <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+        <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        <span class="sr-only">Menu</span>
+      </button>
+      <div class="nav-links" data-visible="false">
+        <a href="index.html">Home</a>
+        <a href="mission.html">Mission</a>
+        <a href="team.html">Team</a>
+        <a href="ide.html">Python IDE</a>
+        <a href="ai-chat.html">AI Chat</a>
+        <a href="partners.html">Partners</a>
+        <a href="news.html">News</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <h1>News & Updates</h1>
+      <p>Real stories from students, perspectives from volunteers, cultural commentary, and more.</p>
+    </section>
+
+    <section class="news-container">
+      <div class="news-card">
+        <img src="assets/news1.jpg" alt="Binary Tree">
+        <div class="news-content">
+          <h2 class="news-title">Student Perspective: What is Binary Tree?</h2>
+          <p class="news-meta">Ben Standefer • July 2025</p>
+          <p class="news-summary">Coming Soon</p>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <img src="assets/news2.jpg" alt="Hackathon event">
+        <div class="news-content">
+          <h2 class="news-title">Youth Hackathon Summer 2025</h2>
+          <p class="news-meta">Ben Standefer • July 2025</p>
+          <p class="news-summary">Coming Soon</p>
+        </div>
+      </div>
+      
+      <div class="news-card">
+        <img src="assets/news3.jpg" alt="TEDI">
+        <div class="news-content">
+          <h2 class="news-title">TEDI Tanzania & Binary Tree</h2>
+          <p class="news-meta">Ben Standefer • July 2025</p>
+          <p class="news-summary">Coming Soon</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 BinaryTree. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    AOS.init({ duration: 800, once: true, offset: 100 });
+
+    const primaryNav = document.querySelector('.nav-links');
+    const navToggle = document.querySelector('.mobile-nav-toggle');
+    const navbar = document.querySelector('.navbar');
+
+    navToggle.addEventListener('click', () => {
+      const visibility = primaryNav.getAttribute('data-visible');
+      const expanded = visibility !== "true";
+      primaryNav.setAttribute('data-visible', expanded);
+      navToggle.setAttribute('aria-expanded', expanded);
+      navbar.classList.toggle('nav-open', expanded);
+      document.body.classList.toggle('menu-open', expanded);
+    });
+
+    primaryNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (primaryNav.getAttribute('data-visible') === "true") {
+          primaryNav.setAttribute('data-visible', false);
+          navToggle.setAttribute('aria-expanded', false);
+          navbar.classList.remove('nav-open');
+          document.body.classList.remove('menu-open');
+        }
+      });
+    });
+  </script>
+
+  <style>
+    .hero {
+      background: #E5EEFC;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #555;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .news-container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .news-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .news-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .news-content {
+      padding: 1.5rem;
+    }
+
+    .news-title {
+      font-size: 1.3rem;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .news-meta {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 0.8rem;
+    }
+
+    .news-summary {
+      font-size: 1rem;
+      color: #333;
+    }
+
+    footer {
+      background: #C4CEDC;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+  </style>
+</body>
+</html>
