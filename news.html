@@ -53,14 +53,16 @@
     </section>
 
     <section class="news-container">
-      <div class="news-card">
-        <img src="assets/news1.jpg" alt="Binary Tree">
-        <div class="news-content">
-          <h2 class="news-title">Student Perspective: What is Binary Tree?</h2>
-          <p class="news-meta">Ben Standefer • July 2025</p>
-          <p class="news-summary">Coming Soon</p>
-        </div>
-      </div>
+        <a href="news1.html" class="news-card">
+            <img src="assets/icon.png" alt="Binary Tree">
+            <div class="news-content">
+              <h2 class="news-title">Student Perspective: What is Binary Tree?</h2>
+              <p class="news-meta">Ben Standefer • July 2025</p>
+              <p class="news-summary">A brief recap of Binary Tree since its founding and the work we do.</p>
+            </div>
+          </a>
+          
+          
 
       <div class="news-card">
         <img src="assets/news2.jpg" alt="Hackathon event">
@@ -188,6 +190,17 @@
       font-size: 0.9rem;
       margin-top: 3rem;
     }
+    a.news-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+a.news-card:hover {
+  transform: translateY(-4px);
+  transition: transform 0.2s ease;
+}
+
   </style>
 </body>
 </html>
