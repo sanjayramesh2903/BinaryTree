@@ -19,12 +19,110 @@
 </head>
 <style>
 
+.mission-statement-split {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: #f8f9fb;
+}
+
+.mission-content {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  width: 100%;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mission-text {
+  flex: 1 1 500px;
+}
+
+.mission-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.mission-text p {
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.mission-image {
+  flex: 1 1 400px;
+  text-align: center;
+}
+
+.mission-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+
+.advisory-board {
+    text-align: center;
+    margin: 4rem auto;
+    max-width: 1000px;
+    padding: 0 2rem;
+}
+
+.advisory-board h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.advisory-board p {
+    font-size: 1.1rem;
+    color: #444;
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+}
+
+.advisors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.advisor-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    max-width: 300px;
+    text-align: center;
+}
+
+.advisor-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.advisor-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.advisor-card p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
 
 </style>
 <body>
     <div id="navbar-container"></div>
     
-
     <main>
         <section class="mission-hero">
             <div class="hero-content">
@@ -48,42 +146,42 @@
         </section>
 
         <div class="content">
-            <section class="mission-grid">
-                <div class="mission-card" data-aos="fade-up">
-                    <div class="mission-icon" data-aos="zoom-in" data-aos-delay="100">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                    </div>
-                    <h2 data-aos="fade-up" data-aos-delay="200">Education</h2>
-                    <p data-aos="fade-up" data-aos-delay="300">Empowering through knowledge.</p>
-                </div>
+            
 
-                <div class="mission-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="mission-icon" data-aos="zoom-in" data-aos-delay="300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                    </div>
-                    <h2 data-aos="fade-up" data-aos-delay="400">Programming</h2>
-                    <p data-aos="fade-up" data-aos-delay="500">Building skills for the future.</p>
+            <section class="mission-statement-split" data-aos="fade-up">
+                <div class="mission-content">
+                  <div class="mission-text" data-aos="fade-right" data-aos-delay="100">
+                    <h2>Who We Are</h2>
+                    <p>
+                      BinaryTree is a 501(c)(3) non-profit organization dedicated to bridging the digital divide and bringing quality technology education to underserved communities in developing countries.
+                    </p>
+                  </div>
+                  <div class="mission-image" data-aos="fade-left" data-aos-delay="200">
+                    <img src="assets/sampleimage.png" alt="Students in a computer lab">
+                  </div>
                 </div>
+              </section>
+              
 
-                <div class="mission-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="mission-icon" data-aos="zoom-in" data-aos-delay="500">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+            <section class="advisory-board" data-aos="fade-up">
+                <h2 data-aos="fade-up" data-aos-delay="100">Advisory Board</h2>
+                <p data-aos="fade-up" data-aos-delay="200">
+                    BinaryTree’s advisory board is composed of international community leaders who have helped us cultivate our values and establish ourselves as the world’s leading youth-led digital literacy nonprofit.
+                </p>
+                <div class="advisors-grid">
+                    <div class="advisor-card" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="assets/gloriaaaaa.jpeg" alt="Gloria Anderson">
+                        <h3>Gloria Anderson</h3>
+                        <p>Gloria is one of the kindest and most empathetic leaders you'll find. She's been with Binary Tree since day one and is the reason we thrive today.</p>
                     </div>
-                    <h2 data-aos="fade-up" data-aos-delay="600">Support</h2>
-                    <p data-aos="fade-up" data-aos-delay="700">Guiding and mentoring.</p>
+                    <div class="advisor-card" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="assets/michaelllll.jpg" alt="Michael Nyawino">
+                        <h3>Michael Nyawino</h3>
+                        <p>Michael is a respected grassroots organizer in Kenya and helped us establish strong international footholds. He embodies Binary Tree's values on a daily basis.</p>
+                    </div>
                 </div>
             </section>
-
-            <section class="mission-statement" data-aos="fade-up">
-                <h2 data-aos="fade-up" data-aos-delay="100">Who We Are</h2>
-                <p data-aos="fade-up" data-aos-delay="200">BinaryTree is a 501(c)(3) non-profit organization dedicated to bridging the digital divide and bringing quality technology education to underserved communities in developing countries.</p>
-            </section>
+            
 
             <section class="current-initiatives" data-aos="fade-up">
                 <h2 data-aos="fade-up" data-aos-delay="100">Current Initiatives</h2>
