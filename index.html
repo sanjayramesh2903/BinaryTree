@@ -6,173 +6,290 @@
     <title>BinaryTree - Empowering Digital Education</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" href="assets/icon.png">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fbfd;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .nav-logo img {
+            height: 32px;
+            margin-right: 10px;
+        }
+
+        .nav-links a {
+            margin-left: 1.2rem;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .hero {
+            height: 100vh;
+            background: url('assets/aaaa.png') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .impact-gallery {
+            background: #f5f9ff;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-grid img {
+    width: 100%;
+    height: 200px; /* You can adjust this height to what looks good */
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        .news-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(to right, #e5ecf9, #f3f8ff);
+            text-align: center;
+        }
+
+        .news-cards {
+            max-width: 900px;
+            margin: 2rem auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            background: white;
+            border-left: 5px solid #3498db;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .news-card h3 {
+            margin-top: 0;
+        }
+
+        .news-card a {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #3498db;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .partners-section, .contact-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .partner-card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 160px; /* Fixed height */
+    width: 100%;   /* Let the grid control width */
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+
+.partner-logo {
+    max-height: 120px;
+    object-fit: contain;
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+    .contact-button.email {
+    background-color: #4a6fa5;
+}
+
+.contact-button.instagram {
+    background-color: #d17c8c;
+}
+
+.contact-button.youtube {
+    background-color: #a94442;
+}
+
+.contact-buttons a {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    color: white; /* <-- This line fixes the issue */
+}
+
+
+.contact-button.linkedin {
+    background-color: #507a93;
+}
+
+.contact-button.team {
+    background-color: #6c8aad;
+}
+
+/* Optional: soften on hover */
+.contact-buttons a:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <img src = assets/icon.png alt = "small-logo" class = "small-logo">
-            <a href="index.html" class="nav-logo">BinaryTree</a>
-            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
-                <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-                <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-                <span class="sr-only">Menu</span>
-            </button>
-            <div class="nav-links" data-visible="false">
-                <a href="index.html">Home</a>
-                <a href="mission.html">Mission</a>
-               
-                
-                <a href="team.html">Team</a>
-                <a href="ide.html">Python IDE</a>
-                <a href="ai-chat.html">AI Chat</a>
-                
-                <a href="partners.html">Partners</a>
-                <a href="news.html">News</a>
+    <div id="navbar-container"></div>
+
+    <section class="hero">
+        <h1 data-aos="fade-down">Binary Tree: Empowering African Youth</h1>
+        
+    </section>
+
+    <section id="gallery" class="impact-gallery" data-aos="fade-up">
+        <h2>Inside Our Classrooms</h2>
+        <div class="gallery-grid">
+            <img src="assets/aaa.png" alt="Classroom Activity 1">
+            <img src="assets/aaaaa.jpeg" alt="Classroom Activity 2">
+            <img src="assets/aa.jpeg" alt="Classroom Activity 3">
+            <img src="assets/xax.png" alt="Classroom Activity 4">
+        </div>
+    </section>
+
+    <section id="news" class="news-section" data-aos="fade-up">
+        <h2>Latest News & Updates</h2>
+        <div class="news-cards">
+            <div class="news-card">
+                <h3>🤝 New Partnership with Sartify</h3>
+                <p>BinaryTree is officially partnering with Sartify. We'll be using tools like NenaAI and PawaAI in future series in East Africa. </p>
+                <a href="news.html">Read More</a>
+            </div>
+            <div class="news-card">
+                <h3>🤖 Hackathon Wrapping Up!</h3>
+                <p>Our June-July 2025 Hackathon is wrapping up with submissions from former Kenyan and Tanzanian students as well as enthusiastic programmers and entrepreneurs from across Africa. </p>
+                <a href="news.html">Read More</a>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <main>
-        <section class="hero">
-            <h1 data-aos="fade-down">Discover the World of BinaryTree</h1>
-            <h2 data-aos="fade-up" data-aos-delay="200">Support Our Mission</h2>
-            <img src = assets/icon.png alt = "logo" class = "logo" data-aos="zoom-in" data-aos-delay="400">
-        </section>
-
-        <div class="content">
-            <section class="explore-section" data-aos="fade-up">
-                <h2 data-aos="fade-up" data-aos-delay="100">Ready to start learning?</h2>
-                <p data-aos="fade-up" data-aos-delay="200">Discover how BinaryTree can help you master computer science.</p>
-                <a href="mission.html" class="explore-button" data-aos="fade-up" data-aos-delay="300">Explore More</a>
-            </section>
-
-            <section id="partners" class="section partners-section">
-                <h2 class="section-title" data-aos="fade-up">Our Sponsors & Partners</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                    We are proud to be supported by organizations that share our mission of expanding digital literacy across Africa. These partnerships help us reach more students, build more programs, and make a lasting impact.
-                </p>
-            
-                <div class="partners-grid">
-                    <!-- Partner 1 -->
-                    <div class="partner-card" data-aos="fade-up" data-aos-delay="200">
-                        <img src="assets/tedi.jpg" alt="Partner 1 Logo" class="partner-logo">
-                        <p class="partner-name">TEDI Tanzani</p>
-                    </div>
-            
-                    <!-- Partner 2 -->
-                    <div class="partner-card" data-aos="fade-up" data-aos-delay="300">
-                        <img src="assets/cohecf.jpeg" alt="Partner 2 Logo" class="partner-logo">
-                        <p class="partner-name">COHECF-Kenya</p>
-                    </div>
-            
-                    <!-- Partner 3 -->
-                    <div class="partner-card" data-aos="fade-up" data-aos-delay="400">
-                        <img src="assets/gnofar.png" alt="Partner 3 Logo" class="partner-logo">
-                        <p class="partner-name">GNO Far</p>
-                    </div>
-            
-                    <!-- Partner 4 -->
-                    <div class="partner-card" data-aos="fade-up" data-aos-delay="500">
-                        <img src="assets/acri.png" alt="Partner 4 Logo" class="partner-logo">
-                        <p class="partner-name">ACRI Uganda</p>
-                    </div>
-            
-                    <!-- Partner 5 -->
-                    <div class="partner-card" data-aos="fade-up" data-aos-delay="600">
-                        <img src="assets/coderlevelup.png" alt="Partner 5 Logo" class="partner-logo">
-                        <p class="partner-name">Coder:Level Up</p>
-                    </div>
-            
-                    <!-- Partner 6 -->
-                    <div class="partner-card" data-aos="fade-up" data-aos-delay="700">
-                        <img src="assets/angazacenter.jpeg" alt="Partner 6 Logo" class="partner-logo">
-                        <p class="partner-name">Angaza Center</p>
-                    </div>
-                </div>
-            </section>
-            
-
-            <section id="contact" class="contact-section">
-                <h2 data-aos="fade-up">Contact Us</h2>
-                <p data-aos="fade-up" data-aos-delay="100">Ready to make a difference? Join our mission to empower through education.</p>
-                <div class="contact-buttons">
-                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=binarytree61@gmail.com&tf=cm" class="contact-button email" data-aos="fade-up" data-aos-delay="200">Email Us</a>
-                    <a href="https://www.instagram.com/binarytreeofficial/" class="contact-button instagram" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-delay="250">Instagram</a>
-                    <a href="https://www.youtube.com/@BinaryTree-t8z" class="contact-button youtube" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-delay="300">YouTube</a>
-                    <a href="https://www.linkedin.com/company/binarytree-official/?trk=public_post_feed-actor-name" class="contact-button linkedin" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-delay="350">LinkedIn</a>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScA8y0n1wZykUefJ7mCOaW6t9LVg52q_LbKA3bh4V83vCOK6g/viewform?usp=dialog" class="contact-button team" data-aos="fade-up" data-aos-delay="400">Join the Team</a>
-                </div>
-            </section>
+    <section id="partners" class="partners-section" data-aos="fade-up">
+        <h2>Our Sponsors & Partners</h2>
+        <div class="partners-grid">
+            <div class="partner-card"><img src="assets/tedi.jpg" alt="TEDI" class="partner-logo"><p>TEDI Tanzani</p></div>
+            <div class="partner-card"><img src="assets/cohecf.jpeg" alt="COHECF" class="partner-logo"><p>COHECF-Kenya</p></div>
+            <div class="partner-card"><img src="assets/gnofar.png" alt="GNO Far" class="partner-logo"><p>GNO Far</p></div>
+            <div class="partner-card"><img src="assets/acri.png" alt="ACRI Uganda" class="partner-logo"><p>ACRI Uganda</p></div>
+            <div class="partner-card"><img src="assets/coderlevelup.png" alt="Coder Level Up" class="partner-logo"><p>Coder:Level Up</p></div>
+            <div class="partner-card"><img src="assets/angazacenter.jpeg" alt="Angaza Center" class="partner-logo"><p>Angaza Center</p></div>
         </div>
-    </main>
+    </section>
+
+    <section id="contact" class="contact-section" data-aos="fade-up">
+        <h2>Connect With Us</h2>
+        <p>Reach out to volunteer, partner, or ask questions about our programs.</p>
+        <div class="contact-buttons">
+            <a href="https://mail.google.com/mail/u/0/?fs=1&to=binarytree61@gmail.com&tf=cm" class="contact-button team"  target="_blank">Email Us</a>
+            <a href="https://www.instagram.com/binarytreeofficial/" class="contact-button instagram" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com/@BinaryTree-t8z" class="contact-button youtube" target="_blank">YouTube</a>
+            <a href="https://www.linkedin.com/company/binarytree-official/?trk=public_post_feed-actor-name" class="contact-button linkedin" target="_blank">LinkedIn</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScA8y0n1wZykUefJ7mCOaW6t9LVg52q_LbKA3bh4V83vCOK6g/viewform?usp=dialog" class="contact-button team">Join the Team</a>
+        </div>
+    </section>
 
     <footer>
-        <div class="footer-content" data-aos="fade-up">
-            <p>&copy; 2025 BinaryTree. All rights reserved.</p>
-        </div>
+        <p>&copy; 2025 BinaryTree. All rights reserved.</p>
     </footer>
 
     <script>
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
-    </script>
-    <script>
-        const primaryNav = document.querySelector('.nav-links');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
-        const navbar = document.querySelector('.navbar'); // Get the navbar element
-
-        navToggle.addEventListener('click', () => {
-            const visibility = primaryNav.getAttribute('data-visible');
-
-            if (visibility === "false" || visibility === null) {
-                primaryNav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-                navbar.classList.add('nav-open'); // Add class to navbar
-                document.body.classList.add('menu-open'); // Add class to body
-            } else {
-                primaryNav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-                navbar.classList.remove('nav-open'); // Remove class from navbar
-                document.body.classList.remove('menu-open'); // Remove class from body
-            }
-        });
-
-        // Close menu when a link is clicked (optional but good UX)
-        primaryNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (primaryNav.getAttribute('data-visible') === "true") {
-                    primaryNav.setAttribute('data-visible', false);
-                    navToggle.setAttribute('aria-expanded', false);
-                    navbar.classList.remove('nav-open');
-                    document.body.classList.remove('menu-open'); // Remove class from body
-                }
-            });
-        });
+        fetch('navbar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      });
+        AOS.init({ duration: 800, once: true });
     </script>
 </body>
 </html>
