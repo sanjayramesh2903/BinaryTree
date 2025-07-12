@@ -11,7 +11,6 @@
         top: 0;
         z-index: 1000;
         flex-wrap: wrap;
-        position: relative; /* For absolute positioning of dropdown */
     }
     
     .nav-logo {
@@ -62,16 +61,9 @@
     
         .nav-links {
             display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: #ffffff;
+            width: 100%;
             flex-direction: column;
-            text-align: center;
-            padding: 1rem 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 999;
+            margin-top: 1rem;
         }
     
         .nav-links.active {
@@ -79,14 +71,8 @@
         }
     
         .nav-links a {
-            padding: 0.75rem 1rem;
-            margin: 0.25rem 0;
-            font-size: 1.1rem;
+            padding: 0.75rem 0;
             border-top: 1px solid #eee;
-            border-radius: 8px;
-            background: #f7fafd;
-            width: 90%;
-            margin: 0.25rem auto;
         }
     }
     </style>
@@ -116,14 +102,5 @@
         const navLinks = document.getElementById('navLinks');
         navLinks.classList.toggle('active');
     }
-    
-    // Optional: auto-collapse when link is clicked (mobile UX)
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-    });
     </script>
     
