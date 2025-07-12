@@ -352,11 +352,30 @@
 
     <script>
         fetch('navbar.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-      });
+          .then(res => res.text())
+          .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+        
+            // Activate hamburger functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.getElementById('navLinks');
+        
+            if (hamburger && navLinks) {
+              hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+              });
+        
+              // Optional: Close menu when a link is clicked
+              document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                  navLinks.classList.remove('active');
+                });
+              });
+            }
+          });
+        
         AOS.init({ duration: 800, once: true });
-    </script>
+        </script>
+        
 </body>
 </html>
