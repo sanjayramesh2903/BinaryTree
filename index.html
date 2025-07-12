@@ -12,6 +12,10 @@
     <link rel="icon" href="assets/icon.png">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Outfit', sans-serif;
             margin: 0;
@@ -19,6 +23,7 @@
             background-color: #f9fbfd;
             color: #1a1a1a;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         .navbar {
@@ -56,6 +61,7 @@
 
         .hero {
             height: 100vh;
+            min-height: 500px;
             background: url('assets/aaaa.png') center/cover no-repeat;
             display: flex;
             flex-direction: column;
@@ -65,16 +71,36 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.7);
             text-align: center;
             padding: 0 1rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero h1, .hero h2 {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
             font-size: 3rem;
             font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .hero h2 {
             font-size: 1.5rem;
             margin-top: 1rem;
+            font-weight: 400;
         }
 
         .impact-gallery {
@@ -83,22 +109,30 @@
             text-align: center;
         }
 
+        .impact-gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .gallery-grid img {
-    width: 100%;
-    height: 200px; /* You can adjust this height to what looks good */
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
 
         .gallery-grid img:hover {
             transform: scale(1.05);
@@ -108,6 +142,12 @@
             padding: 4rem 2rem;
             background: linear-gradient(to right, #e5ecf9, #f3f8ff);
             text-align: center;
+        }
+
+        .news-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
         }
 
         .news-cards {
@@ -121,14 +161,27 @@
         .news-card {
             background: white;
             border-left: 5px solid #3498db;
-            padding: 1rem 1.5rem;
+            padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
         .news-card h3 {
             margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+
+        .news-card p {
+            color: #666;
+            line-height: 1.6;
         }
 
         .news-card a {
@@ -137,6 +190,11 @@
             color: #3498db;
             font-weight: 600;
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .news-card a:hover {
+            color: #2980b9;
         }
 
         .partners-section, .contact-section {
@@ -144,130 +202,337 @@
             text-align: center;
         }
 
+        .partners-section h2, .contact-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .partner-card {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 160px; /* Fixed height */
-    width: 100%;   /* Let the grid control width */
-    box-sizing: border-box;
-    justify-content: space-between;
-}
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 180px;
+            width: 100%;
+            box-sizing: border-box;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
 
-.partner-logo {
-    max-height: 120px;
-    object-fit: contain;
-    width: 100%;
-    border-radius: 8px;
-}
+        .partner-logo {
+            max-height: 120px;
+            object-fit: contain;
+            width: 100%;
+            border-radius: 8px;
+        }
 
+        .partner-card p {
+            margin: 0;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+        }
 
-    .contact-button.email {
-    background-color: #4a6fa5;
-}
+        .contact-button.email {
+            background-color: #4a6fa5;
+        }
 
-.contact-button.instagram {
-    background-color: #d17c8c;
-}
+        .contact-button.instagram {
+            background-color: #d17c8c;
+        }
 
-.contact-button.youtube {
-    background-color: #a94442;
-}
+        .contact-button.youtube {
+            background-color: #a94442;
+        }
 
-#who-we-are {
-    padding: 4rem 2rem 2rem;
-    text-align: center;
-}
+        #who-we-are {
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
 
-#who-we-are h2 {
-    margin-bottom: 1.5rem;
-}
+        #who-we-are h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
 
-#who-we-are p {
-    margin-bottom: 2.5rem;
-}
+        #who-we-are p {
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
 
-.video-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
+        .video-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
 
+        .video-wrapper {
+            flex: 1 1 480px;
+            max-width: 560px;
+            aspect-ratio: 16 / 9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-.video-wrapper {
-    flex: 1 1 480px;
-    max-width: 560px;
-    aspect-ratio: 16 / 9;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 20px;
+        }
 
-.video-wrapper iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 20px;
-}
+        .video-wrapper:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+        }
 
-.video-wrapper:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
-}
+        .video-grid.single-video {
+            justify-content: center;
+            margin-top: 2rem;
+        }
 
-.video-grid.single-video {
-    justify-content: center;
-    margin-top: 2rem;
-}
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
 
+        .contact-buttons a {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            text-align: center;
+        }
 
-.contact-buttons a {
-    display: inline-block;
-    margin: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    color: white; /* <-- This line fixes the issue */
-}
+        .contact-button.linkedin {
+            background-color: #507a93;
+        }
 
+        .contact-button.team {
+            background-color: #6c8aad;
+        }
 
-.contact-button.linkedin {
-    background-color: #507a93;
-}
-
-.contact-button.team {
-    background-color: #6c8aad;
-}
-
-/* Optional: soften on hover */
-.contact-buttons a:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
+        .contact-buttons a:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
 
         footer {
             background: #2c3e50;
             color: white;
             text-align: center;
-            padding: 1rem;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hero {
+                height: 80vh;
+                min-height: 400px;
+                padding: 0 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+                margin-top: 0.5rem;
+            }
+
+            .impact-gallery, .news-section, .partners-section, .contact-section, #who-we-are {
+                padding: 2rem 1rem;
+            }
+
+            .impact-gallery h2, .news-section h2, .partners-section h2, .contact-section h2, #who-we-are h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .gallery-grid img {
+                height: 180px;
+            }
+
+            .news-cards {
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .news-card {
+                padding: 1rem;
+            }
+
+            .news-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .partners-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .partner-card {
+                height: 140px;
+                padding: 1rem;
+            }
+
+            .partner-logo {
+                max-height: 80px;
+            }
+
+            .partner-card p {
+                font-size: 0.9rem;
+            }
+
+            .video-grid {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .video-wrapper {
+                flex: none;
+                max-width: 100%;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .contact-buttons a {
+                width: 200px;
+                padding: 0.8rem 1rem;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero h2 {
+                font-size: 1rem;
+            }
+
+            .impact-gallery, .news-section, .partners-section, .contact-section, #who-we-are {
+                padding: 1.5rem 0.8rem;
+            }
+
+            .impact-gallery h2, .news-section h2, .partners-section h2, .contact-section h2, #who-we-are h2 {
+                font-size: 1.5rem;
+            }
+
+            .gallery-grid img {
+                height: 150px;
+            }
+
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .partner-card {
+                height: 120px;
+                padding: 0.8rem;
+            }
+
+            .partner-logo {
+                max-height: 60px;
+            }
+
+            .partner-card p {
+                font-size: 0.8rem;
+            }
+
+            .contact-buttons a {
+                width: 180px;
+                padding: 0.7rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Tablet Styles */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .partners-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .video-wrapper {
+                flex: 1 1 400px;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                height: 100vh;
+                min-height: 300px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -367,7 +632,98 @@
       .then(res => res.text())
       .then(data => {
         document.getElementById('navbar-container').innerHTML = data;
+        
+        // Initialize mobile menu with enhanced animations
+        setTimeout(function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const menu = document.getElementById('navLinks');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const navbar = document.querySelector('.navbar');
+            
+            if (toggle && menu && overlay && navbar) {
+                console.log('Mobile menu elements found successfully');
+                
+                // Toggle menu function
+                function toggleMenu() {
+                    const isOpen = menu.classList.contains('show');
+                    
+                    if (isOpen) {
+                        // Close menu with staggered animation
+                        menu.classList.remove('show');
+                        overlay.classList.remove('show');
+                        toggle.classList.remove('active');
+                        navbar.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                        console.log('Menu closed');
+                    } else {
+                        // Open menu with staggered animation
+                        menu.classList.add('show');
+                        overlay.classList.add('show');
+                        toggle.classList.add('active');
+                        navbar.classList.add('menu-open');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Menu opened');
+                    }
+                }
+                
+                // Close menu function
+                function closeMenu() {
+                    menu.classList.remove('show');
+                    overlay.classList.remove('show');
+                    toggle.classList.remove('active');
+                    navbar.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                    console.log('Menu closed');
+                }
+                
+                // Add event listeners
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Toggle button clicked');
+                    toggleMenu();
+                });
+                
+                overlay.addEventListener('click', closeMenu);
+                
+                // Close menu when clicking nav links with delay for animation
+                const navLinks = menu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        // Add a small delay to see the click animation
+                        setTimeout(closeMenu, 150);
+                    });
+                });
+                
+                // Close menu on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMenu();
+                    }
+                });
+                
+                // Add touch support for better mobile experience
+                let touchStartY = 0;
+                let touchEndY = 0;
+                
+                menu.addEventListener('touchstart', function(e) {
+                    touchStartY = e.changedTouches[0].screenY;
+                });
+                
+                menu.addEventListener('touchend', function(e) {
+                    touchEndY = e.changedTouches[0].screenY;
+                    // Close menu on swipe up
+                    if (touchStartY - touchEndY > 50) {
+                        closeMenu();
+                    }
+                });
+                
+                console.log('Enhanced mobile menu initialized successfully');
+            } else {
+                console.log('Mobile menu elements not found');
+            }
+        }, 300);
       });
+        
         AOS.init({ duration: 800, once: true });
     </script>
 </body>

@@ -66,121 +66,338 @@
   </footer>
 
   <script>
-     fetch('navbar.html')
+    fetch('navbar.html')
       .then(res => res.text())
       .then(data => {
         document.getElementById('navbar-container').innerHTML = data;
+        
+        // Initialize mobile menu with a simple approach
+        setTimeout(function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const menu = document.getElementById('navLinks');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (toggle && menu && overlay) {
+                console.log('Mobile menu elements found successfully');
+                
+                // Toggle menu function
+                function toggleMenu() {
+                    const isOpen = menu.classList.contains('show');
+                    
+                    if (isOpen) {
+                        // Close menu
+                        menu.classList.remove('show');
+                        overlay.classList.remove('show');
+                        toggle.classList.remove('active');
+                        document.body.style.overflow = '';
+                        console.log('Menu closed');
+                    } else {
+                        // Open menu
+                        menu.classList.add('show');
+                        overlay.classList.add('show');
+                        toggle.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Menu opened');
+                    }
+                }
+                
+                // Close menu function
+                function closeMenu() {
+                    menu.classList.remove('show');
+                    overlay.classList.remove('show');
+                    toggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                    console.log('Menu closed');
+                }
+                
+                // Add event listeners
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Toggle button clicked');
+                    toggleMenu();
+                });
+                
+                overlay.addEventListener('click', closeMenu);
+                
+                // Close menu when clicking nav links
+                const navLinks = menu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+                
+                // Close menu on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMenu();
+                    }
+                });
+                
+                console.log('Mobile menu initialized successfully');
+            } else {
+                console.log('Mobile menu elements not found');
+            }
+        }, 300);
       });
+        
     AOS.init({ duration: 800, once: true, offset: 100 });
-
-    const primaryNav = document.querySelector('.nav-links');
-    const navToggle = document.querySelector('.mobile-nav-toggle');
-    const navbar = document.querySelector('.navbar');
-
-    navToggle.addEventListener('click', () => {
-      const visibility = primaryNav.getAttribute('data-visible');
-      const expanded = visibility !== "true";
-      primaryNav.setAttribute('data-visible', expanded);
-      navToggle.setAttribute('aria-expanded', expanded);
-      navbar.classList.toggle('nav-open', expanded);
-      document.body.classList.toggle('menu-open', expanded);
-    });
-
-    primaryNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        if (primaryNav.getAttribute('data-visible') === "true") {
-          primaryNav.setAttribute('data-visible', false);
-          navToggle.setAttribute('aria-expanded', false);
-          navbar.classList.remove('nav-open');
-          document.body.classList.remove('menu-open');
-        }
-      });
-    });
   </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9fbfd;
+      color: #1a1a1a;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
     .hero {
-      background: #E5EEFC;
-      padding: 3rem 2rem;
+      background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+      padding: 5rem 2rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+
+    .hero h1, .hero p {
+      position: relative;
+      z-index: 2;
     }
 
     .hero h1 {
-      font-size: 3rem;
+      font-size: 3.5rem;
       margin-bottom: 1rem;
-      color: #555;
+      color: #ffffff;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      animation: fadeInUp 0.8s ease-out;
     }
 
     .hero p {
-      font-size: 1.2rem;
-      color: #555;
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .news-container {
       max-width: 1200px;
-      margin: 3rem auto;
+      margin: 4rem auto;
       padding: 0 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
     }
 
     .news-card {
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       overflow: hidden;
-      transition: transform 0.2s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transform: translateY(0);
+    }
+
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
     }
 
     .news-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .news-card:hover::before {
+      opacity: 1;
     }
 
     .news-card img {
       width: 100%;
-      height: 180px;
+      height: 220px;
       object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .news-card:hover img {
+      transform: scale(1.05);
     }
 
     .news-content {
-      padding: 1.5rem;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
     }
 
     .news-title {
-      font-size: 1.3rem;
-      margin: 0 0 0.5rem 0;
+      font-size: 1.4rem;
+      margin: 0 0 0.8rem 0;
+      color: #2c3e50;
+      font-weight: 600;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+    }
+
+    .news-card:hover .news-title {
+      color: #3498db;
     }
 
     .news-meta {
       font-size: 0.9rem;
-      color: #888;
-      margin-bottom: 0.8rem;
+      color: #3498db;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .news-meta::before {
+      content: '📅';
+      font-size: 0.8rem;
     }
 
     .news-summary {
       font-size: 1rem;
-      color: #333;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .news-card::after {
+      content: 'Read More →';
+      position: absolute;
+      bottom: 1.5rem;
+      right: 2rem;
+      color: #3498db;
+      font-weight: 600;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .news-card:hover::after {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     footer {
-      background: #C4CEDC;
-      padding: 1rem;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      padding: 2rem;
       text-align: center;
-      font-size: 0.9rem;
-      margin-top: 3rem;
+      color: white;
+      margin-top: 4rem;
     }
-    a.news-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
 
-a.news-card:hover {
-  transform: translateY(-4px);
-  transition: transform 0.2s ease;
-}
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 3rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .news-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .news-card {
+        border-radius: 15px;
+      }
+
+      .news-content {
+        padding: 1.5rem;
+      }
+
+      .news-title {
+        font-size: 1.2rem;
+      }
+
+      .news-card::after {
+        position: static;
+        display: block;
+        margin-top: 1rem;
+        text-align: right;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .news-container {
+        padding: 0 0.5rem;
+      }
+
+      .news-content {
+        padding: 1.2rem;
+      }
+    }
   </style>
 </body>
 </html>

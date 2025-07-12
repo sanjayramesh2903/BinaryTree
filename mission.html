@@ -243,63 +243,84 @@
     </footer>
 
     <script>
-
-
-    fetch('navbar.html')
+        fetch('navbar.html')
       .then(res => res.text())
       .then(data => {
         document.getElementById('navbar-container').innerHTML = data;
-      });
-
-
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+        
+        // Initialize mobile menu with a simple approach
+        setTimeout(function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const menu = document.getElementById('navLinks');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (toggle && menu && overlay) {
+                console.log('Mobile menu elements found successfully');
+                
+                // Toggle menu function
+                function toggleMenu() {
+                    const isOpen = menu.classList.contains('show');
+                    
+                    if (isOpen) {
+                        // Close menu
+                        menu.classList.remove('show');
+                        overlay.classList.remove('show');
+                        toggle.classList.remove('active');
+                        document.body.style.overflow = '';
+                        console.log('Menu closed');
+                    } else {
+                        // Open menu
+                        menu.classList.add('show');
+                        overlay.classList.add('show');
+                        toggle.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Menu opened');
+                    }
+                }
+                
+                // Close menu function
+                function closeMenu() {
+                    menu.classList.remove('show');
+                    overlay.classList.remove('show');
+                    toggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                    console.log('Menu closed');
+                }
+                
+                // Add event listeners
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Toggle button clicked');
+                    toggleMenu();
+                });
+                
+                overlay.addEventListener('click', closeMenu);
+                
+                // Close menu when clicking nav links
+                const navLinks = menu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+                
+                // Close menu on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMenu();
+                    }
+                });
+                
+                console.log('Mobile menu initialized successfully');
             } else {
-                navbar.classList.remove('scrolled');
+                console.log('Mobile menu elements not found');
             }
-        });
-
+        }, 300);
+      });
+        
         // Initialize AOS
         AOS.init({
             duration: 800,
             once: true,
             offset: 100
-        });
-    </script>
-    <script src="ide.js"></script>
-    <script>
-        const primaryNav = document.querySelector('.nav-links');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
-        const navbar = document.querySelector('.navbar'); // Get the navbar element
-
-        navToggle.addEventListener('click', () => {
-            const visibility = primaryNav.getAttribute('data-visible');
-
-            if (visibility === "false" || visibility === null) {
-                primaryNav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-                navbar.classList.add('nav-open'); // Add class to navbar
-                document.body.classList.add('menu-open'); // Add class to body
-            } else {
-                primaryNav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-                navbar.classList.remove('nav-open'); // Remove class from navbar
-                document.body.classList.remove('menu-open'); // Remove class from body
-            }
-        });
-
-        // Close menu when a link is clicked (optional but good UX)
-        primaryNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (primaryNav.getAttribute('data-visible') === "true") {
-                    primaryNav.setAttribute('data-visible', false);
-                    navToggle.setAttribute('aria-expanded', false);
-                    navbar.classList.remove('nav-open');
-                    document.body.classList.remove('menu-open'); // Remove class from body
-                }
-            });
         });
     </script>
 </body>

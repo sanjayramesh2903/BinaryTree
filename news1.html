@@ -4,88 +4,355 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>What is Binary Tree? - BinaryTree News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/icon.png">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Outfit', sans-serif;
       margin: 0;
       padding: 0;
       line-height: 1.7;
-      background: #f9fbfe;
-      color: #333;
+      background: #f9fbfd;
+      color: #1a1a1a;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
     }
-    p {
-  margin-bottom: 1.2rem; /* or 20px, etc. */
-}
- h2 {
-    margin-bottom: 1.2rem; /* or 20px, etc. */
-}
-    header {
-      background-color: #E5EEFC;
-      padding: 2rem;
+
+    .article-hero {
+      background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+      padding: 6rem 2rem 4rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      color: #333;
+
+    .article-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      z-index: 1;
     }
+
+    .article-hero h1, .article-hero .article-meta {
+      position: relative;
+      z-index: 2;
+    }
+
+    .article-hero h1 {
+      font-size: 3.5rem;
+      margin: 0 0 1rem 0;
+      color: #ffffff;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      line-height: 1.2;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .article-hero .article-meta {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .article-hero .article-meta::before {
+      content: '✍️';
+      font-size: 1rem;
+    }
+
     .article-container {
       max-width: 800px;
-      margin: 3rem auto;
-      padding: 2rem;
+      margin: -2rem auto 4rem;
+      padding: 3rem;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
     }
-    .article-meta {
-      color: #777;
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+
+    .article-container p {
+      margin-bottom: 1.8rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #444;
     }
+
+    .article-container h2 {
+      font-size: 2rem;
+      margin: 3rem 0 1.5rem 0;
+      color: #2c3e50;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .article-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #3498db, #2ecc71);
+      border-radius: 2px;
+    }
+
+    .article-container p:first-of-type {
+      font-size: 1.2rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .back-to-news {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      padding: 0.8rem 1.5rem;
+      background: rgba(52, 152, 219, 0.1);
+      border-radius: 25px;
+      border: 1px solid rgba(52, 152, 219, 0.2);
+    }
+
+    .back-to-news:hover {
+      background: rgba(52, 152, 219, 0.2);
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+    }
+
+    .back-to-news::before {
+      content: '←';
+      font-size: 1.2rem;
+    }
+
     footer {
-      background: #C4CEDC;
-      padding: 1rem;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      padding: 2rem;
       text-align: center;
-      font-size: 0.9rem;
-      margin-top: 3rem;
+      color: white;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .article-hero {
+        padding: 4rem 1rem 3rem;
+      }
+
+      .article-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .article-hero .article-meta {
+        font-size: 1rem;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .article-container {
+        margin: -1rem auto 2rem;
+        padding: 2rem 1.5rem;
+        border-radius: 15px;
+      }
+
+      .article-container h2 {
+        font-size: 1.6rem;
+        margin: 2rem 0 1rem 0;
+      }
+
+      .article-container p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .back-to-news {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .article-hero h1 {
+        font-size: 2rem;
+      }
+
+      .article-container {
+        padding: 1.5rem 1rem;
+      }
+
+      .article-container h2 {
+        font-size: 1.4rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Student Perspective: What is Binary Tree?</h1>
-  </header>
+  <div id="navbar-container"></div>
 
-  <div class="article-container">
-    <p class="article-meta">By Ben Standefer • June 2025</p>
+  <div class="article-hero">
+    <h1 data-aos="fade-down">Student Perspective: What is Binary Tree?</h1>
+    <div class="article-meta" data-aos="fade-up" data-aos-delay="200">
+      By Ben Standefer • June 2025
+    </div>
+  </div>
 
-    <p>When I first meet new students, nonprofit leaders, or eager volunteers, it’s rare that someone knows exactly what Binary Tree is. I’ve had people guess we’re an environmental protection nonprofit planting trees, an American software company, or even an African university. I’m writing this article to hopefully give a crystal clear picture of the kind of work Binary Tree does and our founding values. The what and the why of Binary Tree. I’m not going to catalogue every project or every partnership, but I want to try and encapsulate the most impactful parts of our journey and offer a glimpse into our community. </p>
+  <div class="article-container" data-aos="fade-up" data-aos-delay="300">
+    <a href="news.html" class="back-to-news" data-aos="fade-right">Back to News</a>
+
+    <p>When I first meet new students, nonprofit leaders, or eager volunteers, it's rare that someone knows exactly what Binary Tree is. I've had people guess we're an environmental protection nonprofit planting trees, an American software company, or even an African university. I'm writing this article to hopefully give a crystal clear picture of the kind of work Binary Tree does and our founding values. The what and the why of Binary Tree. I'm not going to catalogue every project or every partnership, but I want to try and encapsulate the most impactful parts of our journey and offer a glimpse into our community.</p>
 
     <h2>THE WHAT</h2>
-    <p>Simply put, Binary Tree is a digital literacy nonprofit. We connect with communities across Africa and leverage every resource at our disposal so more people know how to turn on a computer, send an email, make a resume, create a Python program, or build a website for their burgeoning business. We’re lucky enough to currently operate in four different countries and have partnerships and community support from over a dozen organizations across multiple continents. We rarely do the same kind of work twice. We’ve led lecture series over spans of months covering basic web navigation all the way to machine learning. We’ve participated in conferences, advised on budgets, and designed social media campaigns. We’ve worked with classrooms of kids and adults twice our age. The one commonality is our determination to adapt to the communities we serve. We’re presented with a problem, and we have to figure out the best strategy to fix it. But we didn’t start here. We started with a much smaller team, no connections, and a singular desire to engineer change. </p>
-    <p>Binary Tree started with a couple of high schoolers from Texas. Shoutout to my cofounder Keshav. We all knew we wanted to teach digital literacy in Africa (for varying reasons, see THE WHY for that) and didn’t know not much else. So we cold emailed. Dozens upon dozens of emails. Just reaching out and grasping for anyone to take us under their wing, show us the ropes, and give us an opportunity to prove our passion. And somehow it worked. We were lucky enough to receive an eager response from TEDI Tanzania, a nonprofit founded in Dar es Salaam committed to bridging the digital divide (more on them in our next article!). They helped us understand the problem from an insider’s perspective. They showed us photos of the computer labs they’d built and shared stories of the lives they’d impacted. That was our spark. We saw this incredible organization that started from nothing, just like us, and had given children all over Tanzania hope and new opportunities through sheer will, passion, and time. We knew we wanted to do this same kind of work, and we knew we wanted to start NOW.</p>
-    <p>Fast forward to our very first lecture. It was a smaller group, no more than twenty Tanzanian men and women staring at us nervously, wondering if they were wasting their time being on that Zoom call. We stared back, smiling just as nervously, wondering if we were really ready to teach these total strangers the skills that could one day help them get a job or support a family. It was awkward at first. No raised hands, no comments, just wide eyes as we went through our material. At the end of the call, I honestly had no idea if a word I’d said had resonated with the group. But then one student sent me a message. A short message, just following up with a question about our slide show. That short message put an embarrassingly large smile on my face and made the rest of my day. They’d listened. Not just listened. The complete strangers we’d been lucky enough to meet UNDERSTOOD the concepts we’d laid down and cared enough about the material to ask additional questions. This was the first moment where I could breathe a sigh of relief and see a clear path forward. The work we were starting to do actually mattered. 
-    </p>
-    <p>Today, classes are anything but quiet. Part of that is on us. We learned from our mistakes (we made a lot of them) and began to design much more interactive slideshows and practice exercises to keep students engaged. More than that though, we started to form connections. Walls broke down, and awkward stares turned into friendly smiles and unabashed voices asking us to repeat a point, give an example, or just speak a little louder. I’ve been blessed to have met over 400 young adults across Africa and still keep in contact with some of those first students we knew through TEDI. This is the crux of Binary Tree. Beyond computers and code, we’re an organization that makes an effort to connect and to see the world a little differently. 
+    <p>Simply put, Binary Tree is a digital literacy nonprofit. We connect with communities across Africa and leverage every resource at our disposal so more people know how to turn on a computer, send an email, make a resume, create a Python program, or build a website for their burgeoning business. We're lucky enough to currently operate in four different countries and have partnerships and community support from over a dozen organizations across multiple continents. We rarely do the same kind of work twice. We've led lecture series over spans of months covering basic web navigation all the way to machine learning. We've participated in conferences, advised on budgets, and designed social media campaigns. We've worked with classrooms of kids and adults twice our age. The one commonality is our determination to adapt to the communities we serve. We're presented with a problem, and we have to figure out the best strategy to fix it. But we didn't start here. We started with a much smaller team, no connections, and a singular desire to engineer change.</p>
+    
+    <p>Binary Tree started with a couple of high schoolers from Texas. Shoutout to my cofounder Keshav. We all knew we wanted to teach digital literacy in Africa (for varying reasons, see THE WHY for that) and didn't know not much else. So we cold emailed. Dozens upon dozens of emails. Just reaching out and grasping for anyone to take us under their wing, show us the ropes, and give us an opportunity to prove our passion. And somehow it worked. We were lucky enough to receive an eager response from TEDI Tanzania, a nonprofit founded in Dar es Salaam committed to bridging the digital divide (more on them in our next article!). They helped us understand the problem from an insider's perspective. They showed us photos of the computer labs they'd built and shared stories of the lives they'd impacted. That was our spark. We saw this incredible organization that started from nothing, just like us, and had given children all over Tanzania hope and new opportunities through sheer will, passion, and time. We knew we wanted to do this same kind of work, and we knew we wanted to start NOW.</p>
+    
+    <p>Fast forward to our very first lecture. It was a smaller group, no more than twenty Tanzanian men and women staring at us nervously, wondering if they were wasting their time being on that Zoom call. We stared back, smiling just as nervously, wondering if we were really ready to teach these total strangers the skills that could one day help them get a job or support a family. It was awkward at first. No raised hands, no comments, just wide eyes as we went through our material. At the end of the call, I honestly had no idea if a word I'd said had resonated with the group. But then one student sent me a message. A short message, just following up with a question about our slide show. That short message put an embarrassingly large smile on my face and made the rest of my day. They'd listened. Not just listened. The complete strangers we'd been lucky enough to meet UNDERSTOOD the concepts we'd laid down and cared enough about the material to ask additional questions. This was the first moment where I could breathe a sigh of relief and see a clear path forward. The work we were starting to do actually mattered.</p>
+    
+    <p>Today, classes are anything but quiet. Part of that is on us. We learned from our mistakes (we made a lot of them) and began to design much more interactive slideshows and practice exercises to keep students engaged. More than that though, we started to form connections. Walls broke down, and awkward stares turned into friendly smiles and unabashed voices asking us to repeat a point, give an example, or just speak a little louder. I've been blessed to have met over 400 young adults across Africa and still keep in contact with some of those first students we knew through TEDI. This is the crux of Binary Tree. Beyond computers and code, we're an organization that makes an effort to connect and to see the world a little differently.</p>
 
-    </p>
     <h2>THE WHY</h2>
-    <p>So why digital literacy in Africa? Well, none of us had the exact same reason, and it’s very possible some of my colleagues will write their own ‘why’ articles in the future, so I’ll stick to what made me want to take this on. 
-</p>
-    <p>In my sophomore year, I attended a Model UN at Harvard. While the actual competition was fun, what amazed me was being able to meet people from dozens of countries across the world all together in one place. On my second day at the Model UN, I met a girl from Tunisia named Fatima. I told her how my dad was a software engineer, and how I’d learned to code from a young age, loved computers, and wanted to use those skills in the future. She told me she was also interested in programming and robotics, but that she knew absolutely no one else in her community that had those same passions. This puzzled me. She went on to describe her experience with the digital divide in her own country and across Africa as a whole. While I’d had a peripheral awareness of this inequality before, hearing someone who shared my passions and drive laying out the additional hurdles she and so many others have had to overcome struck me. The conversation ended shortly after that, but the words she’d shared stayed stuck in my brain. 
-    </p>
+    <p>So why digital literacy in Africa? Well, none of us had the exact same reason, and it's very possible some of my colleagues will write their own 'why' articles in the future, so I'll stick to what made me want to take this on.</p>
+    
+    <p>In my sophomore year, I attended a Model UN at Harvard. While the actual competition was fun, what amazed me was being able to meet people from dozens of countries across the world all together in one place. On my second day at the Model UN, I met a girl from Tunisia named Fatima. I told her how my dad was a software engineer, and how I'd learned to code from a young age, loved computers, and wanted to use those skills in the future. She told me she was also interested in programming and robotics, but that she knew absolutely no one else in her community that had those same passions. This puzzled me. She went on to describe her experience with the digital divide in her own country and across Africa as a whole. While I'd had a peripheral awareness of this inequality before, hearing someone who shared my passions and drive laying out the additional hurdles she and so many others have had to overcome struck me. The conversation ended shortly after that, but the words she'd shared stayed stuck in my brain.</p>
 
-    <p>This interaction is not the sole reason we started Binary Tree. I’d known I wanted to start a nonprofit before this. I loved service from a young age and knew this was a natural next step in my journey. But Fatima’s words kept coming back to me as I deliberated on a cause. I could think back to my own experiences with code. My dad pushing me (despite some initial resistance) to learn to code in middle school changed my life. Almost every project and accomplishment I’d taken on in high school could be traced back to programming. I knew that giving even one other person that kind of gift would give me incomparable satisfaction. I knew this was my purpose. 
-</p>
-<p>Today, Binary Tree’s ‘why’ has grown considerably. When I think of why I continue to spend hours every day attending meetings and looking over curriculum, I don’t think as much of Fatima or my father. Instead, I think of Bouba happily reiterating points to his friends. I think of Gloria taking the time to check in on me even when she’s still got a full schedule and is fighting jet lag. I think of a thousand little back-and-forths that fundamentally define Binary Tree’s giving and connecting spirit. If you’ve read this far, I hope you take the time to reach out to one of our members, learn more about their ‘why’s, and maybe join our amazing team. 
-
-</p>
+    <p>This interaction is not the sole reason we started Binary Tree. I'd known I wanted to start a nonprofit before this. I loved service from a young age and knew this was a natural next step in my journey. But Fatima's words kept coming back to me as I deliberated on a cause. I could think back to my own experiences with code. My dad pushing me (despite some initial resistance) to learn to code in middle school changed my life. Almost every project and accomplishment I'd taken on in high school could be traced back to programming. I knew that giving even one other person that kind of gift would give me incomparable satisfaction. I knew this was my purpose.</p>
+    
+    <p>Today, Binary Tree's 'why' has grown considerably. When I think of why I continue to spend hours every day attending meetings and looking over curriculum, I don't think as much of Fatima or my father. Instead, I think of Bouba happily reiterating points to his friends. I think of Gloria taking the time to check in on me even when she's still got a full schedule and is fighting jet lag. I think of a thousand little back-and-forths that fundamentally define Binary Tree's giving and connecting spirit. If you've read this far, I hope you take the time to reach out to one of our members, learn more about their 'why's, and maybe join our amazing team.</p>
   </div>
 
   <footer>
-    <p>&copy; 2025 BinaryTree. All rights reserved.</p>
+    <div class="footer-content">
+      <p>&copy; 2025 BinaryTree. All rights reserved.</p>
+    </div>
   </footer>
+
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+        
+        // Initialize mobile menu with enhanced animations
+        setTimeout(function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const menu = document.getElementById('navLinks');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const navbar = document.querySelector('.navbar');
+            
+            if (toggle && menu && overlay && navbar) {
+                console.log('Mobile menu elements found successfully');
+                
+                // Toggle menu function
+                function toggleMenu() {
+                    const isOpen = menu.classList.contains('show');
+                    
+                    if (isOpen) {
+                        // Close menu with staggered animation
+                        menu.classList.remove('show');
+                        overlay.classList.remove('show');
+                        toggle.classList.remove('active');
+                        navbar.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                        console.log('Menu closed');
+                    } else {
+                        // Open menu with staggered animation
+                        menu.classList.add('show');
+                        overlay.classList.add('show');
+                        toggle.classList.add('active');
+                        navbar.classList.add('menu-open');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Menu opened');
+                    }
+                }
+                
+                // Close menu function
+                function closeMenu() {
+                    menu.classList.remove('show');
+                    overlay.classList.remove('show');
+                    toggle.classList.remove('active');
+                    navbar.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                    console.log('Menu closed');
+                }
+                
+                // Add event listeners
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Toggle button clicked');
+                    toggleMenu();
+                });
+                
+                overlay.addEventListener('click', closeMenu);
+                
+                // Close menu when clicking nav links with delay for animation
+                const navLinks = menu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        // Add a small delay to see the click animation
+                        setTimeout(closeMenu, 150);
+                    });
+                });
+                
+                // Close menu on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMenu();
+                    }
+                });
+                
+                // Add touch support for better mobile experience
+                let touchStartY = 0;
+                let touchEndY = 0;
+                
+                menu.addEventListener('touchstart', function(e) {
+                    touchStartY = e.changedTouches[0].screenY;
+                });
+                
+                menu.addEventListener('touchend', function(e) {
+                    touchEndY = e.changedTouches[0].screenY;
+                    // Close menu on swipe up
+                    if (touchStartY - touchEndY > 50) {
+                        closeMenu();
+                    }
+                });
+                
+                console.log('Enhanced mobile menu initialized successfully');
+            } else {
+                console.log('Mobile menu elements not found');
+            }
+        }, 300);
+      });
+        
+    AOS.init({ duration: 800, once: true, offset: 100 });
+  </script>
 </body>
 </html>
