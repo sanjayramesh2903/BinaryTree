@@ -1,106 +1,52 @@
 <style>
-    /* Base styles */
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: #ffffff;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        flex-wrap: wrap;
-    }
-    
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        font-weight: 800;
-        font-size: 1.5rem;
-        color: #2c3e50;
-    }
-    
-    .nav-logo img {
-        height: 32px;
-        margin-right: 10px;
-    }
-    
-    .nav-links {
-        display: flex;
-        gap: 1rem;
-    }
-    
-    .nav-links a {
-        text-decoration: none;
-        color: #2c3e50;
-        font-weight: 500;
-    }
-    
-    /* Hamburger icon */
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        cursor: pointer;
-    }
-    
-    .hamburger span {
-        height: 3px;
-        width: 25px;
-        background-color: #2c3e50;
-        margin: 4px 0;
-        border-radius: 2px;
-    }
-    
-    /* Mobile styles */
-    @media (max-width: 768px) {
-        .hamburger {
-            display: flex;
-        }
-    
-        .nav-links {
-            display: none;
-            width: 100%;
-            flex-direction: column;
-            margin-top: 1rem;
-        }
-    
-        .nav-links.active {
-            display: flex;
-        }
-    
-        .nav-links a {
-            padding: 0.75rem 0;
-            border-top: 1px solid #eee;
-        }
-    }
-    </style>
-    
-    <nav class="navbar">
-        <a href="index.html" class="nav-logo">
-            <img src="assets/icon.png" alt="Logo"> BinaryTree
-        </a>
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="nav-links" id="navLinks">
-            <a href="index.html">Home</a>
-            <a href="mission.html">Mission</a>
-            <a href="team.html">Team</a>
-            <a href="ide.html">Python IDE</a>
-            <a href="ai-chat.html">AI Chat</a>
-            <a href="partners.html">Partners</a>
-            <a href="news.html">News</a>
-        </div>
-    </nav>
-    
-    <script>
-    function toggleMenu() {
-        const navLinks = document.getElementById('navLinks');
-        navLinks.classList.toggle('active');
-    }
-    </script>
-    
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+.nav-logo img {
+    height: 32px;
+    margin-right: 10px;
+}
+
+.nav-links a {
+    margin-left: 1.2rem;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+
+</style>
+
+<nav class="navbar">
+    <a href="index.html" class="nav-logo">
+        <img src="assets/icon.png" alt="Logo"> BinaryTree
+    </a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="mission.html">Mission</a>
+        <a href="team.html">Team</a>
+        <a href="ide.html">Python IDE</a>
+        <a href="ai-chat.html">AI Chat</a>
+        <a href="partners.html">Partners</a>
+        <a href="news.html">News</a>
+    </div>
+</nav>
