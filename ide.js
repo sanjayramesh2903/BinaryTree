@@ -21,6 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('file-input');
     const filenameInput = document.getElementById('filename-input');
     const output = document.getElementById('output');
+    const inputContainer = document.getElementById('input-container');
+    const userInput = document.getElementById('user-input');
+    const submitInput = document.getElementById('submit-input');
+
+    // Global variables for execution state
+    let isWaitingForInput = false;
+    let currentInputPrompt = '';
+    let userInputs = [];
+    let executionContext = null;
 
     filenameInput.addEventListener('input', function() {
         this.value = this.value.replace(/[\\/:*?"<>|]/g, '_');
@@ -34,29 +43,176 @@ document.addEventListener('DOMContentLoaded', function() {
         window.editor.refresh();
     });
 
-    runBtn.addEventListener('click', async () => {
-        const code = editor.getValue();
-        output.textContent = 'Running...';
+    // Handle input submission
+    submitInput.addEventListener('click', submitUserInput);
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            submitUserInput();
+        }
+    });
 
+    function submitUserInput() {
+        if (!isWaitingForInput) return;
+        
+        const inputValue = userInput.value;
+        userInput.value = '';
+        
+        // Display the input in the output
+        output.textContent += inputValue + '\n';
+        
+        // Hide input container
+        inputContainer.style.display = 'none';
+        isWaitingForInput = false;
+        
+        // Store the input and continue execution
+        userInputs.push(inputValue);
+        continueExecution();
+    }
+
+    function showInputPrompt(prompt = '') {
+        if (prompt && !output.textContent.endsWith(prompt)) {
+            output.textContent += prompt;
+        }
+        inputContainer.style.display = 'flex';
+        userInput.focus();
+        isWaitingForInput = true;
+    }
+
+    function hideInputPrompt() {
+        inputContainer.style.display = 'none';
+        isWaitingForInput = false;
+    }
+
+    function extractInputPrompts(code) {
+        // Extract input() statements and their prompts
+        const inputPattern = /input\s*\(\s*["']([^"']*)["']\s*\)|input\s*\(\s*\)/g;
+        const prompts = [];
+        let match;
+        
+        while ((match = inputPattern.exec(code)) !== null) {
+            prompts.push(match[1] || '');
+        }
+        
+        return prompts;
+    }
+
+    async function continueExecution() {
+        if (!executionContext) return;
+        
         try {
+            // Execute with all collected inputs
             const response = await fetch('https://emkc.org/api/v2/piston/execute', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: getCode()
+                body: JSON.stringify({
+                    language: 'python',
+                    version: '3.10',
+                    files: [{
+                        content: executionContext.code
+                    }],
+                    stdin: userInputs.join('\n') + '\n'
+                })
             });
 
             const data = await response.json();
-            output.textContent = data.run.output || data.message;
+            
+            if (data.run.output) {
+                const outputText = data.run.output;
+                
+                // Count how many inputs we've provided vs how many are needed
+                const expectedInputs = executionContext.expectedInputs || 0;
+                
+                if (userInputs.length < expectedInputs) {
+                    // Still need more inputs
+                    const currentPrompt = executionContext.prompts[userInputs.length] || '';
+                    
+                    // Clear and show current output up to this point
+                    const lines = outputText.split('\n');
+                    const relevantOutput = lines.slice(0, userInputs.length + 1).join('\n');
+                    
+                    if (!output.textContent.includes(relevantOutput)) {
+                        output.textContent = relevantOutput;
+                    }
+                    
+                    showInputPrompt(currentPrompt);
+                } else {
+                    // All inputs provided, show final output
+                    output.textContent = outputText;
+                    executionContext = null;
+                    userInputs = [];
+                }
+            } else if (data.run.stderr) {
+                output.textContent += '\nError: ' + data.run.stderr;
+                executionContext = null;
+                userInputs = [];
+                hideInputPrompt();
+            }
         } catch (error) {
-            output.textContent = 'Error: Failed to execute code. Please try again.';
+            output.textContent += '\nError: Failed to execute code.';
+            executionContext = null;
+            userInputs = [];
+            hideInputPrompt();
         }
+    }
+
+    async function executeWithInteractiveInput(code) {
+        output.textContent = '';
+        hideInputPrompt();
+        userInputs = [];
+        
+        // Check if code contains input() statements
+        const prompts = extractInputPrompts(code);
+        
+        if (prompts.length === 0) {
+            // No input needed, execute normally
+            try {
+                const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        language: 'python',
+                        version: '3.10',
+                        files: [{
+                            content: code
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                output.textContent = data.run.output || data.run.stderr || data.message || 'No output';
+            } catch (error) {
+                output.textContent = 'Error: Failed to execute code.';
+            }
+            return;
+        }
+        
+        // Code has input statements
+        executionContext = {
+            code: code,
+            prompts: prompts,
+            expectedInputs: prompts.length
+        };
+        
+        // Start with the first input prompt
+        const firstPrompt = prompts[0] || '';
+        showInputPrompt(firstPrompt);
+    }
+
+    runBtn.addEventListener('click', async () => {
+        const code = editor.getValue();
+        await executeWithInteractiveInput(code);
     });
 
     clearBtn.addEventListener('click', () => {
         editor.setValue('');
         output.textContent = '';
+        hideInputPrompt();
+        executionContext = null;
+        userInputs = [];
     });
     
     saveBtn.addEventListener('click', () => {

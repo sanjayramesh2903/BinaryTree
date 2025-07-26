@@ -118,6 +118,14 @@
     color: #555;
 }
 
+/* Prevent counter shaking during animation */
+.stat-number {
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+}
 
 </style>
 <body>
@@ -130,15 +138,15 @@
                 <p class="mission-tagline" data-aos="fade-up" data-aos-delay="200">Improving Computer Science, Technology, and Digital Literacy education for the underprivileged in Africa.</p>
                 <div class="mission-stats" data-aos="fade-up" data-aos-delay="400">
                     <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
-                        <span class="stat-number">900+</span>
+                        <span class="stat-number" data-target="900" data-suffix="+">0</span>
                         <span class="stat-label">Students Impacted</span>
                     </div>
                     <div class="stat-item" data-aos="zoom-in" data-aos-delay="600">
-                        <span class="stat-number">7</span>
+                        <span class="stat-number" data-target="7" data-suffix="">0</span>
                         <span class="stat-label">Partner Countries</span>
                     </div>
                     <div class="stat-item" data-aos="zoom-in" data-aos-delay="700">
-                        <span class="stat-number">3.5K</span>
+                        <span class="stat-number" data-target="3500" data-suffix="K" data-divide="1000">0</span>
                         <span class="stat-label">Hours of Volunteering Provided</span>
                     </div>
                 </div>
@@ -322,6 +330,68 @@
             once: true,
             offset: 100
         });
+
+        // Animated Counter Function
+        function animateCounter(element, target, duration = 2000, suffix = '', divide = 1) {
+            let startTime = null;
+            let startValue = 0;
+            
+            function updateCounter(currentTime) {
+                if (!startTime) startTime = currentTime;
+                
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                
+                const currentValue = Math.floor(startValue + (target - startValue) * easeOutCubic);
+                
+                // Format the number based on divide parameter
+                let displayValue = currentValue;
+                if (divide > 1) {
+                    displayValue = (currentValue / divide).toFixed(1);
+                }
+                
+                element.textContent = displayValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Intersection Observer to trigger animation when stats come into view
+        function initializeCounters() {
+            const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        const suffix = entry.target.getAttribute('data-suffix') || '';
+                        const divide = parseInt(entry.target.getAttribute('data-divide')) || 1;
+                        
+                        // Add a delay to sync with AOS animation
+                        setTimeout(() => {
+                            animateCounter(entry.target, target, 2000, suffix, divide);
+                        }, 800); // Delay to sync with AOS fade-in
+                    }
+                });
+            }, {
+                threshold: 0.5,
+                rootMargin: '0px 0px -10% 0px'
+            });
+            
+            statNumbers.forEach(stat => observer.observe(stat));
+        }
+
+        // Initialize counters after page load
+        window.addEventListener('load', initializeCounters);
     </script>
 </body>
 </html>
