@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hack4BT Hackathon Recap - BinaryTree News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/hackathonexample.png">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+      background: #f9fbfd;
+      color: #1a1a1a;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    .article-hero {
+      background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+
+    .article-hero h1, .article-hero .article-meta {
+      position: relative;
+      z-index: 2;
+    }
+
+    .article-hero h1 {
+      font-size: 3.5rem;
+      margin: 0 0 1rem 0;
+      color: #ffffff;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      line-height: 1.2;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .article-hero .article-meta {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .article-hero .article-meta::before {
+      content: '✍️';
+      font-size: 1rem;
+    }
+
+    .article-container {
+      max-width: 800px;
+      margin: -2rem auto 4rem;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .article-container p {
+      margin-bottom: 1.8rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #444;
+    }
+
+    .article-container h2 {
+      font-size: 2rem;
+      margin: 3rem 0 1.5rem 0;
+      color: #2c3e50;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .article-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #3498db, #2ecc71);
+      border-radius: 2px;
+    }
+
+    .article-container p:first-of-type {
+      font-size: 1.2rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .back-to-news {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      padding: 0.8rem 1.5rem;
+      background: rgba(52, 152, 219, 0.1);
+      border-radius: 25px;
+      border: 1px solid rgba(52, 152, 219, 0.2);
+    }
+
+    .back-to-news:hover {
+      background: rgba(52, 152, 219, 0.2);
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+    }
+
+    .back-to-news::before {
+      content: '←';
+      font-size: 1.2rem;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .article-hero {
+        padding: 4rem 1rem 3rem;
+      }
+
+      .article-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .article-hero .article-meta {
+        font-size: 1rem;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .article-container {
+        margin: -1rem auto 2rem;
+        padding: 2rem 1.5rem;
+        border-radius: 15px;
+      }
+
+      .article-container h2 {
+        font-size: 1.6rem;
+        margin: 2rem 0 1rem 0;
+      }
+
+      .article-container p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .back-to-news {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .article-hero h1 {
+        font-size: 2rem;
+      }
+
+      .article-container {
+        padding: 1.5rem 1rem;
+      }
+
+      .article-container h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="article-hero">
+    <h1 data-aos="fade-down">Recap Thus Far: Lessons in Uganda</h1>
+    <div class="article-meta" data-aos="fade-up" data-aos-delay="200">
+      By Ben Standefer • July 2025
+    </div>
+  </div>
+
+  <div class="article-container" data-aos="fade-up" data-aos-delay="300">
+    <a href="news.html" class="back-to-news" data-aos="fade-right">Back to News</a>
+
+    <div style="text-align:center; max-width:700px; margin:auto;">
+        <img src="assets/ugandaclassroom.png" alt="Class session photo" style="width:100%; max-width:400px; margin-bottom:20px;">
+      
+
+      <p style="font-size: 1.1rem; color: #444;">
+        As I'm writing this, we're three weeks into our web development curriculum with Hawthorne-Scriber High School in Uganda. The kids are curious, ask lots of questions, and push me to understand the concepts I'm distilling better. Some of my favorite lessons yet! 
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 BinaryTree. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+        setTimeout(function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const menu = document.getElementById('navLinks');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const navbar = document.querySelector('.navbar');
+            
+            if (toggle && menu && overlay && navbar) {
+                console.log('Mobile menu elements found successfully');
+                
+                // Toggle menu function
+                function toggleMenu() {
+                    const isOpen = menu.classList.contains('show');
+                    
+                    if (isOpen) {
+                        // Close menu with staggered animation
+                        menu.classList.remove('show');
+                        overlay.classList.remove('show');
+                        toggle.classList.remove('active');
+                        navbar.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                        console.log('Menu closed');
+                    } else {
+                        // Open menu with staggered animation
+                        menu.classList.add('show');
+                        overlay.classList.add('show');
+                        toggle.classList.add('active');
+                        navbar.classList.add('menu-open');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Menu opened');
+                    }
+                }
+                
+                // Close menu function
+                function closeMenu() {
+                    menu.classList.remove('show');
+                    overlay.classList.remove('show');
+                    toggle.classList.remove('active');
+                    navbar.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                    console.log('Menu closed');
+                }
+                
+                // Add event listeners
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Toggle button clicked');
+                    toggleMenu();
+                });
+                
+                overlay.addEventListener('click', closeMenu);
+                
+                // Close menu when clicking nav links with delay for animation
+                const navLinks = menu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        // Add a small delay to see the click animation
+                        setTimeout(closeMenu, 150);
+                    });
+                });
+                
+                // Close menu on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMenu();
+                    }
+                });
+                
+                // Add touch support for better mobile experience
+                let touchStartY = 0;
+                let touchEndY = 0;
+                
+                menu.addEventListener('touchstart', function(e) {
+                    touchStartY = e.changedTouches[0].screenY;
+                });
+                
+                menu.addEventListener('touchend', function(e) {
+                    touchEndY = e.changedTouches[0].screenY;
+                    // Close menu on swipe up
+                    if (touchStartY - touchEndY > 50) {
+                        closeMenu();
+                    }
+                });
+                
+                console.log('Enhanced mobile menu initialized successfully');
+            } else {
+                console.log('Mobile menu elements not found');
+            }
+        }, 300);
+      });
+
+    AOS.init({ duration: 800, once: true, offset: 100 });
+  </script>
+</body>
+</html>
